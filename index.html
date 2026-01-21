@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FarmCoin Майнинг Симулятор</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FarmCoin Майнинг</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         * {
@@ -11,191 +11,185 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
-            background: linear-gradient(to bottom, #0a0a2a, #1a1a3a);
+            background: #0a0a1a;
             color: #ccc;
             min-height: 100vh;
-            padding: 20px;
             font-size: 14px;
+            overflow-x: hidden;
         }
         
         .container {
-            max-width: 1600px;
+            max-width: 100%;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: 300px 1fr 350px;
-            grid-template-rows: auto 1fr;
-            gap: 15px;
-            height: calc(100vh - 40px);
+            padding: 10px;
         }
         
-        header {
-            grid-column: 1 / -1;
-            background: linear-gradient(to right, #2a2a4a, #3a3a5a);
-            padding: 15px 20px;
+        /* Мобильный вид по умолчанию */
+        .mobile-view {
+            display: block;
+        }
+        
+        .desktop-view {
+            display: none;
+        }
+        
+        /* Хедер для мобилки */
+        .mobile-header {
+            background: linear-gradient(to right, #1a1a3a, #2a2a4a);
+            padding: 12px 15px;
             border-radius: 8px;
-            border: 1px solid #444;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+            border: 1px solid #333;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
-        header h1 {
+        .mobile-header h1 {
             color: #4CAF50;
-            font-size: 24px;
-            text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+            font-size: 18px;
+            text-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
         }
         
-        .header-stats {
+        .mobile-stats {
             display: flex;
-            gap: 25px;
+            gap: 15px;
         }
         
-        .header-stat {
+        .mobile-stat {
             text-align: center;
         }
         
-        .header-stat .value {
-            font-size: 18px;
+        .mobile-stat .value {
+            font-size: 14px;
             font-weight: bold;
             color: #FFD700;
         }
         
-        .header-stat .label {
-            font-size: 12px;
+        .mobile-stat .label {
+            font-size: 10px;
             color: #888;
         }
         
-        .left-panel {
+        /* Панели для мобилки */
+        .mobile-panel {
             background: #1a1a2a;
             border-radius: 8px;
             border: 1px solid #333;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+            padding: 12px;
+            margin-bottom: 10px;
         }
         
         .panel-title {
             color: #4CAF50;
-            border-bottom: 2px solid #333;
-            padding-bottom: 8px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 6px;
             margin-bottom: 10px;
-            font-size: 16px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
-        .mining-control {
-            background: #222;
-            padding: 15px;
-            border-radius: 6px;
-            text-align: center;
-            border: 1px solid #333;
+        /* Контролы майнинга */
+        .mining-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
         }
         
         .mining-btn {
+            flex: 1;
             background: linear-gradient(to bottom, #4CAF50, #2E7D32);
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 4px;
+            padding: 12px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-            margin-bottom: 10px;
+            font-size: 14px;
             transition: all 0.3s;
         }
         
-        .mining-btn:hover {
-            background: linear-gradient(to bottom, #45a049, #1B5E20);
-            transform: translateY(-2px);
+        .mining-btn:active {
+            transform: scale(0.98);
         }
         
-        .auto-toggle {
+        .auto-btn {
             background: #333;
-            padding: 10px;
-            border-radius: 4px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
+            color: #ccc;
             border: 1px solid #444;
         }
         
-        .auto-toggle.active {
+        .auto-btn.active {
             background: #2a4a2a;
             border-color: #4CAF50;
+            color: #4CAF50;
         }
         
-        .power-display {
-            background: #222;
-            padding: 15px;
-            border-radius: 6px;
-            border: 1px solid #333;
+        /* Статистика мощности */
+        .power-info {
+            text-align: center;
+            margin: 15px 0;
         }
         
         .power-value {
-            font-size: 28px;
+            font-size: 24px;
             color: #FFD700;
-            text-align: center;
-            margin: 10px 0;
+            margin: 5px 0;
             font-weight: bold;
         }
         
-        .power-label {
-            text-align: center;
-            color: #888;
-            font-size: 12px;
+        .progress-bar {
+            height: 6px;
+            background: #333;
+            border-radius: 3px;
+            margin: 10px 0;
+            overflow: hidden;
         }
         
-        .main-panel {
-            background: #1a1a2a;
-            border-radius: 8px;
-            border: 1px solid #333;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, #4CAF50, #8BC34A);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.3s;
         }
         
-        .market-panel {
-            background: #222;
-            padding: 15px;
-            border-radius: 6px;
-            border: 1px solid #333;
-            flex: 1;
-        }
-        
+        /* График рынка */
         .chart-container {
-            height: 200px;
-            margin: 15px 0;
+            height: 150px;
+            margin: 10px 0;
             background: #1a1a2a;
-            border-radius: 4px;
-            padding: 10px;
+            border-radius: 6px;
+            padding: 8px;
             border: 1px solid #333;
         }
         
-        .market-info {
+        /* Рыночная информация */
+        .market-info-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 15px;
+            gap: 8px;
+            margin-top: 10px;
         }
         
         .market-item {
             background: #2a2a3a;
-            padding: 10px;
+            padding: 8px;
             border-radius: 4px;
             text-align: center;
             border: 1px solid #333;
+            font-size: 12px;
         }
         
         .market-value {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
-            margin-top: 5px;
+            margin-top: 3px;
         }
         
         .market-up {
@@ -206,28 +200,75 @@
             color: #f44336;
         }
         
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 12px;
+        /* События рынка */
+        .market-alerts {
+            margin-top: 10px;
+        }
+        
+        .crash-alert {
+            background: #4a1a1a;
+            border: 1px solid #f44336;
+            color: #ffcccc;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            text-align: center;
+            display: none;
+            margin-bottom: 5px;
+        }
+        
+        .boom-alert {
+            background: #4a4a1a;
+            border: 1px solid #FFD700;
+            color: #ffffcc;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            text-align: center;
+            display: none;
+        }
+        
+        /* Каталог видеокарт */
+        .cards-tabs {
+            display: flex;
+            background: #222;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        
+        .cards-tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            font-size: 12px;
+        }
+        
+        .cards-tab.active {
+            border-bottom-color: #4CAF50;
+            background: #2a2a3a;
+            color: #4CAF50;
+        }
+        
+        .cards-container {
             max-height: 300px;
             overflow-y: auto;
-            padding-right: 5px;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 8px;
         }
         
         .card-item {
             background: #222;
             border: 1px solid #333;
             border-radius: 6px;
-            padding: 12px;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        
-        .card-item:hover {
-            border-color: #4CAF50;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            padding: 10px;
+            font-size: 11px;
         }
         
         .card-item.owned {
@@ -239,49 +280,38 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
         
         .card-name {
             color: #FFD700;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 12px;
         }
         
         .card-price {
             color: #4CAF50;
-            font-size: 13px;
+            font-size: 11px;
         }
         
         .card-specs {
-            font-size: 11px;
+            font-size: 10px;
             color: #888;
-            margin-bottom: 8px;
-        }
-        
-        .card-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .card-owned-count {
-            color: #4CAF50;
-            font-size: 12px;
+            margin-bottom: 5px;
         }
         
         .buy-btn {
             background: #333;
             color: white;
             border: none;
-            padding: 5px 10px;
+            padding: 5px 8px;
             border-radius: 3px;
-            font-size: 11px;
+            font-size: 10px;
             cursor: pointer;
-            transition: background 0.3s;
+            width: 100%;
         }
         
-        .buy-btn:hover {
+        .buy-btn:active {
             background: #444;
         }
         
@@ -290,33 +320,17 @@
             cursor: not-allowed;
         }
         
-        .right-panel {
-            background: #1a1a2a;
-            border-radius: 8px;
-            border: 1px solid #333;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .crypto-status {
-            background: #222;
-            padding: 15px;
-            border-radius: 6px;
-            border: 1px solid #333;
-        }
-        
+        /* Статус рынка */
         .status-indicator {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 8px;
+            margin-top: 8px;
         }
         
         .status-dot {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             background: #4CAF50;
         }
@@ -337,19 +351,20 @@
             100% { opacity: 1; }
         }
         
+        /* Журнал событий */
         .event-log {
-            background: #222;
-            padding: 15px;
-            border-radius: 6px;
-            border: 1px solid #333;
-            flex: 1;
+            max-height: 200px;
             overflow-y: auto;
+            background: #1a1a2a;
+            border-radius: 6px;
+            padding: 8px;
+            border: 1px solid #333;
         }
         
         .event-item {
-            padding: 8px;
+            padding: 6px;
             border-bottom: 1px solid #333;
-            font-size: 12px;
+            font-size: 11px;
             color: #aaa;
         }
         
@@ -359,8 +374,8 @@
         
         .event-time {
             color: #888;
-            font-size: 10px;
-            margin-right: 10px;
+            font-size: 9px;
+            margin-right: 5px;
         }
         
         .event-message.success {
@@ -379,39 +394,7 @@
             color: #FF9800;
         }
         
-        .progress-bar {
-            height: 8px;
-            background: #333;
-            border-radius: 4px;
-            margin: 10px 0;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(to right, #4CAF50, #8BC34A);
-            border-radius: 4px;
-            width: 0%;
-            transition: width 0.5s;
-        }
-        
-        .cards-catalog {
-            max-height: 400px;
-            overflow-y: auto;
-            background: #1a1a2a;
-            border-radius: 6px;
-            padding: 10px;
-            border: 1px solid #333;
-        }
-        
-        .catalog-title {
-            color: #4CAF50;
-            margin-bottom: 10px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid #333;
-            font-size: 16px;
-        }
-        
+        /* Поиск карт */
         .search-box {
             margin-bottom: 10px;
         }
@@ -426,226 +409,408 @@
             font-size: 12px;
         }
         
-        .catalog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 10px;
+        /* Десктоп вид для широких экранов */
+        @media (min-width: 768px) {
+            .mobile-view {
+                display: none;
+            }
+            
+            .desktop-view {
+                display: block;
+            }
+            
+            .container {
+                max-width: 1400px;
+                padding: 15px;
+            }
+            
+            .desktop-header {
+                background: linear-gradient(to right, #1a1a3a, #2a2a4a);
+                padding: 15px 20px;
+                border-radius: 8px;
+                margin-bottom: 15px;
+                border: 1px solid #333;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .desktop-header h1 {
+                color: #4CAF50;
+                font-size: 22px;
+                text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+            }
+            
+            .desktop-stats {
+                display: flex;
+                gap: 30px;
+            }
+            
+            .desktop-stat {
+                text-align: center;
+            }
+            
+            .desktop-stat .value {
+                font-size: 18px;
+                font-weight: bold;
+                color: #FFD700;
+            }
+            
+            .desktop-stat .label {
+                font-size: 12px;
+                color: #888;
+            }
+            
+            .desktop-grid {
+                display: grid;
+                grid-template-columns: 300px 1fr 300px;
+                gap: 15px;
+                height: calc(100vh - 120px);
+            }
+            
+            .left-panel {
+                background: #1a1a2a;
+                border-radius: 8px;
+                border: 1px solid #333;
+                padding: 15px;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .center-panel {
+                background: #1a1a2a;
+                border-radius: 8px;
+                border: 1px solid #333;
+                padding: 15px;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .right-panel {
+                background: #1a1a2a;
+                border-radius: 8px;
+                border: 1px solid #333;
+                padding: 15px;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .desktop-chart {
+                height: 200px;
+                margin: 15px 0;
+            }
+            
+            .desktop-cards-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 10px;
+                max-height: 350px;
+                overflow-y: auto;
+            }
+            
+            .catalog-container {
+                max-height: 400px;
+                overflow-y: auto;
+            }
+            
+            .desktop-market-info {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+                margin-top: 15px;
+            }
+            
+            .desktop-market-item {
+                background: #2a2a3a;
+                padding: 10px;
+                border-radius: 6px;
+                text-align: center;
+                border: 1px solid #333;
+            }
+            
+            .desktop-market-value {
+                font-size: 16px;
+                font-weight: bold;
+                margin-top: 5px;
+            }
         }
         
-        .catalog-item {
-            background: #222;
-            border: 1px solid #333;
-            border-radius: 4px;
-            padding: 10px;
-            font-size: 12px;
-        }
-        
-        .catalog-name {
-            color: #FFD700;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .catalog-price {
-            color: #4CAF50;
-            font-size: 11px;
-            margin-bottom: 3px;
-        }
-        
-        .catalog-power {
-            color: #2196F3;
-            font-size: 11px;
-            margin-bottom: 3px;
-        }
-        
-        .catalog-luck {
-            color: #9C27B0;
-            font-size: 11px;
-        }
-        
-        .crash-alert {
-            background: #4a1a1a;
-            border: 2px solid #f44336;
-            color: #ffcccc;
-            padding: 10px;
-            border-radius: 6px;
-            margin-top: 10px;
-            font-size: 13px;
-            text-align: center;
-            display: none;
-        }
-        
-        .boom-alert {
-            background: #4a4a1a;
-            border: 2px solid #FFD700;
-            color: #ffffcc;
-            padding: 10px;
-            border-radius: 6px;
-            margin-top: 10px;
-            font-size: 13px;
-            text-align: center;
-            display: none;
-        }
-        
-        .market-event {
-            background: #2a2a4a;
-            border: 1px solid #444;
-            padding: 10px;
-            border-radius: 4px;
-            margin-top: 10px;
-            font-size: 12px;
-            color: #aaa;
-            display: none;
-        }
-        
+        /* Скроллбар */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
         
         ::-webkit-scrollbar-track {
             background: #1a1a2a;
-            border-radius: 4px;
+            border-radius: 3px;
         }
         
         ::-webkit-scrollbar-thumb {
             background: #333;
-            border-radius: 4px;
+            border-radius: 3px;
         }
         
         ::-webkit-scrollbar-thumb:hover {
             background: #444;
         }
         
-        @media (max-width: 1200px) {
-            .container {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto;
-                height: auto;
-            }
-            
-            .cards-grid {
-                max-height: 200px;
-            }
+        /* Анимации */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Свайп навигация для мобилок */
+        .swipe-area {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+        
+        .swipe-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #333;
+            transition: background 0.3s;
+        }
+        
+        .swipe-dot.active {
+            background: #4CAF50;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1><i class="fa fa-btc"></i> FarmCoin Майнинг Симулятор</h1>
-            <div class="header-stats">
-                <div class="header-stat">
-                    <div class="value" id="balance-header">0.000000 FARM</div>
-                    <div class="label">Баланс</div>
-                </div>
-                <div class="header-stat">
-                    <div class="value" id="price-header">50.00 ₽</div>
-                    <div class="label">Курс FarmCoin</div>
-                </div>
-                <div class="header-stat">
-                    <div class="value" id="total-mined-header">0 FARM</div>
-                    <div class="label">Всего добыто</div>
-                </div>
-            </div>
-        </header>
-        
-        <div class="left-panel">
-            <div class="mining-control">
-                <h3 class="panel-title"><i class="fa fa-cogs"></i> Управление майнингом</h3>
-                <button class="mining-btn" id="mine-btn">
-                    <i class="fa fa-play"></i> Старт майнинга
-                </button>
-                <div class="auto-toggle" id="auto-toggle">
-                    <span>Автоматический майнинг</span>
-                    <span id="auto-status">ВЫКЛ</span>
+    <!-- Мобильная версия -->
+    <div class="mobile-view">
+        <div class="container">
+            <div class="mobile-header">
+                <h1><i class="fa fa-btc"></i> FarmCoin</h1>
+                <div class="mobile-stats">
+                    <div class="mobile-stat">
+                        <div class="value" id="mobile-balance">0.000000</div>
+                        <div class="label">FARM</div>
+                    </div>
+                    <div class="mobile-stat">
+                        <div class="value" id="mobile-price">50.00</div>
+                        <div class="label">₽</div>
+                    </div>
                 </div>
             </div>
             
-            <div class="power-display">
-                <h3 class="panel-title"><i class="fa fa-bolt"></i> Мощность майнинга</h3>
-                <div class="power-value" id="mining-power">1.0 MH/s</div>
-                <div class="power-label">Общая мощность системы</div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="mining-progress"></div>
+            <div class="mobile-panel">
+                <div class="panel-title"><i class="fa fa-cogs"></i> Майнинг</div>
+                <div class="mining-controls">
+                    <button class="mining-btn" id="mobile-mine-btn">
+                        <i class="fa fa-play"></i> Старт
+                    </button>
+                    <button class="mining-btn auto-btn" id="mobile-auto-btn">
+                        <i class="fa fa-robot"></i> Авто
+                    </button>
                 </div>
-                <div style="text-align: center; font-size: 12px; color: #888; margin-top: 5px;">
-                    Следующая добыча: <span id="mining-timer">3.0</span>с
+                
+                <div class="power-info">
+                    <div style="font-size: 12px; color: #888;">Мощность</div>
+                    <div class="power-value" id="mobile-power">1.0 MH/s</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="mobile-progress"></div>
+                    </div>
+                    <div style="font-size: 11px; color: #888; margin-top: 5px;">
+                        Следующая добыча: <span id="mobile-timer">3.0</span>с
+                    </div>
                 </div>
             </div>
             
-            <div class="cards-catalog">
-                <div class="catalog-title"><i class="fa fa-list"></i> Каталог видеокарт (25)</div>
-                <div class="search-box">
-                    <input type="text" class="search-input" placeholder="Поиск видеокарты..." id="card-search">
-                </div>
-                <div class="catalog-grid" id="catalog-grid">
-                    <!-- Каталог будет заполнен через JS -->
-                </div>
-            </div>
-        </div>
-        
-        <div class="main-panel">
-            <div class="market-panel">
-                <h3 class="panel-title"><i class="fa fa-line-chart"></i> Динамика рынка FarmCoin</h3>
+            <div class="mobile-panel">
+                <div class="panel-title"><i class="fa fa-line-chart"></i> Рынок</div>
                 <div class="chart-container">
-                    <canvas id="price-chart"></canvas>
+                    <canvas id="mobile-chart"></canvas>
                 </div>
                 
-                <div class="market-info">
+                <div class="market-info-grid">
                     <div class="market-item">
-                        <div>Текущая цена</div>
-                        <div class="market-value" id="current-price">50.00 ₽</div>
+                        <div>Цена</div>
+                        <div class="market-value" id="mobile-current-price">50.00 ₽</div>
                     </div>
                     <div class="market-item">
-                        <div>Изменение за день</div>
-                        <div class="market-value" id="daily-change">+0.00%</div>
+                        <div>Изменение</div>
+                        <div class="market-value" id="mobile-daily-change">+0.00%</div>
                     </div>
                     <div class="market-item">
-                        <div>Волатильность</div>
-                        <div class="market-value" id="volatility">Средняя</div>
+                        <div>Тренд</div>
+                        <div class="market-value" id="mobile-trend">Нейтр.</div>
                     </div>
                 </div>
                 
-                <div class="crash-alert" id="crash-alert">
-                    <i class="fa fa-exclamation-triangle"></i> КРАХ РЫНКА! Цены падают!
-                </div>
-                
-                <div class="boom-alert" id="boom-alert">
-                    <i class="fa fa-rocket"></i> БУМ РЫНКА! Цены взлетают!
-                </div>
-                
-                <div class="market-event" id="market-event">
-                    <!-- События рынка будут появляться здесь -->
+                <div class="market-alerts">
+                    <div class="crash-alert" id="mobile-crash-alert">
+                        <i class="fa fa-exclamation-triangle"></i> КРАХ!
+                    </div>
+                    <div class="boom-alert" id="mobile-boom-alert">
+                        <i class="fa fa-rocket"></i> БУМ!
+                    </div>
                 </div>
             </div>
             
-            <div>
-                <h3 class="panel-title"><i class="fa fa-desktop"></i> Ваши видеокарты</h3>
-                <div class="cards-grid" id="cards-grid">
-                    <!-- Купленные карты будут появляться здесь -->
+            <div class="mobile-panel">
+                <div class="cards-tabs">
+                    <div class="cards-tab active" id="tab-owned" onclick="switchTab('owned')">
+                        Мои карты
+                    </div>
+                    <div class="cards-tab" id="tab-catalog" onclick="switchTab('catalog')">
+                        Каталог
+                    </div>
+                </div>
+                
+                <div class="search-box" id="search-box" style="display: none;">
+                    <input type="text" class="search-input" placeholder="Поиск карты..." id="mobile-card-search">
+                </div>
+                
+                <div class="cards-container" id="mobile-cards-container">
+                    <!-- Карты будут загружены через JS -->
+                </div>
+            </div>
+            
+            <div class="mobile-panel">
+                <div class="panel-title"><i class="fa fa-history"></i> События</div>
+                <div class="event-log" id="mobile-event-log">
+                    <div class="event-item">
+                        <span class="event-time">[00:00]</span>
+                        <span class="event-message info">Добро пожаловать!</span>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <div class="right-panel">
-            <div class="crypto-status">
-                <h3 class="panel-title"><i class="fa fa-exclamation-circle"></i> Статус крипторынка</h3>
-                <div>Состояние: <span id="market-status">Стабильное</span></div>
-                <div>Тренд: <span id="market-trend">Нейтральный</span></div>
-                <div>Спрос: <span id="market-demand">Умеренный</span></div>
-                
-                <div class="status-indicator">
-                    <div class="status-dot" id="status-dot"></div>
-                    <span id="status-text">Рынок стабилен</span>
+        <div class="swipe-area">
+            <div class="swipe-dot active" id="dot1"></div>
+            <div class="swipe-dot" id="dot2"></div>
+            <div class="swipe-dot" id="dot3"></div>
+        </div>
+    </div>
+    
+    <!-- Десктоп версия -->
+    <div class="desktop-view">
+        <div class="container">
+            <div class="desktop-header">
+                <h1><i class="fa fa-btc"></i> FarmCoin Майнинг Симулятор</h1>
+                <div class="desktop-stats">
+                    <div class="desktop-stat">
+                        <div class="value" id="desktop-balance">0.000000 FARM</div>
+                        <div class="label">Баланс</div>
+                    </div>
+                    <div class="desktop-stat">
+                        <div class="value" id="desktop-price">50.00 ₽</div>
+                        <div class="label">Курс FarmCoin</div>
+                    </div>
+                    <div class="desktop-stat">
+                        <div class="value" id="desktop-total">0 FARM</div>
+                        <div class="label">Всего добыто</div>
+                    </div>
                 </div>
             </div>
             
-            <div class="event-log">
-                <h3 class="panel-title"><i class="fa fa-history"></i> Журнал событий</h3>
-                <div id="event-log">
-                    <div class="event-item">
-                        <span class="event-time">[00:00:00]</span>
-                        <span class="event-message info">Добро пожаловать в FarmCoin симулятор!</span>
+            <div class="desktop-grid">
+                <div class="left-panel">
+                    <div class="panel-title"><i class="fa fa-cogs"></i> Управление</div>
+                    <button class="mining-btn" id="desktop-mine-btn">
+                        <i class="fa fa-play"></i> Старт майнинга
+                    </button>
+                    <button class="mining-btn auto-btn" id="desktop-auto-btn">
+                        <i class="fa fa-robot"></i> Автоматический майнинг
+                    </button>
+                    
+                    <div class="power-info">
+                        <div>Мощность майнинга</div>
+                        <div class="power-value" id="desktop-power">1.0 MH/s</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="desktop-progress"></div>
+                        </div>
+                        <div style="text-align: center; font-size: 12px; color: #888; margin-top: 5px;">
+                            Следующая добыча: <span id="desktop-timer">3.0</span>с
+                        </div>
+                    </div>
+                    
+                    <div class="panel-title"><i class="fa fa-exclamation-circle"></i> Статус рынка</div>
+                    <div style="background: #222; padding: 10px; border-radius: 6px; font-size: 12px;">
+                        <div>Состояние: <span id="desktop-status">Стабильное</span></div>
+                        <div>Волатильность: <span id="desktop-volatility">Средняя</span></div>
+                        <div>Спрос: <span id="desktop-demand">Умеренный</span></div>
+                        
+                        <div class="status-indicator">
+                            <div class="status-dot" id="desktop-status-dot"></div>
+                            <span id="desktop-status-text">Рынок стабилен</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="center-panel">
+                    <div class="panel-title"><i class="fa fa-line-chart"></i> Динамика рынка</div>
+                    <div class="chart-container desktop-chart">
+                        <canvas id="desktop-chart"></canvas>
+                    </div>
+                    
+                    <div class="desktop-market-info">
+                        <div class="desktop-market-item">
+                            <div>Текущая цена</div>
+                            <div class="desktop-market-value" id="desktop-current-price">50.00 ₽</div>
+                        </div>
+                        <div class="desktop-market-item">
+                            <div>Изменение за день</div>
+                            <div class="desktop-market-value" id="desktop-daily-change">+0.00%</div>
+                        </div>
+                        <div class="desktop-market-item">
+                            <div>Волатильность</div>
+                            <div class="desktop-market-value" id="desktop-volatility-value">Средняя</div>
+                        </div>
+                        <div class="desktop-market-item">
+                            <div>Капитализация</div>
+                            <div class="desktop-market-value" id="desktop-market-cap">0 ₽</div>
+                        </div>
+                    </div>
+                    
+                    <div class="market-alerts">
+                        <div class="crash-alert" id="desktop-crash-alert">
+                            <i class="fa fa-exclamation-triangle"></i> КРАХ РЫНКА! Цены падают!
+                        </div>
+                        <div class="boom-alert" id="desktop-boom-alert">
+                            <i class="fa fa-rocket"></i> БУМ РЫНКА! Цены взлетают!
+                        </div>
+                    </div>
+                    
+                    <div class="panel-title"><i class="fa fa-desktop"></i> Ваши видеокарты</div>
+                    <div class="desktop-cards-grid" id="desktop-cards-grid">
+                        <!-- Карты будут загружены через JS -->
+                    </div>
+                </div>
+                
+                <div class="right-panel">
+                    <div class="panel-title"><i class="fa fa-list"></i> Каталог (25 карт)</div>
+                    <div class="search-box">
+                        <input type="text" class="search-input" placeholder="Поиск видеокарты..." id="desktop-card-search">
+                    </div>
+                    
+                    <div class="catalog-container" id="desktop-catalog">
+                        <!-- Каталог будет загружен через JS -->
+                    </div>
+                    
+                    <div class="panel-title"><i class="fa fa-history"></i> Журнал событий</div>
+                    <div class="event-log" id="desktop-event-log">
+                        <div class="event-item">
+                            <span class="event-time">[00:00:00]</span>
+                            <span class="event-message info">Добро пожаловать в FarmCoin!</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -654,12 +819,13 @@
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        // Основные переменные
         let farmcoinBalance = 0;
         let totalMined = 0;
         let miningPower = 1.0;
         let miningActive = false;
         let autoMining = false;
-        let farmcoinPrice = 50.0;
+        let farmcoinPrice = 50.0; // Начальная цена 50 рублей
         let priceHistory = [];
         let marketTrend = 0;
         let marketVolatility = 0.5;
@@ -668,72 +834,128 @@
         let marketBoom = false;
         let crashTimer = 0;
         let boomTimer = 0;
+        let currentTab = 'owned';
         
+        // Максимальная цена FarmCoin - 150 рублей
+        const MAX_PRICE = 150.0;
+        const MIN_PRICE = 5.0;
+        
+        // 25 видеокарт
         const graphicsCards = {
-            gtx750ti: { name: "GTX 750 Ti", owned: 0, power: 0.8, luck: 2, basePrice: 15 },
-            gtx950: { name: "GTX 950", owned: 0, power: 1.2, luck: 3, basePrice: 20 },
-            gtx960: { name: "GTX 960", owned: 0, power: 1.5, luck: 4, basePrice: 25 },
-            gtx970: { name: "GTX 970", owned: 0, power: 2.0, luck: 5, basePrice: 35 },
-            gtx980: { name: "GTX 980", owned: 0, power: 2.5, luck: 6, basePrice: 45 },
-            gtx1050: { name: "GTX 1050", owned: 0, power: 1.8, luck: 4, basePrice: 30 },
-            gtx1050ti: { name: "GTX 1050 Ti", owned: 0, power: 2.2, luck: 5, basePrice: 35 },
-            gtx1060_3gb: { name: "GTX 1060 3GB", owned: 0, power: 2.8, luck: 6, basePrice: 40 },
-            gtx1060_6gb: { name: "GTX 1060 6GB", owned: 0, power: 3.2, luck: 7, basePrice: 50 },
-            gtx1070: { name: "GTX 1070", owned: 0, power: 4.0, luck: 8, basePrice: 70 },
-            gtx1070ti: { name: "GTX 1070 Ti", owned: 0, power: 4.5, luck: 9, basePrice: 85 },
-            gtx1080: { name: "GTX 1080", owned: 0, power: 5.0, luck: 10, basePrice: 100 },
-            gtx1080ti: { name: "GTX 1080 Ti", owned: 0, power: 6.0, luck: 12, basePrice: 150 },
-            rtx2060: { name: "RTX 2060", owned: 0, power: 7.0, luck: 14, basePrice: 180 },
-            rtx2060super: { name: "RTX 2060 Super", owned: 0, power: 8.0, luck: 16, basePrice: 220 },
-            rtx2070: { name: "RTX 2070", owned: 0, power: 9.0, luck: 18, basePrice: 250 },
-            rtx2070super: { name: "RTX 2070 Super", owned: 0, power: 10.0, luck: 20, basePrice: 300 },
-            rtx2080: { name: "RTX 2080", owned: 0, power: 12.0, luck: 22, basePrice: 400 },
-            rtx2080ti: { name: "RTX 2080 Ti", owned: 0, power: 15.0, luck: 25, basePrice: 500 },
-            rtx3060: { name: "RTX 3060", owned: 0, power: 13.0, luck: 20, basePrice: 350 },
-            rtx3060ti: { name: "RTX 3060 Ti", owned: 0, power: 16.0, luck: 23, basePrice: 450 },
-            rtx3070: { name: "RTX 3070", owned: 0, power: 18.0, luck: 25, basePrice: 550 },
-            rtx3080: { name: "RTX 3080", owned: 0, power: 25.0, luck: 30, basePrice: 800 },
-            rtx3090: { name: "RTX 3090", owned: 0, power: 35.0, luck: 35, basePrice: 1200 },
-            asic_s9: { name: "ASIC Antminer S9", owned: 0, power: 100.0, luck: 50, basePrice: 5000 }
+            gtx750ti: { name: "GTX 750 Ti", owned: 0, power: 0.5, luck: 1, basePrice: 10 },
+            gtx950: { name: "GTX 950", owned: 0, power: 0.8, luck: 2, basePrice: 15 },
+            gtx960: { name: "GTX 960", owned: 0, power: 1.0, luck: 3, basePrice: 20 },
+            gtx970: { name: "GTX 970", owned: 0, power: 1.5, luck: 4, basePrice: 30 },
+            gtx980: { name: "GTX 980", owned: 0, power: 2.0, luck: 5, basePrice: 40 },
+            gtx1050: { name: "GTX 1050", owned: 0, power: 1.2, luck: 3, basePrice: 25 },
+            gtx1050ti: { name: "GTX 1050 Ti", owned: 0, power: 1.8, luck: 4, basePrice: 35 },
+            gtx1060_3gb: { name: "GTX 1060 3GB", owned: 0, power: 2.2, luck: 5, basePrice: 45 },
+            gtx1060_6gb: { name: "GTX 1060 6GB", owned: 0, power: 2.8, luck: 6, basePrice: 55 },
+            gtx1070: { name: "GTX 1070", owned: 0, power: 3.5, luck: 7, basePrice: 70 },
+            gtx1070ti: { name: "GTX 1070 Ti", owned: 0, power: 4.0, luck: 8, basePrice: 85 },
+            gtx1080: { name: "GTX 1080", owned: 0, power: 4.5, luck: 9, basePrice: 100 },
+            gtx1080ti: { name: "GTX 1080 Ti", owned: 0, power: 5.5, luck: 11, basePrice: 130 },
+            rtx2060: { name: "RTX 2060", owned: 0, power: 6.0, luck: 12, basePrice: 150 },
+            rtx2060super: { name: "RTX 2060 Super", owned: 0, power: 7.0, luck: 14, basePrice: 180 },
+            rtx2070: { name: "RTX 2070", owned: 0, power: 8.0, luck: 16, basePrice: 220 },
+            rtx2070super: { name: "RTX 2070 Super", owned: 0, power: 9.0, luck: 18, basePrice: 270 },
+            rtx2080: { name: "RTX 2080", owned: 0, power: 10.0, luck: 20, basePrice: 320 },
+            rtx2080ti: { name: "RTX 2080 Ti", owned: 0, power: 12.0, luck: 22, basePrice: 400 },
+            rtx3060: { name: "RTX 3060", owned: 0, power: 11.0, luck: 18, basePrice: 300 },
+            rtx3060ti: { name: "RTX 3060 Ti", owned: 0, power: 13.0, luck: 20, basePrice: 350 },
+            rtx3070: { name: "RTX 3070", owned: 0, power: 15.0, luck: 22, basePrice: 420 },
+            rtx3080: { name: "RTX 3080", owned: 0, power: 20.0, luck: 25, basePrice: 550 },
+            rtx3090: { name: "RTX 3090", owned: 0, power: 25.0, luck: 28, basePrice: 700 },
+            asic_s9: { name: "ASIC S9", owned: 0, power: 50.0, luck: 35, basePrice: 1500 }
         };
         
-        const balanceHeader = document.getElementById('balance-header');
-        const priceHeader = document.getElementById('price-header');
-        const totalMinedHeader = document.getElementById('total-mined-header');
-        const mineBtn = document.getElementById('mine-btn');
-        const autoToggle = document.getElementById('auto-toggle');
-        const autoStatus = document.getElementById('auto-status');
-        const miningPowerEl = document.getElementById('mining-power');
-        const miningProgress = document.getElementById('mining-progress');
-        const miningTimer = document.getElementById('mining-timer');
-        const currentPrice = document.getElementById('current-price');
-        const dailyChange = document.getElementById('daily-change');
-        const volatility = document.getElementById('volatility');
-        const marketStatus = document.getElementById('market-status');
-        const marketTrendEl = document.getElementById('market-trend');
-        const marketDemand = document.getElementById('market-demand');
-        const statusDot = document.getElementById('status-dot');
-        const statusText = document.getElementById('status-text');
-        const crashAlert = document.getElementById('crash-alert');
-        const boomAlert = document.getElementById('boom-alert');
-        const marketEvent = document.getElementById('market-event');
-        const cardsGrid = document.getElementById('cards-grid');
-        const catalogGrid = document.getElementById('catalog-grid');
-        const cardSearch = document.getElementById('card-search');
-        const eventLog = document.getElementById('event-log');
+        // Мобильные элементы
+        const mobileBalance = document.getElementById('mobile-balance');
+        const mobilePrice = document.getElementById('mobile-price');
+        const mobileMineBtn = document.getElementById('mobile-mine-btn');
+        const mobileAutoBtn = document.getElementById('mobile-auto-btn');
+        const mobilePower = document.getElementById('mobile-power');
+        const mobileProgress = document.getElementById('mobile-progress');
+        const mobileTimer = document.getElementById('mobile-timer');
+        const mobileCurrentPrice = document.getElementById('mobile-current-price');
+        const mobileDailyChange = document.getElementById('mobile-daily-change');
+        const mobileTrend = document.getElementById('mobile-trend');
+        const mobileCrashAlert = document.getElementById('mobile-crash-alert');
+        const mobileBoomAlert = document.getElementById('mobile-boom-alert');
+        const mobileCardsContainer = document.getElementById('mobile-cards-container');
+        const mobileEventLog = document.getElementById('mobile-event-log');
+        const mobileCardSearch = document.getElementById('mobile-card-search');
+        const searchBox = document.getElementById('search-box');
         
-        let priceChart;
-        const chartCtx = document.getElementById('price-chart').getContext('2d');
+        // Десктоп элементы
+        const desktopBalance = document.getElementById('desktop-balance');
+        const desktopPrice = document.getElementById('desktop-price');
+        const desktopTotal = document.getElementById('desktop-total');
+        const desktopMineBtn = document.getElementById('desktop-mine-btn');
+        const desktopAutoBtn = document.getElementById('desktop-auto-btn');
+        const desktopPower = document.getElementById('desktop-power');
+        const desktopProgress = document.getElementById('desktop-progress');
+        const desktopTimer = document.getElementById('desktop-timer');
+        const desktopCurrentPrice = document.getElementById('desktop-current-price');
+        const desktopDailyChange = document.getElementById('desktop-daily-change');
+        const desktopVolatilityValue = document.getElementById('desktop-volatility-value');
+        const desktopMarketCap = document.getElementById('desktop-market-cap');
+        const desktopStatus = document.getElementById('desktop-status');
+        const desktopVolatility = document.getElementById('desktop-volatility');
+        const desktopDemand = document.getElementById('desktop-demand');
+        const desktopStatusDot = document.getElementById('desktop-status-dot');
+        const desktopStatusText = document.getElementById('desktop-status-text');
+        const desktopCrashAlert = document.getElementById('desktop-crash-alert');
+        const desktopBoomAlert = document.getElementById('desktop-boom-alert');
+        const desktopCardsGrid = document.getElementById('desktop-cards-grid');
+        const desktopEventLog = document.getElementById('desktop-event-log');
+        const desktopCardSearch = document.getElementById('desktop-card-search');
+        const desktopCatalog = document.getElementById('desktop-catalog');
         
-        function initPriceChart() {
-            for (let i = 0; i < 50; i++) {
+        let mobileChart, desktopChart;
+        
+        function initCharts() {
+            // Инициализация истории цен
+            for (let i = 0; i < 30; i++) {
                 priceHistory.push({
                     time: i,
-                    price: 50 + (Math.random() - 0.5) * 10
+                    price: 50 + (Math.random() - 0.5) * 20
                 });
             }
             
-            priceChart = new Chart(chartCtx, {
+            // Мобильный график
+            const mobileCtx = document.getElementById('mobile-chart').getContext('2d');
+            mobileChart = new Chart(mobileCtx, {
+                type: 'line',
+                data: {
+                    labels: priceHistory.map(p => p.time),
+                    datasets: [{
+                        data: priceHistory.map(p => p.price),
+                        borderColor: '#4CAF50',
+                        backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                        borderWidth: 1.5,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { display: false },
+                        y: {
+                            display: false,
+                            min: 0,
+                            max: MAX_PRICE
+                        }
+                    }
+                }
+            });
+            
+            // Десктоп график
+            const desktopCtx = document.getElementById('desktop-chart').getContext('2d');
+            desktopChart = new Chart(desktopCtx, {
                 type: 'line',
                 data: {
                     labels: priceHistory.map(p => p.time),
@@ -754,25 +976,19 @@
                         legend: {
                             labels: {
                                 color: '#ccc',
-                                font: {
-                                    size: 12
-                                }
+                                font: { size: 12 }
                             }
                         }
                     },
                     scales: {
-                        x: {
-                            display: false
-                        },
+                        x: { display: false },
                         y: {
-                            grid: {
-                                color: 'rgba(100, 100, 100, 0.2)'
-                            },
+                            min: 0,
+                            max: MAX_PRICE,
+                            grid: { color: 'rgba(100, 100, 100, 0.2)' },
                             ticks: {
                                 color: '#ccc',
-                                callback: function(value) {
-                                    return value.toFixed(0) + ' ₽';
-                                }
+                                callback: value => value + ' ₽'
                             }
                         }
                     }
@@ -783,173 +999,182 @@
         function updateMarket() {
             let trendChange = (Math.random() - 0.5) * 0.03;
             
+            // События краха и бума
             if (marketCrash) {
-                trendChange = -0.05 - Math.random() * 0.1;
+                trendChange = -0.08 - Math.random() * 0.12;
                 crashTimer--;
                 if (crashTimer <= 0) {
                     marketCrash = false;
-                    crashAlert.style.display = 'none';
+                    mobileCrashAlert.style.display = 'none';
+                    desktopCrashAlert.style.display = 'none';
                     addEvent('Крах рынка завершился', 'info');
                 }
-            }
-            
-            if (marketBoom) {
-                trendChange = 0.05 + Math.random() * 0.1;
+            } else if (marketBoom) {
+                trendChange = 0.08 + Math.random() * 0.12;
                 boomTimer--;
                 if (boomTimer <= 0) {
                     marketBoom = false;
-                    boomAlert.style.display = 'none';
+                    mobileBoomAlert.style.display = 'none';
+                    desktopBoomAlert.style.display = 'none';
                     addEvent('Бум рынка завершился', 'info');
                 }
             }
             
-            if (!marketCrash && !marketBoom && Math.random() < 0.005) {
-                marketCrash = true;
-                crashTimer = 10 + Math.floor(Math.random() * 20);
-                crashAlert.style.display = 'block';
-                addEvent('НАЧАЛСЯ КРАХ РЫНКА! Цены стремительно падают!', 'error');
-            }
-            
-            if (!marketCrash && !marketBoom && Math.random() < 0.003) {
-                marketBoom = true;
-                boomTimer = 8 + Math.floor(Math.random() * 15);
-                boomAlert.style.display = 'block';
-                addEvent('НАЧАЛСЯ БУМ РЫНКА! Цены стремительно растут!', 'warning');
+            // Случайные события
+            if (!marketCrash && !marketBoom) {
+                if (Math.random() < 0.004) {
+                    marketCrash = true;
+                    crashTimer = 8 + Math.floor(Math.random() * 15);
+                    mobileCrashAlert.style.display = 'block';
+                    desktopCrashAlert.style.display = 'block';
+                    addEvent('КРАХ РЫНКА! Цены стремительно падают!', 'error');
+                } else if (Math.random() < 0.003) {
+                    marketBoom = true;
+                    boomTimer = 6 + Math.floor(Math.random() * 12);
+                    mobileBoomAlert.style.display = 'block';
+                    desktopBoomAlert.style.display = 'block';
+                    addEvent('БУМ РЫНКА! Цены стремительно растут!', 'warning');
+                }
             }
             
             marketTrend += trendChange;
             marketTrend = Math.max(-1, Math.min(1, marketTrend));
             marketVolatility = 0.3 + Math.abs(marketTrend) * 0.4 + Math.random() * 0.3;
             
-            let priceChange = marketTrend * 0.02;
-            priceChange += (Math.random() - 0.5) * marketVolatility * 0.03;
+            let priceChange = marketTrend * 0.015;
+            priceChange += (Math.random() - 0.5) * marketVolatility * 0.025;
             
-            if (marketCrash) priceChange = Math.min(priceChange, -0.08);
-            if (marketBoom) priceChange = Math.max(priceChange, 0.08);
+            if (marketCrash) priceChange = Math.min(priceChange, -0.1);
+            if (marketBoom) priceChange = Math.max(priceChange, 0.1);
             
             const oldPrice = farmcoinPrice;
             farmcoinPrice += farmcoinPrice * priceChange;
-            farmcoinPrice = Math.max(1, farmcoinPrice);
             
+            // Ограничение цены от 5 до 150 рублей
+            farmcoinPrice = Math.max(MIN_PRICE, Math.min(MAX_PRICE, farmcoinPrice));
+            
+            // Динамические цены на видеокарты
             for (let card in graphicsCards) {
-                if (Math.random() < 0.1) {
-                    const change = (Math.random() - 0.5) * 0.4;
+                if (Math.random() < 0.08) {
+                    const change = (Math.random() - 0.5) * 0.3;
                     graphicsCards[card].basePrice = Math.max(5, graphicsCards[card].basePrice * (1 + change));
                 }
             }
             
+            // Обновление истории цен
             priceHistory.push({
                 time: priceHistory.length,
                 price: farmcoinPrice
             });
             
-            if (priceHistory.length > 100) {
+            if (priceHistory.length > 50) {
                 priceHistory.shift();
             }
             
-            if (priceChart) {
-                priceChart.data.labels = priceHistory.map(p => p.time);
-                priceChart.data.datasets[0].data = priceHistory.map(p => p.price);
-                priceChart.update();
+            // Обновление графиков
+            if (mobileChart) {
+                mobileChart.data.labels = priceHistory.map(p => p.time);
+                mobileChart.data.datasets[0].data = priceHistory.map(p => p.price);
+                mobileChart.update();
+            }
+            
+            if (desktopChart) {
+                desktopChart.data.labels = priceHistory.map(p => p.time);
+                desktopChart.data.datasets[0].data = priceHistory.map(p => p.price);
+                desktopChart.update();
             }
             
             updateMarketUI(oldPrice);
-            updateCatalog();
-            updateOwnedCards();
+            updateCardsDisplay();
             saveGame();
         }
         
         function updateMarketUI(oldPrice) {
             const changePercent = ((farmcoinPrice - oldPrice) / oldPrice) * 100;
+            const marketCap = farmcoinPrice * totalMined * 100;
             
-            balanceHeader.textContent = farmcoinBalance.toFixed(6) + ' FARM';
-            priceHeader.textContent = farmcoinPrice.toFixed(2) + ' ₽';
-            totalMinedHeader.textContent = totalMined.toFixed(4) + ' FARM';
-            currentPrice.textContent = farmcoinPrice.toFixed(2) + ' ₽';
+            // Мобильное обновление
+            mobileBalance.textContent = farmcoinBalance.toFixed(6);
+            mobilePrice.textContent = farmcoinPrice.toFixed(2);
+            mobileCurrentPrice.textContent = farmcoinPrice.toFixed(2) + ' ₽';
+            mobileDailyChange.textContent = (changePercent >= 0 ? '+' : '') + changePercent.toFixed(1) + '%';
+            mobileDailyChange.className = 'market-value ' + (changePercent >= 0 ? 'market-up' : 'market-down');
             
-            dailyChange.textContent = (changePercent >= 0 ? '+' : '') + changePercent.toFixed(2) + '%';
-            dailyChange.className = 'market-value ' + (changePercent >= 0 ? 'market-up' : 'market-down');
+            let trendText;
+            if (marketTrend > 0.2) trendText = 'Рост';
+            else if (marketTrend < -0.2) trendText = 'Падение';
+            else trendText = 'Нейтр.';
+            mobileTrend.textContent = trendText;
             
-            let volatilityText;
-            if (marketVolatility < 0.4) {
-                volatilityText = 'Низкая';
-                volatility.style.color = '#4CAF50';
-            } else if (marketVolatility < 0.7) {
-                volatilityText = 'Средняя';
-                volatility.style.color = '#FF9800';
-            } else {
-                volatilityText = 'Высокая';
-                volatility.style.color = '#f44336';
-            }
-            volatility.textContent = volatilityText;
+            // Десктоп обновление
+            desktopBalance.textContent = farmcoinBalance.toFixed(6) + ' FARM';
+            desktopPrice.textContent = farmcoinPrice.toFixed(2) + ' ₽';
+            desktopTotal.textContent = totalMined.toFixed(4) + ' FARM';
+            desktopCurrentPrice.textContent = farmcoinPrice.toFixed(2) + ' ₽';
+            desktopDailyChange.textContent = (changePercent >= 0 ? '+' : '') + changePercent.toFixed(2) + '%';
+            desktopDailyChange.className = 'desktop-market-value ' + (changePercent >= 0 ? 'market-up' : 'market-down');
+            desktopMarketCap.textContent = marketCap.toFixed(2) + ' ₽';
+            
+            // Статус рынка
+            let statusText, volatilityText, demandText;
             
             if (marketCrash) {
-                marketStatus.textContent = 'КРАХ';
-                marketStatus.style.color = '#f44336';
-                marketTrendEl.textContent = 'Падение';
-                marketTrendEl.style.color = '#f44336';
-                statusDot.className = 'status-dot crash';
-                statusText.textContent = 'Критическое падение цен';
-                statusText.style.color = '#f44336';
-                
-                marketEvent.style.display = 'block';
-                marketEvent.innerHTML = `<i class="fa fa-exclamation-triangle"></i> Крах рынка! Цены падают на ${Math.abs(changePercent).toFixed(1)}%`;
-                marketEvent.style.borderColor = '#f44336';
+                statusText = 'КРАХ';
+                desktopStatus.style.color = '#f44336';
+                volatilityText = 'Критическая';
+                desktopVolatility.style.color = '#f44336';
+                demandText = 'Нулевой';
+                desktopDemand.style.color = '#f44336';
+                desktopStatusDot.className = 'status-dot crash';
+                desktopStatusText.textContent = 'Критическое падение';
+                desktopStatusText.style.color = '#f44336';
             } else if (marketBoom) {
-                marketStatus.textContent = 'БУМ';
-                marketStatus.style.color = '#FFD700';
-                marketTrendEl.textContent = 'Рост';
-                marketTrendEl.style.color = '#FFD700';
-                statusDot.className = 'status-dot boom';
-                statusText.textContent = 'Стремительный рост цен';
-                statusText.style.color = '#FFD700';
-                
-                marketEvent.style.display = 'block';
-                marketEvent.innerHTML = `<i class="fa fa-rocket"></i> Бум рынка! Цены растут на ${changePercent.toFixed(1)}%`;
-                marketEvent.style.borderColor = '#FFD700';
+                statusText = 'БУМ';
+                desktopStatus.style.color = '#FFD700';
+                volatilityText = 'Экстремальная';
+                desktopVolatility.style.color = '#FFD700';
+                demandText = 'Максимальный';
+                desktopDemand.style.color = '#FFD700';
+                desktopStatusDot.className = 'status-dot boom';
+                desktopStatusText.textContent = 'Стремительный рост';
+                desktopStatusText.style.color = '#FFD700';
             } else {
-                let statusTextValue;
                 if (marketTrend > 0.2) {
-                    marketStatus.textContent = 'Рост';
-                    marketStatus.style.color = '#4CAF50';
-                    marketTrendEl.textContent = 'Восходящий';
-                    marketTrendEl.style.color = '#4CAF50';
-                    statusTextValue = 'Умеренный рост';
-                    statusText.style.color = '#4CAF50';
+                    statusText = 'Рост';
+                    desktopStatus.style.color = '#4CAF50';
+                    volatilityText = 'Высокая';
+                    desktopVolatility.style.color = '#FF9800';
+                    demandText = 'Сильный';
+                    desktopDemand.style.color = '#4CAF50';
+                    desktopStatusDot.className = 'status-dot';
+                    desktopStatusText.textContent = 'Умеренный рост';
+                    desktopStatusText.style.color = '#4CAF50';
                 } else if (marketTrend < -0.2) {
-                    marketStatus.textContent = 'Спад';
-                    marketStatus.style.color = '#FF9800';
-                    marketTrendEl.textContent = 'Нисходящий';
-                    marketTrendEl.style.color = '#FF9800';
-                    statusTextValue = 'Умеренный спад';
-                    statusText.style.color = '#FF9800';
+                    statusText = 'Спад';
+                    desktopStatus.style.color = '#FF9800';
+                    volatilityText = 'Высокая';
+                    desktopVolatility.style.color = '#FF9800';
+                    demandText = 'Слабый';
+                    desktopDemand.style.color = '#f44336';
+                    desktopStatusDot.className = 'status-dot';
+                    desktopStatusText.textContent = 'Умеренный спад';
+                    desktopStatusText.style.color = '#FF9800';
                 } else {
-                    marketStatus.textContent = 'Стабильное';
-                    marketStatus.style.color = '#2196F3';
-                    marketTrendEl.textContent = 'Нейтральный';
-                    marketTrendEl.style.color = '#2196F3';
-                    statusTextValue = 'Рынок стабилен';
-                    statusText.style.color = '#2196F3';
+                    statusText = 'Стабильное';
+                    desktopStatus.style.color = '#2196F3';
+                    volatilityText = 'Средняя';
+                    desktopVolatility.style.color = '#2196F3';
+                    demandText = 'Умеренный';
+                    desktopDemand.style.color = '#2196F3';
+                    desktopStatusDot.className = 'status-dot';
+                    desktopStatusText.textContent = 'Рынок стабилен';
+                    desktopStatusText.style.color = '#2196F3';
                 }
-                
-                statusDot.className = 'status-dot';
-                statusText.textContent = statusTextValue;
-                marketEvent.style.display = 'none';
             }
             
-            let demandText;
-            const demandValue = Math.abs(marketTrend) * (1 + marketVolatility);
-            if (demandValue < 0.3) {
-                demandText = 'Слабый';
-                marketDemand.style.color = '#f44336';
-            } else if (demandValue < 0.6) {
-                demandText = 'Умеренный';
-                marketDemand.style.color = '#FF9800';
-            } else {
-                demandText = 'Сильный';
-                marketDemand.style.color = '#4CAF50';
-            }
-            marketDemand.textContent = demandText;
+            desktopStatus.textContent = statusText;
+            desktopVolatilityValue.textContent = volatilityText;
+            desktopVolatilityValue.style.color = desktopVolatility.style.color;
         }
         
         function calculateMiningPower() {
@@ -958,7 +1183,8 @@
                 totalPower += graphicsCards[card].owned * graphicsCards[card].power;
             }
             miningPower = totalPower;
-            miningPowerEl.textContent = miningPower.toFixed(1) + ' MH/s';
+            mobilePower.textContent = miningPower.toFixed(1) + ' MH/s';
+            desktopPower.textContent = miningPower.toFixed(1) + ' MH/s';
         }
         
         function calculateMiningLuck() {
@@ -974,13 +1200,13 @@
             let price = card.basePrice;
             
             if (marketCrash) {
-                price *= 0.7;
+                price *= 0.6;
             } else if (marketBoom) {
-                price *= 1.5;
+                price *= 1.6;
             } else if (marketTrend > 0.3) {
-                price *= 1.2;
+                price *= 1.3;
             } else if (marketTrend < -0.3) {
-                price *= 0.8;
+                price *= 0.7;
             }
             
             return Math.max(price, 5);
@@ -994,14 +1220,18 @@
             if (miningActive) return;
             
             miningActive = true;
-            mineBtn.innerHTML = '<i class="fa fa-pause"></i> Пауза майнинга';
-            mineBtn.style.background = 'linear-gradient(to bottom, #f44336, #d32f2f)';
+            mobileMineBtn.innerHTML = '<i class="fa fa-pause"></i> Пауза';
+            desktopMineBtn.innerHTML = '<i class="fa fa-pause"></i> Пауза майнинга';
+            mobileMineBtn.style.background = 'linear-gradient(to bottom, #f44336, #d32f2f)';
+            desktopMineBtn.style.background = 'linear-gradient(to bottom, #f44336, #d32f2f)';
             
             miningInterval = setInterval(() => {
                 miningTime += 0.1;
                 const progressPercent = (miningTime / miningCycleTime) * 100;
-                miningProgress.style.width = `${Math.min(progressPercent, 100)}%`;
-                miningTimer.textContent = (miningCycleTime - miningTime).toFixed(1);
+                mobileProgress.style.width = `${Math.min(progressPercent, 100)}%`;
+                desktopProgress.style.width = `${Math.min(progressPercent, 100)}%`;
+                mobileTimer.textContent = (miningCycleTime - miningTime).toFixed(1);
+                desktopTimer.textContent = (miningCycleTime - miningTime).toFixed(1);
                 
                 if (miningTime >= miningCycleTime) {
                     attemptMine();
@@ -1016,8 +1246,10 @@
             if (!miningActive) return;
             
             miningActive = false;
-            mineBtn.innerHTML = '<i class="fa fa-play"></i> Старт майнинга';
-            mineBtn.style.background = 'linear-gradient(to bottom, #4CAF50, #2E7D32)';
+            mobileMineBtn.innerHTML = '<i class="fa fa-play"></i> Старт';
+            desktopMineBtn.innerHTML = '<i class="fa fa-play"></i> Старт майнинга';
+            mobileMineBtn.style.background = 'linear-gradient(to bottom, #4CAF50, #2E7D32)';
+            desktopMineBtn.style.background = 'linear-gradient(to bottom, #4CAF50, #2E7D32)';
             clearInterval(miningInterval);
             saveGame();
         }
@@ -1029,20 +1261,20 @@
             const marketEffect = 1 + (marketTrend * 0.3);
             totalChance *= marketEffect;
             
-            if (marketCrash) totalChance *= 0.7;
-            if (marketBoom) totalChance *= 1.2;
+            if (marketCrash) totalChance *= 0.6;
+            if (marketBoom) totalChance *= 1.3;
             
             const isSuccess = Math.random() < totalChance;
             
             if (isSuccess) {
                 const baseReward = 0.001;
-                const powerBonus = miningPower * 0.0005;
-                const randomBonus = Math.random() * 0.001;
+                const powerBonus = miningPower * 0.0003;
+                const randomBonus = Math.random() * 0.0005;
                 
                 let minedAmount = baseReward + powerBonus + randomBonus;
                 
-                if (marketCrash) minedAmount *= 0.5;
-                if (marketBoom) minedAmount *= 2.0;
+                if (marketCrash) minedAmount *= 0.4;
+                if (marketBoom) minedAmount *= 1.8;
                 
                 farmcoinBalance += minedAmount;
                 totalMined += minedAmount;
@@ -1057,17 +1289,149 @@
         }
         
         function updateUI() {
-            balanceHeader.textContent = farmcoinBalance.toFixed(6) + ' FARM';
-            totalMinedHeader.textContent = totalMined.toFixed(4) + ' FARM';
             calculateMiningPower();
             calculateMiningLuck();
-            updateCatalog();
-            updateOwnedCards();
+            updateCardsDisplay();
         }
         
-        function updateCatalog() {
-            catalogGrid.innerHTML = '';
-            const searchTerm = cardSearch.value.toLowerCase();
+        function updateCardsDisplay() {
+            // Мобильные карты
+            if (currentTab === 'owned') {
+                updateMobileOwnedCards();
+            } else {
+                updateMobileCatalog();
+            }
+            
+            // Десктоп карты
+            updateDesktopOwnedCards();
+            updateDesktopCatalog();
+        }
+        
+        function updateMobileOwnedCards() {
+            mobileCardsContainer.innerHTML = '';
+            searchBox.style.display = 'none';
+            
+            let hasCards = false;
+            for (let cardId in graphicsCards) {
+                const card = graphicsCards[cardId];
+                if (card.owned > 0) {
+                    hasCards = true;
+                    const price = getCardPrice(cardId);
+                    const cardElement = document.createElement('div');
+                    cardElement.className = 'card-item owned fade-in';
+                    cardElement.innerHTML = `
+                        <div class="card-header">
+                            <div class="card-name">${card.name}</div>
+                            <div style="color: #4CAF50; font-size: 11px;">x${card.owned}</div>
+                        </div>
+                        <div class="card-specs">
+                            ${card.power} MH/s | +${card.luck}% удачи
+                        </div>
+                        <button class="buy-btn" onclick="buyCard('${cardId}')" 
+                                ${farmcoinBalance >= price ? '' : 'disabled'}>
+                            Купить еще (${price.toFixed(1)} FARM)
+                        </button>
+                    `;
+                    mobileCardsContainer.appendChild(cardElement);
+                }
+            }
+            
+            if (!hasCards) {
+                mobileCardsContainer.innerHTML = `
+                    <div style="text-align: center; color: #888; padding: 20px; font-size: 12px;">
+                        У вас нет видеокарт.<br>
+                        Перейдите в каталог для покупки.
+                    </div>
+                `;
+            }
+        }
+        
+        function updateMobileCatalog() {
+            mobileCardsContainer.innerHTML = '';
+            searchBox.style.display = 'block';
+            
+            const searchTerm = mobileCardSearch.value.toLowerCase();
+            let cardsFound = false;
+            
+            for (let cardId in graphicsCards) {
+                const card = graphicsCards[cardId];
+                
+                if (searchTerm && !card.name.toLowerCase().includes(searchTerm)) {
+                    continue;
+                }
+                
+                cardsFound = true;
+                const price = getCardPrice(cardId);
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card-item fade-in';
+                cardElement.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-name">${card.name}</div>
+                        <div class="card-price">${price.toFixed(1)} FARM</div>
+                    </div>
+                    <div class="card-specs">
+                        ${card.power} MH/s | +${card.luck}% удачи
+                    </div>
+                    <button class="buy-btn" onclick="buyCard('${cardId}')" 
+                            ${farmcoinBalance >= price ? '' : 'disabled'}>
+                        Купить
+                    </button>
+                `;
+                mobileCardsContainer.appendChild(cardElement);
+            }
+            
+            if (!cardsFound) {
+                mobileCardsContainer.innerHTML = `
+                    <div style="text-align: center; color: #888; padding: 20px; font-size: 12px;">
+                        Видеокарты не найдены
+                    </div>
+                `;
+            }
+        }
+        
+        function updateDesktopOwnedCards() {
+            desktopCardsGrid.innerHTML = '';
+            
+            let hasCards = false;
+            for (let cardId in graphicsCards) {
+                const card = graphicsCards[cardId];
+                if (card.owned > 0) {
+                    hasCards = true;
+                    const price = getCardPrice(cardId);
+                    const cardElement = document.createElement('div');
+                    cardElement.className = 'card-item owned fade-in';
+                    cardElement.innerHTML = `
+                        <div class="card-header">
+                            <div class="card-name">${card.name}</div>
+                            <div style="color: #4CAF50; font-size: 12px;">x${card.owned}</div>
+                        </div>
+                        <div class="card-specs">
+                            Мощность: ${card.power} MH/s<br>
+                            Удача: +${card.luck}%
+                        </div>
+                        <button class="buy-btn" onclick="buyCard('${cardId}')" 
+                                ${farmcoinBalance >= price ? '' : 'disabled'}
+                                style="font-size: 11px; padding: 6px;">
+                            Купить еще (${price.toFixed(1)} FARM)
+                        </button>
+                    `;
+                    desktopCardsGrid.appendChild(cardElement);
+                }
+            }
+            
+            if (!hasCards) {
+                desktopCardsGrid.innerHTML = `
+                    <div style="text-align: center; color: #888; padding: 30px; font-size: 13px; grid-column: 1 / -1;">
+                        У вас нет видеокарт.<br>
+                        Купите их в каталоге справа.
+                    </div>
+                `;
+            }
+        }
+        
+        function updateDesktopCatalog() {
+            desktopCatalog.innerHTML = '';
+            const searchTerm = desktopCardSearch.value.toLowerCase();
             
             for (let cardId in graphicsCards) {
                 const card = graphicsCards[cardId];
@@ -1078,53 +1442,41 @@
                 
                 const price = getCardPrice(cardId);
                 const cardElement = document.createElement('div');
-                cardElement.className = 'catalog-item';
+                cardElement.className = 'card-item fade-in';
                 cardElement.innerHTML = `
-                    <div class="catalog-name">${card.name}</div>
-                    <div class="catalog-price">Цена: ${price.toFixed(2)} FARM</div>
-                    <div class="catalog-power">Мощность: ${card.power} MH/s</div>
-                    <div class="catalog-luck">Удача: +${card.luck}%</div>
+                    <div class="card-header">
+                        <div class="card-name">${card.name}</div>
+                        <div class="card-price">${price.toFixed(1)} FARM</div>
+                    </div>
+                    <div class="card-specs">
+                        Мощность: ${card.power} MH/s<br>
+                        Удача: +${card.luck}%
+                    </div>
                     <button class="buy-btn" onclick="buyCard('${cardId}')" 
-                            ${farmcoinBalance >= price ? '' : 'disabled'}>
+                            ${farmcoinBalance >= price ? '' : 'disabled'}
+                            style="font-size: 11px; padding: 6px;">
                         Купить
                     </button>
                 `;
-                catalogGrid.appendChild(cardElement);
+                desktopCatalog.appendChild(cardElement);
             }
         }
         
-        function updateOwnedCards() {
-            cardsGrid.innerHTML = '';
+        function switchTab(tab) {
+            currentTab = tab;
+            document.getElementById('tab-owned').classList.remove('active');
+            document.getElementById('tab-catalog').classList.remove('active');
+            document.getElementById(`tab-${tab}`).classList.add('active');
             
-            let hasCards = false;
-            for (let cardId in graphicsCards) {
-                const card = graphicsCards[cardId];
-                if (card.owned > 0) {
-                    hasCards = true;
-                    const cardElement = document.createElement('div');
-                    cardElement.className = 'card-item owned';
-                    cardElement.innerHTML = `
-                        <div class="card-header">
-                            <div class="card-name">${card.name}</div>
-                            <div class="card-owned-count">x${card.owned}</div>
-                        </div>
-                        <div class="card-specs">
-                            Мощность: ${card.power} MH/s | Удача: +${card.luck}%
-                        </div>
-                        <div class="card-actions">
-                            <button class="buy-btn" onclick="buyCard('${cardId}')" 
-                                    ${farmcoinBalance >= getCardPrice(cardId) ? '' : 'disabled'}>
-                                Купить еще
-                            </button>
-                        </div>
-                    `;
-                    cardsGrid.appendChild(cardElement);
-                }
-            }
-            
-            if (!hasCards) {
-                cardsGrid.innerHTML = '<div style="text-align: center; color: #888; padding: 20px;">У вас нет видеокарт. Купите их в каталоге слева.</div>';
-            }
+            updateSwipeDots(tab === 'owned' ? 0 : 1);
+            updateCardsDisplay();
+        }
+        
+        function updateSwipeDots(index) {
+            document.getElementById('dot1').classList.remove('active');
+            document.getElementById('dot2').classList.remove('active');
+            document.getElementById('dot3').classList.remove('active');
+            document.getElementById(`dot${index + 1}`).classList.add('active');
         }
         
         function buyCard(cardId) {
@@ -1138,25 +1490,29 @@
                 updateUI();
                 saveGame();
             } else {
-                addEvent(`Недостаточно FARM для покупки ${graphicsCards[cardId].name}`, 'error');
+                addEvent(`Недостаточно FARM для ${graphicsCards[cardId].name}`, 'error');
             }
         }
         
         function addEvent(message, type) {
             const now = new Date();
-            const timeString = `[${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}]`;
+            const timeString = window.innerWidth < 768 
+                ? `[${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}]`
+                : `[${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}]`;
             
             const eventItem = document.createElement('div');
-            eventItem.className = 'event-item';
+            eventItem.className = 'event-item fade-in';
             eventItem.innerHTML = `
                 <span class="event-time">${timeString}</span>
                 <span class="event-message ${type}">${message}</span>
             `;
             
-            eventLog.prepend(eventItem);
+            mobileEventLog.prepend(eventItem);
+            desktopEventLog.prepend(eventItem);
             
-            if (eventLog.children.length > 50) {
-                eventLog.removeChild(eventLog.lastChild);
+            if (mobileEventLog.children.length > 20) {
+                mobileEventLog.removeChild(mobileEventLog.lastChild);
+                desktopEventLog.removeChild(desktopEventLog.lastChild);
             }
         }
         
@@ -1164,15 +1520,13 @@
             autoMining = !autoMining;
             
             if (autoMining) {
-                autoToggle.classList.add('active');
-                autoStatus.textContent = 'ВКЛ';
-                autoStatus.style.color = '#4CAF50';
+                mobileAutoBtn.classList.add('active');
+                desktopAutoBtn.classList.add('active');
                 startMining();
                 addEvent('Автоматический майнинг включен', 'info');
             } else {
-                autoToggle.classList.remove('active');
-                autoStatus.textContent = 'ВЫКЛ';
-                autoStatus.style.color = '#888';
+                mobileAutoBtn.classList.remove('active');
+                desktopAutoBtn.classList.remove('active');
                 if (miningActive) stopMining();
                 addEvent('Автоматический майнинг выключен', 'info');
             }
@@ -1200,14 +1554,14 @@
             };
             
             try {
-                localStorage.setItem('farmcoinSimulator2016', JSON.stringify(gameState));
+                localStorage.setItem('farmcoinMobileSimulator', JSON.stringify(gameState));
             } catch (e) {
                 console.error('Ошибка сохранения:', e);
             }
         }
         
         function loadGame() {
-            const saved = localStorage.getItem('farmcoinSimulator2016');
+            const saved = localStorage.getItem('farmcoinMobileSimulator');
             if (saved) {
                 try {
                     const gameState = JSON.parse(saved);
@@ -1237,36 +1591,40 @@
                     }
                     
                     if (priceHistory.length === 0) {
-                        for (let i = 0; i < 50; i++) {
+                        for (let i = 0; i < 30; i++) {
                             priceHistory.push({
                                 time: i,
-                                price: 50 + (Math.random() - 0.5) * 10
+                                price: 50 + (Math.random() - 0.5) * 20
                             });
                         }
                     }
                     
                     if (autoMining) {
-                        autoToggle.classList.add('active');
-                        autoStatus.textContent = 'ВКЛ';
-                        autoStatus.style.color = '#4CAF50';
+                        mobileAutoBtn.classList.add('active');
+                        desktopAutoBtn.classList.add('active');
                         if (!miningActive) startMining();
                     }
                     
                     if (miningActive) {
-                        mineBtn.innerHTML = '<i class="fa fa-pause"></i> Пауза майнинга';
-                        mineBtn.style.background = 'linear-gradient(to bottom, #f44336, #d32f2f)';
+                        mobileMineBtn.innerHTML = '<i class="fa fa-pause"></i> Пауза';
+                        desktopMineBtn.innerHTML = '<i class="fa fa-pause"></i> Пауза майнинга';
+                        mobileMineBtn.style.background = 'linear-gradient(to bottom, #f44336, #d32f2f)';
+                        desktopMineBtn.style.background = 'linear-gradient(to bottom, #f44336, #d32f2f)';
                     }
                     
                     if (marketCrash) {
-                        crashAlert.style.display = 'block';
+                        mobileCrashAlert.style.display = 'block';
+                        desktopCrashAlert.style.display = 'block';
                     }
                     
                     if (marketBoom) {
-                        boomAlert.style.display = 'block';
+                        mobileBoomAlert.style.display = 'block';
+                        desktopBoomAlert.style.display = 'block';
                     }
                     
                     updateUI();
-                    addEvent('Игра загружена из сохранения', 'info');
+                    updateMarketUI(farmcoinPrice);
+                    addEvent('Игра загружена', 'info');
                 } catch (e) {
                     console.error('Ошибка загрузки:', e);
                     addEvent('Ошибка загрузки сохранения', 'error');
@@ -1275,7 +1633,7 @@
         }
         
         function init() {
-            mineBtn.addEventListener('click', () => {
+            mobileMineBtn.addEventListener('click', () => {
                 if (miningActive) {
                     stopMining();
                 } else {
@@ -1283,26 +1641,71 @@
                 }
             });
             
-            autoToggle.addEventListener('click', toggleAutoMining);
-            cardSearch.addEventListener('input', updateCatalog);
+            desktopMineBtn.addEventListener('click', () => {
+                if (miningActive) {
+                    stopMining();
+                } else {
+                    startMining();
+                }
+            });
             
-            initPriceChart();
+            mobileAutoBtn.addEventListener('click', toggleAutoMining);
+            desktopAutoBtn.addEventListener('click', toggleAutoMining);
+            
+            mobileCardSearch.addEventListener('input', updateMobileCatalog);
+            desktopCardSearch.addEventListener('input', updateDesktopCatalog);
+            
+            // Свайп навигация для мобилок
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            document.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            
+            document.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+            
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                const diff = touchStartX - touchEndX;
+                
+                if (Math.abs(diff) > swipeThreshold) {
+                    if (diff > 0) {
+                        // Свайп влево
+                        if (currentTab === 'owned') {
+                            switchTab('catalog');
+                        }
+                    } else {
+                        // Свайп вправо
+                        if (currentTab === 'catalog') {
+                            switchTab('owned');
+                        }
+                    }
+                }
+            }
+            
+            initCharts();
             loadGame();
             
             setInterval(updateMarket, 3000);
             setInterval(saveGame, 1000);
             
             updateUI();
-            updateCatalog();
+            updateCardsDisplay();
             
-            addEvent('FarmCoin майнинг симулятор запущен', 'info');
-            addEvent('Курс FarmCoin отображается в рублях', 'info');
-            addEvent('Доступно 25 видеокарт для покупки', 'info');
+            addEvent('FarmCoin майнинг запущен', 'info');
+            addEvent('Курс: 5-150 рублей', 'info');
+            addEvent('25 видеокарт доступно', 'info');
             
             window.addEventListener('beforeunload', saveGame);
         }
         
         window.addEventListener('DOMContentLoaded', init);
+        window.switchTab = switchTab;
+        window.buyCard = buyCard;
     </script>
 </body>
 </html>
