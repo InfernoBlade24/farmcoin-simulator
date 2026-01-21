@@ -28,7 +28,6 @@
             padding: 10px;
         }
         
-        /* Мобильный вид по умолчанию */
         .mobile-view {
             display: block;
         }
@@ -37,7 +36,6 @@
             display: none;
         }
         
-        /* Хедер для мобилки */
         .mobile-header {
             background: linear-gradient(to right, #1a1a3a, #2a2a4a);
             padding: 12px 15px;
@@ -75,7 +73,6 @@
             color: #888;
         }
         
-        /* Панели для мобилки */
         .mobile-panel {
             background: #1a1a2a;
             border-radius: 8px;
@@ -95,7 +92,6 @@
             gap: 8px;
         }
         
-        /* Контролы майнинга */
         .mining-controls {
             display: flex;
             gap: 10px;
@@ -130,7 +126,6 @@
             color: #4CAF50;
         }
         
-        /* Статистика мощности */
         .power-info {
             text-align: center;
             margin: 15px 0;
@@ -159,7 +154,6 @@
             transition: width 0.3s;
         }
         
-        /* График рынка */
         .chart-container {
             height: 150px;
             margin: 10px 0;
@@ -169,7 +163,6 @@
             border: 1px solid #333;
         }
         
-        /* Рыночная информация */
         .market-info-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -200,7 +193,6 @@
             color: #f44336;
         }
         
-        /* События рынка */
         .market-alerts {
             margin-top: 10px;
         }
@@ -228,7 +220,18 @@
             display: none;
         }
         
-        /* Каталог видеокарт */
+        .recovery-alert {
+            background: #1a3a2a;
+            border: 1px solid #4CAF50;
+            color: #ccffcc;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            text-align: center;
+            display: none;
+            margin-bottom: 5px;
+        }
+        
         .cards-tabs {
             display: flex;
             background: #222;
@@ -320,7 +323,6 @@
             cursor: not-allowed;
         }
         
-        /* Статус рынка */
         .status-indicator {
             display: flex;
             align-items: center;
@@ -345,13 +347,17 @@
             animation: pulse 1s infinite;
         }
         
+        .status-dot.recovery {
+            background: #4CAF50;
+            animation: pulse 0.7s infinite;
+        }
+        
         @keyframes pulse {
             0% { opacity: 1; }
             50% { opacity: 0.5; }
             100% { opacity: 1; }
         }
         
-        /* Журнал событий */
         .event-log {
             max-height: 200px;
             overflow-y: auto;
@@ -394,7 +400,6 @@
             color: #FF9800;
         }
         
-        /* Поиск карт */
         .search-box {
             margin-bottom: 10px;
         }
@@ -409,7 +414,6 @@
             font-size: 12px;
         }
         
-        /* Десктоп вид для широких экранов */
         @media (min-width: 768px) {
             .mobile-view {
                 display: none;
@@ -538,7 +542,6 @@
             }
         }
         
-        /* Скроллбар */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -557,7 +560,6 @@
             background: #444;
         }
         
-        /* Анимации */
         .fade-in {
             animation: fadeIn 0.3s ease-in;
         }
@@ -567,7 +569,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Свайп навигация для мобилок */
         .swipe-area {
             position: fixed;
             bottom: 20px;
@@ -589,10 +590,19 @@
         .swipe-dot.active {
             background: #4CAF50;
         }
+        
+        .market-event-log {
+            font-size: 11px;
+            color: #aaa;
+            margin-top: 5px;
+            padding: 5px;
+            background: #222;
+            border-radius: 4px;
+            border: 1px solid #333;
+        }
     </style>
 </head>
 <body>
-    <!-- Мобильная версия -->
     <div class="mobile-view">
         <div class="container">
             <div class="mobile-header">
@@ -648,18 +658,25 @@
                         <div class="market-value" id="mobile-daily-change">+0.00%</div>
                     </div>
                     <div class="market-item">
-                        <div>Тренд</div>
-                        <div class="market-value" id="mobile-trend">Нейтр.</div>
+                        <div>Капитализация</div>
+                        <div class="market-value" id="mobile-cap">0 ₽</div>
                     </div>
                 </div>
                 
                 <div class="market-alerts">
                     <div class="crash-alert" id="mobile-crash-alert">
-                        <i class="fa fa-exclamation-triangle"></i> КРАХ!
+                        <i class="fa fa-exclamation-triangle"></i> КРАХ! -70%
                     </div>
                     <div class="boom-alert" id="mobile-boom-alert">
-                        <i class="fa fa-rocket"></i> БУМ!
+                        <i class="fa fa-rocket"></i> БУМ! +100%
                     </div>
+                    <div class="recovery-alert" id="mobile-recovery-alert">
+                        <i class="fa fa-arrow-up"></i> ВОССТАНОВЛЕНИЕ
+                    </div>
+                </div>
+                
+                <div class="market-event-log" id="mobile-market-log">
+                    Рынок стабилен
                 </div>
             </div>
             
@@ -678,7 +695,6 @@
                 </div>
                 
                 <div class="cards-container" id="mobile-cards-container">
-                    <!-- Карты будут загружены через JS -->
                 </div>
             </div>
             
@@ -700,7 +716,6 @@
         </div>
     </div>
     
-    <!-- Десктоп версия -->
     <div class="desktop-view">
         <div class="container">
             <div class="desktop-header">
@@ -746,7 +761,7 @@
                     <div style="background: #222; padding: 10px; border-radius: 6px; font-size: 12px;">
                         <div>Состояние: <span id="desktop-status">Стабильное</span></div>
                         <div>Волатильность: <span id="desktop-volatility">Средняя</span></div>
-                        <div>Спрос: <span id="desktop-demand">Умеренный</span></div>
+                        <div>Капитализация: <span id="desktop-cap-label">0 ₽</span></div>
                         
                         <div class="status-indicator">
                             <div class="status-dot" id="desktop-status-dot"></div>
@@ -771,27 +786,33 @@
                             <div class="desktop-market-value" id="desktop-daily-change">+0.00%</div>
                         </div>
                         <div class="desktop-market-item">
-                            <div>Волатильность</div>
-                            <div class="desktop-market-value" id="desktop-volatility-value">Средняя</div>
-                        </div>
-                        <div class="desktop-market-item">
                             <div>Капитализация</div>
                             <div class="desktop-market-value" id="desktop-market-cap">0 ₽</div>
+                        </div>
+                        <div class="desktop-market-item">
+                            <div>Объем торгов</div>
+                            <div class="desktop-market-value" id="desktop-volume">0 ₽</div>
                         </div>
                     </div>
                     
                     <div class="market-alerts">
                         <div class="crash-alert" id="desktop-crash-alert">
-                            <i class="fa fa-exclamation-triangle"></i> КРАХ РЫНКА! Цены падают!
+                            <i class="fa fa-exclamation-triangle"></i> КРАХ РЫНКА! Капитализация -70%
                         </div>
                         <div class="boom-alert" id="desktop-boom-alert">
-                            <i class="fa fa-rocket"></i> БУМ РЫНКА! Цены взлетают!
+                            <i class="fa fa-rocket"></i> БУМ РЫНКА! Капитализация +100%
                         </div>
+                        <div class="recovery-alert" id="desktop-recovery-alert">
+                            <i class="fa fa-arrow-up"></i> ВОССТАНОВЛЕНИЕ ПОСЛЕ КРАХА
+                        </div>
+                    </div>
+                    
+                    <div class="market-event-log" id="desktop-market-log">
+                        Состояние рынка: стабильное
                     </div>
                     
                     <div class="panel-title"><i class="fa fa-desktop"></i> Ваши видеокарты</div>
                     <div class="desktop-cards-grid" id="desktop-cards-grid">
-                        <!-- Карты будут загружены через JS -->
                     </div>
                 </div>
                 
@@ -802,7 +823,6 @@
                     </div>
                     
                     <div class="catalog-container" id="desktop-catalog">
-                        <!-- Каталог будет загружен через JS -->
                     </div>
                     
                     <div class="panel-title"><i class="fa fa-history"></i> Журнал событий</div>
@@ -825,18 +845,20 @@
         let miningPower = 1.0;
         let miningActive = false;
         let autoMining = false;
-        let farmcoinPrice = 50.0; // Начальная цена 50 рублей
+        let farmcoinPrice = 50.0;
         let priceHistory = [];
         let marketTrend = 0;
         let marketVolatility = 0.5;
         let miningLuck = 50;
         let marketCrash = false;
         let marketBoom = false;
+        let crashRecovery = false;
         let crashTimer = 0;
         let boomTimer = 0;
+        let recoveryTimer = 0;
         let currentTab = 'owned';
+        let tradeVolume = 0;
         
-        // Максимальная цена FarmCoin - 150 рублей
         const MAX_PRICE = 150.0;
         const MIN_PRICE = 5.0;
         
@@ -869,7 +891,6 @@
             asic_s9: { name: "ASIC S9", owned: 0, power: 50.0, luck: 35, basePrice: 1500 }
         };
         
-        // Мобильные элементы
         const mobileBalance = document.getElementById('mobile-balance');
         const mobilePrice = document.getElementById('mobile-price');
         const mobileMineBtn = document.getElementById('mobile-mine-btn');
@@ -879,15 +900,16 @@
         const mobileTimer = document.getElementById('mobile-timer');
         const mobileCurrentPrice = document.getElementById('mobile-current-price');
         const mobileDailyChange = document.getElementById('mobile-daily-change');
-        const mobileTrend = document.getElementById('mobile-trend');
+        const mobileCap = document.getElementById('mobile-cap');
         const mobileCrashAlert = document.getElementById('mobile-crash-alert');
         const mobileBoomAlert = document.getElementById('mobile-boom-alert');
+        const mobileRecoveryAlert = document.getElementById('mobile-recovery-alert');
+        const mobileMarketLog = document.getElementById('mobile-market-log');
         const mobileCardsContainer = document.getElementById('mobile-cards-container');
         const mobileEventLog = document.getElementById('mobile-event-log');
         const mobileCardSearch = document.getElementById('mobile-card-search');
         const searchBox = document.getElementById('search-box');
         
-        // Десктоп элементы
         const desktopBalance = document.getElementById('desktop-balance');
         const desktopPrice = document.getElementById('desktop-price');
         const desktopTotal = document.getElementById('desktop-total');
@@ -898,15 +920,17 @@
         const desktopTimer = document.getElementById('desktop-timer');
         const desktopCurrentPrice = document.getElementById('desktop-current-price');
         const desktopDailyChange = document.getElementById('desktop-daily-change');
-        const desktopVolatilityValue = document.getElementById('desktop-volatility-value');
         const desktopMarketCap = document.getElementById('desktop-market-cap');
+        const desktopVolume = document.getElementById('desktop-volume');
         const desktopStatus = document.getElementById('desktop-status');
         const desktopVolatility = document.getElementById('desktop-volatility');
-        const desktopDemand = document.getElementById('desktop-demand');
+        const desktopCapLabel = document.getElementById('desktop-cap-label');
         const desktopStatusDot = document.getElementById('desktop-status-dot');
         const desktopStatusText = document.getElementById('desktop-status-text');
         const desktopCrashAlert = document.getElementById('desktop-crash-alert');
         const desktopBoomAlert = document.getElementById('desktop-boom-alert');
+        const desktopRecoveryAlert = document.getElementById('desktop-recovery-alert');
+        const desktopMarketLog = document.getElementById('desktop-market-log');
         const desktopCardsGrid = document.getElementById('desktop-cards-grid');
         const desktopEventLog = document.getElementById('desktop-event-log');
         const desktopCardSearch = document.getElementById('desktop-card-search');
@@ -915,7 +939,6 @@
         let mobileChart, desktopChart;
         
         function initCharts() {
-            // Инициализация истории цен
             for (let i = 0; i < 30; i++) {
                 priceHistory.push({
                     time: i,
@@ -923,7 +946,6 @@
                 });
             }
             
-            // Мобильный график
             const mobileCtx = document.getElementById('mobile-chart').getContext('2d');
             mobileChart = new Chart(mobileCtx, {
                 type: 'line',
@@ -946,14 +968,13 @@
                         x: { display: false },
                         y: {
                             display: false,
-                            min: 0,
+                            min: MIN_PRICE,
                             max: MAX_PRICE
                         }
                     }
                 }
             });
             
-            // Десктоп график
             const desktopCtx = document.getElementById('desktop-chart').getContext('2d');
             desktopChart = new Chart(desktopCtx, {
                 type: 'line',
@@ -983,7 +1004,7 @@
                     scales: {
                         x: { display: false },
                         y: {
-                            min: 0,
+                            min: MIN_PRICE,
                             max: MAX_PRICE,
                             grid: { color: 'rgba(100, 100, 100, 0.2)' },
                             ticks: {
@@ -996,18 +1017,40 @@
             });
         }
         
-        function updateMarket() {
-            let trendChange = (Math.random() - 0.5) * 0.03;
+        function calculateMarketCap() {
+            const baseCap = farmcoinPrice * totalMined * 100;
             
-            // События краха и бума
+            let multiplier = 1.0;
+            if (marketCrash) {
+                multiplier = 0.3;
+            } else if (marketBoom) {
+                multiplier = 2.0;
+            } else if (crashRecovery) {
+                multiplier = 0.8 + (recoveryTimer / 10) * 0.4;
+            } else if (marketTrend > 0.3) {
+                multiplier = 1.3;
+            } else if (marketTrend < -0.3) {
+                multiplier = 0.7;
+            }
+            
+            return baseCap * multiplier;
+        }
+        
+        function updateMarket() {
+            let trendChange = (Math.random() - 0.5) * 0.025;
+            
             if (marketCrash) {
                 trendChange = -0.08 - Math.random() * 0.12;
                 crashTimer--;
                 if (crashTimer <= 0) {
                     marketCrash = false;
+                    crashRecovery = true;
+                    recoveryTimer = 10;
                     mobileCrashAlert.style.display = 'none';
                     desktopCrashAlert.style.display = 'none';
-                    addEvent('Крах рынка завершился', 'info');
+                    mobileRecoveryAlert.style.display = 'block';
+                    desktopRecoveryAlert.style.display = 'block';
+                    addEvent('Крах завершен. Начинается восстановление!', 'info');
                 }
             } else if (marketBoom) {
                 trendChange = 0.08 + Math.random() * 0.12;
@@ -1018,22 +1061,34 @@
                     desktopBoomAlert.style.display = 'none';
                     addEvent('Бум рынка завершился', 'info');
                 }
+            } else if (crashRecovery) {
+                trendChange = 0.05 + Math.random() * 0.08;
+                recoveryTimer--;
+                if (recoveryTimer <= 0) {
+                    crashRecovery = false;
+                    mobileRecoveryAlert.style.display = 'none';
+                    desktopRecoveryAlert.style.display = 'none';
+                    addEvent('Восстановление завершено', 'info');
+                }
             }
             
-            // Случайные события
-            if (!marketCrash && !marketBoom) {
-                if (Math.random() < 0.004) {
+            if (!marketCrash && !marketBoom && !crashRecovery) {
+                const eventChance = Math.random();
+                
+                if (eventChance < 0.0035) {
                     marketCrash = true;
-                    crashTimer = 8 + Math.floor(Math.random() * 15);
+                    crashTimer = 8 + Math.floor(Math.random() * 12);
                     mobileCrashAlert.style.display = 'block';
                     desktopCrashAlert.style.display = 'block';
-                    addEvent('КРАХ РЫНКА! Цены стремительно падают!', 'error');
-                } else if (Math.random() < 0.003) {
+                    mobileRecoveryAlert.style.display = 'none';
+                    desktopRecoveryAlert.style.display = 'none';
+                    addEvent('КРАХ РЫНКА! Капитализация падает на 70%!', 'error');
+                } else if (eventChance < 0.007) {
                     marketBoom = true;
-                    boomTimer = 6 + Math.floor(Math.random() * 12);
+                    boomTimer = 7 + Math.floor(Math.random() * 10);
                     mobileBoomAlert.style.display = 'block';
                     desktopBoomAlert.style.display = 'block';
-                    addEvent('БУМ РЫНКА! Цены стремительно растут!', 'warning');
+                    addEvent('БУМ РЫНКА! Капитализация растет на 100%!', 'warning');
                 }
             }
             
@@ -1041,27 +1096,27 @@
             marketTrend = Math.max(-1, Math.min(1, marketTrend));
             marketVolatility = 0.3 + Math.abs(marketTrend) * 0.4 + Math.random() * 0.3;
             
-            let priceChange = marketTrend * 0.015;
-            priceChange += (Math.random() - 0.5) * marketVolatility * 0.025;
+            let priceChange = marketTrend * 0.012;
+            priceChange += (Math.random() - 0.5) * marketVolatility * 0.02;
             
             if (marketCrash) priceChange = Math.min(priceChange, -0.1);
             if (marketBoom) priceChange = Math.max(priceChange, 0.1);
+            if (crashRecovery) priceChange = Math.max(priceChange, 0.05);
             
             const oldPrice = farmcoinPrice;
             farmcoinPrice += farmcoinPrice * priceChange;
             
-            // Ограничение цены от 5 до 150 рублей
             farmcoinPrice = Math.max(MIN_PRICE, Math.min(MAX_PRICE, farmcoinPrice));
             
-            // Динамические цены на видеокарты
             for (let card in graphicsCards) {
-                if (Math.random() < 0.08) {
+                if (Math.random() < 0.1) {
                     const change = (Math.random() - 0.5) * 0.3;
                     graphicsCards[card].basePrice = Math.max(5, graphicsCards[card].basePrice * (1 + change));
                 }
             }
             
-            // Обновление истории цен
+            tradeVolume = Math.abs(priceChange) * (50000 + Math.random() * 100000);
+            
             priceHistory.push({
                 time: priceHistory.length,
                 price: farmcoinPrice
@@ -1071,7 +1126,6 @@
                 priceHistory.shift();
             }
             
-            // Обновление графиков
             if (mobileChart) {
                 mobileChart.data.labels = priceHistory.map(p => p.time);
                 mobileChart.data.datasets[0].data = priceHistory.map(p => p.price);
@@ -1091,90 +1145,90 @@
         
         function updateMarketUI(oldPrice) {
             const changePercent = ((farmcoinPrice - oldPrice) / oldPrice) * 100;
-            const marketCap = farmcoinPrice * totalMined * 100;
+            const marketCap = calculateMarketCap();
             
-            // Мобильное обновление
             mobileBalance.textContent = farmcoinBalance.toFixed(6);
             mobilePrice.textContent = farmcoinPrice.toFixed(2);
             mobileCurrentPrice.textContent = farmcoinPrice.toFixed(2) + ' ₽';
             mobileDailyChange.textContent = (changePercent >= 0 ? '+' : '') + changePercent.toFixed(1) + '%';
             mobileDailyChange.className = 'market-value ' + (changePercent >= 0 ? 'market-up' : 'market-down');
+            mobileCap.textContent = marketCap.toFixed(0) + ' ₽';
             
-            let trendText;
-            if (marketTrend > 0.2) trendText = 'Рост';
-            else if (marketTrend < -0.2) trendText = 'Падение';
-            else trendText = 'Нейтр.';
-            mobileTrend.textContent = trendText;
-            
-            // Десктоп обновление
             desktopBalance.textContent = farmcoinBalance.toFixed(6) + ' FARM';
             desktopPrice.textContent = farmcoinPrice.toFixed(2) + ' ₽';
             desktopTotal.textContent = totalMined.toFixed(4) + ' FARM';
             desktopCurrentPrice.textContent = farmcoinPrice.toFixed(2) + ' ₽';
             desktopDailyChange.textContent = (changePercent >= 0 ? '+' : '') + changePercent.toFixed(2) + '%';
             desktopDailyChange.className = 'desktop-market-value ' + (changePercent >= 0 ? 'market-up' : 'market-down');
-            desktopMarketCap.textContent = marketCap.toFixed(2) + ' ₽';
+            desktopMarketCap.textContent = marketCap.toFixed(0) + ' ₽';
+            desktopVolume.textContent = tradeVolume.toFixed(0) + ' ₽';
+            desktopCapLabel.textContent = marketCap.toFixed(0) + ' ₽';
             
-            // Статус рынка
-            let statusText, volatilityText, demandText;
+            let statusText, volatilityText, marketLogText;
             
             if (marketCrash) {
                 statusText = 'КРАХ';
                 desktopStatus.style.color = '#f44336';
                 volatilityText = 'Критическая';
                 desktopVolatility.style.color = '#f44336';
-                demandText = 'Нулевой';
-                desktopDemand.style.color = '#f44336';
                 desktopStatusDot.className = 'status-dot crash';
-                desktopStatusText.textContent = 'Критическое падение';
+                desktopStatusText.textContent = 'Капитализация -70%';
                 desktopStatusText.style.color = '#f44336';
+                marketLogText = 'Рынок в кризисе. Цены и капитализация падают.';
             } else if (marketBoom) {
                 statusText = 'БУМ';
                 desktopStatus.style.color = '#FFD700';
                 volatilityText = 'Экстремальная';
                 desktopVolatility.style.color = '#FFD700';
-                demandText = 'Максимальный';
-                desktopDemand.style.color = '#FFD700';
                 desktopStatusDot.className = 'status-dot boom';
-                desktopStatusText.textContent = 'Стремительный рост';
+                desktopStatusText.textContent = 'Капитализация +100%';
                 desktopStatusText.style.color = '#FFD700';
+                marketLogText = 'Бум рынка! Цены и капитализация растут.';
+            } else if (crashRecovery) {
+                statusText = 'ВОССТАНОВЛЕНИЕ';
+                desktopStatus.style.color = '#4CAF50';
+                volatilityText = 'Высокая';
+                desktopVolatility.style.color = '#FF9800';
+                desktopStatusDot.className = 'status-dot recovery';
+                desktopStatusText.textContent = 'Рынок восстанавливается';
+                desktopStatusText.style.color = '#4CAF50';
+                marketLogText = 'Рынок восстанавливается после краха.';
             } else {
                 if (marketTrend > 0.2) {
-                    statusText = 'Рост';
+                    statusText = 'РОСТ';
                     desktopStatus.style.color = '#4CAF50';
                     volatilityText = 'Высокая';
                     desktopVolatility.style.color = '#FF9800';
-                    demandText = 'Сильный';
-                    desktopDemand.style.color = '#4CAF50';
                     desktopStatusDot.className = 'status-dot';
-                    desktopStatusText.textContent = 'Умеренный рост';
+                    desktopStatusText.textContent = 'Стабильный рост';
                     desktopStatusText.style.color = '#4CAF50';
+                    marketLogText = 'Рынок демонстрирует рост.';
                 } else if (marketTrend < -0.2) {
-                    statusText = 'Спад';
+                    statusText = 'СПАД';
                     desktopStatus.style.color = '#FF9800';
                     volatilityText = 'Высокая';
                     desktopVolatility.style.color = '#FF9800';
-                    demandText = 'Слабый';
-                    desktopDemand.style.color = '#f44336';
                     desktopStatusDot.className = 'status-dot';
                     desktopStatusText.textContent = 'Умеренный спад';
                     desktopStatusText.style.color = '#FF9800';
+                    marketLogText = 'Рынок в умеренном спаде.';
                 } else {
-                    statusText = 'Стабильное';
+                    statusText = 'СТАБИЛЬНО';
                     desktopStatus.style.color = '#2196F3';
                     volatilityText = 'Средняя';
                     desktopVolatility.style.color = '#2196F3';
-                    demandText = 'Умеренный';
-                    desktopDemand.style.color = '#2196F3';
                     desktopStatusDot.className = 'status-dot';
                     desktopStatusText.textContent = 'Рынок стабилен';
                     desktopStatusText.style.color = '#2196F3';
+                    marketLogText = 'Рынок стабилен, без резких колебаний.';
                 }
             }
             
             desktopStatus.textContent = statusText;
-            desktopVolatilityValue.textContent = volatilityText;
-            desktopVolatilityValue.style.color = desktopVolatility.style.color;
+            desktopVolatility.textContent = volatilityText;
+            
+            mobileMarketLog.textContent = marketLogText;
+            desktopMarketLog.textContent = marketLogText + ' Капитализация: ' + marketCap.toFixed(0) + '₽';
         }
         
         function calculateMiningPower() {
@@ -1263,6 +1317,7 @@
             
             if (marketCrash) totalChance *= 0.6;
             if (marketBoom) totalChance *= 1.3;
+            if (crashRecovery) totalChance *= 1.1;
             
             const isSuccess = Math.random() < totalChance;
             
@@ -1275,6 +1330,7 @@
                 
                 if (marketCrash) minedAmount *= 0.4;
                 if (marketBoom) minedAmount *= 1.8;
+                if (crashRecovery) minedAmount *= 1.2;
                 
                 farmcoinBalance += minedAmount;
                 totalMined += minedAmount;
@@ -1295,14 +1351,12 @@
         }
         
         function updateCardsDisplay() {
-            // Мобильные карты
             if (currentTab === 'owned') {
                 updateMobileOwnedCards();
             } else {
                 updateMobileCatalog();
             }
             
-            // Десктоп карты
             updateDesktopOwnedCards();
             updateDesktopCatalog();
         }
@@ -1549,19 +1603,21 @@
                 priceHistory,
                 marketCrash,
                 marketBoom,
+                crashRecovery,
                 crashTimer,
-                boomTimer
+                boomTimer,
+                recoveryTimer
             };
             
             try {
-                localStorage.setItem('farmcoinMobileSimulator', JSON.stringify(gameState));
+                localStorage.setItem('farmcoinFixedSimulator', JSON.stringify(gameState));
             } catch (e) {
                 console.error('Ошибка сохранения:', e);
             }
         }
         
         function loadGame() {
-            const saved = localStorage.getItem('farmcoinMobileSimulator');
+            const saved = localStorage.getItem('farmcoinFixedSimulator');
             if (saved) {
                 try {
                     const gameState = JSON.parse(saved);
@@ -1578,8 +1634,10 @@
                     priceHistory = gameState.priceHistory || [];
                     marketCrash = gameState.marketCrash || false;
                     marketBoom = gameState.marketBoom || false;
+                    crashRecovery = gameState.crashRecovery || false;
                     crashTimer = gameState.crashTimer || 0;
                     boomTimer = gameState.boomTimer || 0;
+                    recoveryTimer = gameState.recoveryTimer || 0;
                     
                     if (gameState.graphicsCards) {
                         for (let cardId in gameState.graphicsCards) {
@@ -1622,6 +1680,11 @@
                         desktopBoomAlert.style.display = 'block';
                     }
                     
+                    if (crashRecovery) {
+                        mobileRecoveryAlert.style.display = 'block';
+                        desktopRecoveryAlert.style.display = 'block';
+                    }
+                    
                     updateUI();
                     updateMarketUI(farmcoinPrice);
                     addEvent('Игра загружена', 'info');
@@ -1655,7 +1718,6 @@
             mobileCardSearch.addEventListener('input', updateMobileCatalog);
             desktopCardSearch.addEventListener('input', updateDesktopCatalog);
             
-            // Свайп навигация для мобилок
             let touchStartX = 0;
             let touchEndX = 0;
             
@@ -1674,12 +1736,10 @@
                 
                 if (Math.abs(diff) > swipeThreshold) {
                     if (diff > 0) {
-                        // Свайп влево
                         if (currentTab === 'owned') {
                             switchTab('catalog');
                         }
                     } else {
-                        // Свайп вправо
                         if (currentTab === 'catalog') {
                             switchTab('owned');
                         }
@@ -1697,8 +1757,8 @@
             updateCardsDisplay();
             
             addEvent('FarmCoin майнинг запущен', 'info');
-            addEvent('Курс: 5-150 рублей', 'info');
-            addEvent('25 видеокарт доступно', 'info');
+            addEvent('Исправленная версия: капитализация падает при крахе', 'info');
+            addEvent('Бумы и крахи теперь равновероятны', 'info');
             
             window.addEventListener('beforeunload', saveGame);
         }
