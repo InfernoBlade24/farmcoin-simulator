@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FarmCoin Майнинг</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmCoin Pro Майнинг</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         * {
@@ -15,267 +15,272 @@
         }
         
         body {
-            background: #0a0a1a;
-            color: #ccc;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+            color: #e0e0ff;
             min-height: 100vh;
             font-size: 14px;
-            overflow-x: hidden;
         }
         
         .container {
-            max-width: 100%;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 10px;
+            padding: 15px;
         }
         
-        .mobile-view {
-            display: block;
-        }
-        
-        .desktop-view {
-            display: none;
-        }
-        
-        .mobile-header {
-            background: linear-gradient(to right, #1a1a3a, #2a2a4a);
-            padding: 12px 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #333;
+        /* Хедер */
+        header {
+            background: linear-gradient(90deg, #1a1a3a, #2a2a5a);
+            border-radius: 12px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            border: 1px solid #3a3a7a;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
-        .mobile-header h1 {
+        header h1 {
             color: #4CAF50;
-            font-size: 18px;
-            text-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+            font-size: 24px;
+            text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
         }
         
-        .mobile-stats {
+        .header-stats {
             display: flex;
-            gap: 15px;
+            gap: 30px;
         }
         
-        .mobile-stat {
+        .header-stat {
             text-align: center;
         }
         
-        .mobile-stat .value {
-            font-size: 14px;
+        .header-value {
+            font-size: 20px;
             font-weight: bold;
             color: #FFD700;
         }
         
-        .mobile-stat .label {
-            font-size: 10px;
-            color: #888;
+        .header-label {
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 3px;
         }
         
-        .mobile-panel {
-            background: #1a1a2a;
-            border-radius: 8px;
-            border: 1px solid #333;
-            padding: 12px;
-            margin-bottom: 10px;
+        /* Основная сетка */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr 320px;
+            gap: 20px;
+            min-height: calc(100vh - 150px);
         }
         
-        .panel-title {
+        /* Левая панель */
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        /* Центральная панель */
+        .center-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        /* Правая панель */
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        /* Карточки */
+        .card {
+            background: linear-gradient(135deg, #1a1a2a, #2a2a3a);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #3a3a4a;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .card-title {
             color: #4CAF50;
-            border-bottom: 1px solid #333;
-            padding-bottom: 6px;
-            margin-bottom: 10px;
-            font-size: 14px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3a3a4a;
             display: flex;
             align-items: center;
+            gap: 10px;
+        }
+        
+        /* Кнопки */
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             gap: 8px;
         }
         
-        .mining-controls {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .mining-btn {
-            flex: 1;
-            background: linear-gradient(to bottom, #4CAF50, #2E7D32);
+        .btn-primary {
+            background: linear-gradient(90deg, #4CAF50, #2E7D32);
             color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
         }
         
-        .mining-btn:active {
-            transform: scale(0.98);
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #45a049, #1B5E20);
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);
         }
         
-        .auto-btn {
+        .btn-secondary {
             background: #333;
             color: #ccc;
             border: 1px solid #444;
         }
         
-        .auto-btn.active {
-            background: #2a4a2a;
-            border-color: #4CAF50;
-            color: #4CAF50;
+        .btn-secondary:hover {
+            background: #444;
+            box-shadow: 0 0 10px rgba(100,100,100,0.3);
         }
         
-        .power-info {
+        .btn-gold {
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .btn-gold:hover {
+            background: linear-gradient(90deg, #FFC300, #FF8C00);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        }
+        
+        .btn-red {
+            background: linear-gradient(90deg, #f44336, #d32f2f);
+            color: white;
+        }
+        
+        .btn-red:hover {
+            background: linear-gradient(90deg, #e53935, #c62828);
+        }
+        
+        /* Майнинг контролы */
+        .mining-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .power-display {
             text-align: center;
-            margin: 15px 0;
+            padding: 15px;
+            background: #2a2a3a;
+            border-radius: 8px;
+            border: 1px solid #3a3a4a;
         }
         
         .power-value {
-            font-size: 24px;
+            font-size: 32px;
             color: #FFD700;
-            margin: 5px 0;
+            margin: 10px 0;
             font-weight: bold;
         }
         
         .progress-bar {
-            height: 6px;
+            height: 8px;
             background: #333;
-            border-radius: 3px;
-            margin: 10px 0;
+            border-radius: 4px;
+            margin: 15px 0;
             overflow: hidden;
         }
         
         .progress-fill {
             height: 100%;
-            background: linear-gradient(to right, #4CAF50, #8BC34A);
-            border-radius: 3px;
-            width: 0%;
-            transition: width 0.3s;
+            background: linear-gradient(90deg, #4CAF50, #2196F3);
+            border-radius: 4px;
+            transition: width 0.5s;
         }
         
+        /* График */
         .chart-container {
-            height: 150px;
-            margin: 10px 0;
+            height: 250px;
             background: #1a1a2a;
-            border-radius: 6px;
-            padding: 8px;
-            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #3a3a4a;
         }
         
-        .market-info-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            margin-top: 10px;
-        }
-        
-        .market-item {
-            background: #2a2a3a;
-            padding: 8px;
-            border-radius: 4px;
-            text-align: center;
-            border: 1px solid #333;
-            font-size: 12px;
-        }
-        
-        .market-value {
-            font-size: 14px;
-            font-weight: bold;
-            margin-top: 3px;
-        }
-        
-        .market-up {
-            color: #4CAF50;
-        }
-        
-        .market-down {
-            color: #f44336;
-        }
-        
-        .market-alerts {
-            margin-top: 10px;
-        }
-        
-        .crash-alert {
-            background: #4a1a1a;
-            border: 1px solid #f44336;
-            color: #ffcccc;
-            padding: 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            text-align: center;
-            display: none;
-            margin-bottom: 5px;
-        }
-        
-        .boom-alert {
-            background: #4a4a1a;
-            border: 1px solid #FFD700;
-            color: #ffffcc;
-            padding: 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            text-align: center;
-            display: none;
-        }
-        
-        .recovery-alert {
-            background: #1a3a2a;
-            border: 1px solid #4CAF50;
-            color: #ccffcc;
-            padding: 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            text-align: center;
-            display: none;
-            margin-bottom: 5px;
-        }
-        
+        /* Каталог видеокарт */
         .cards-tabs {
             display: flex;
-            background: #222;
-            border-radius: 6px;
-            margin-bottom: 10px;
+            background: #2a2a3a;
+            border-radius: 8px;
             overflow: hidden;
+            margin-bottom: 15px;
         }
         
         .cards-tab {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             text-align: center;
             cursor: pointer;
-            border-bottom: 2px solid transparent;
-            font-size: 12px;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
         }
         
         .cards-tab.active {
+            background: #3a3a4a;
             border-bottom-color: #4CAF50;
-            background: #2a2a3a;
             color: #4CAF50;
         }
         
         .cards-container {
-            max-height: 300px;
+            max-height: 400px;
             overflow-y: auto;
+            padding-right: 5px;
         }
         
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 8px;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
         }
         
         .card-item {
-            background: #222;
-            border: 1px solid #333;
-            border-radius: 6px;
-            padding: 10px;
-            font-size: 11px;
+            background: #2a2a3a;
+            border: 1px solid #3a3a4a;
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s;
+        }
+        
+        .card-item:hover {
+            border-color: #4CAF50;
+            transform: translateY(-3px);
+        }
+        
+        .card-item.golden {
+            background: linear-gradient(135deg, #3a2a00, #5a4a00);
+            border: 2px solid #FFD700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
         }
         
         .card-item.owned {
-            background: #1a2a1a;
+            background: linear-gradient(135deg, #1a3a1a, #2a4a2a);
             border-color: #4CAF50;
         }
         
@@ -283,542 +288,613 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
         
         .card-name {
             color: #FFD700;
             font-weight: bold;
-            font-size: 12px;
+            font-size: 14px;
+        }
+        
+        .card-specs {
+            font-size: 11px;
+            color: #aaa;
+            margin-bottom: 10px;
+            line-height: 1.4;
         }
         
         .card-price {
             color: #4CAF50;
-            font-size: 11px;
-        }
-        
-        .card-specs {
-            font-size: 10px;
-            color: #888;
+            font-size: 13px;
             margin-bottom: 5px;
         }
         
-        .buy-btn {
-            background: #333;
-            color: white;
-            border: none;
-            padding: 5px 8px;
-            border-radius: 3px;
+        .card-tier {
             font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        
+        .tier-budget {
+            background: #666;
+            color: #fff;
+        }
+        
+        .tier-mid {
+            background: #4CAF50;
+            color: #fff;
+        }
+        
+        .tier-high {
+            background: #2196F3;
+            color: #fff;
+        }
+        
+        .tier-premium {
+            background: #9C27B0;
+            color: #fff;
+        }
+        
+        .tier-flagship {
+            background: linear-gradient(90deg, #FF9800, #FF5722);
+            color: #fff;
+        }
+        
+        .tier-asic {
+            background: #607D8B;
+            color: #fff;
+        }
+        
+        /* Модальные окна */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal {
+            background: linear-gradient(135deg, #1a1a2a, #2a2a3a);
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid #3a3a7a;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #3a3a4a;
+        }
+        
+        .modal-title {
+            color: #4CAF50;
+            font-size: 18px;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 24px;
             cursor: pointer;
-            width: 100%;
-        }
-        
-        .buy-btn:active {
-            background: #444;
-        }
-        
-        .buy-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        
-        .status-indicator {
+            padding: 0;
+            width: 30px;
+            height: 30px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-top: 8px;
-        }
-        
-        .status-dot {
-            width: 10px;
-            height: 10px;
+            justify-content: center;
             border-radius: 50%;
-            background: #4CAF50;
         }
         
-        .status-dot.crash {
-            background: #f44336;
-            animation: pulse 1.5s infinite;
+        .close-modal:hover {
+            background: #333;
+            color: white;
         }
         
-        .status-dot.boom {
-            background: #FFD700;
-            animation: pulse 1s infinite;
+        .form-group {
+            margin-bottom: 15px;
         }
         
-        .status-dot.recovery {
-            background: #4CAF50;
-            animation: pulse 0.7s infinite;
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ccc;
         }
         
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-        
-        .event-log {
-            max-height: 200px;
-            overflow-y: auto;
-            background: #1a1a2a;
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            background: #2a2a3a;
+            border: 1px solid #3a3a4a;
             border-radius: 6px;
-            padding: 8px;
-            border: 1px solid #333;
+            color: white;
+            font-size: 14px;
         }
         
-        .event-item {
-            padding: 6px;
-            border-bottom: 1px solid #333;
-            font-size: 11px;
-            color: #aaa;
+        .form-input:focus {
+            outline: none;
+            border-color: #4CAF50;
         }
         
-        .event-item:last-child {
+        /* История */
+        .history-container {
+            max-height: 300px;
+            overflow-y: auto;
+            background: #2a2a3a;
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #3a3a4a;
+        }
+        
+        .history-item {
+            padding: 10px;
+            border-bottom: 1px solid #3a3a4a;
+            font-size: 12px;
+            color: #ccc;
+        }
+        
+        .history-item:last-child {
             border-bottom: none;
         }
         
-        .event-time {
+        .history-time {
             color: #888;
-            font-size: 9px;
-            margin-right: 5px;
+            font-size: 11px;
+            margin-right: 10px;
         }
         
-        .event-message.success {
-            color: #4CAF50;
+        /* История купонов */
+        .coupons-container {
+            max-height: 200px;
+            overflow-y: auto;
+            background: #2a2a3a;
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #3a3a4a;
+            margin-top: 10px;
         }
         
-        .event-message.error {
-            color: #f44336;
+        .coupon-item {
+            padding: 10px;
+            border-bottom: 1px solid #3a3a4a;
+            font-size: 11px;
+            color: #ccc;
         }
         
-        .event-message.info {
-            color: #2196F3;
+        .coupon-item:last-child {
+            border-bottom: none;
         }
         
-        .event-message.warning {
-            color: #FF9800;
+        .coupon-code {
+            color: #FFD700;
+            font-weight: bold;
+            font-family: monospace;
+            margin-bottom: 3px;
         }
         
-        .search-box {
+        .coupon-details {
+            font-size: 10px;
+            color: #888;
+        }
+        
+        /* Алерты */
+        .market-alerts {
+            margin-top: 15px;
+        }
+        
+        .alert {
+            padding: 12px;
+            border-radius: 6px;
             margin-bottom: 10px;
+            font-size: 13px;
+            text-align: center;
+            display: none;
         }
         
-        .search-input {
-            width: 100%;
-            padding: 8px;
-            background: #222;
-            border: 1px solid #333;
-            border-radius: 4px;
-            color: white;
-            font-size: 12px;
+        .alert-crash {
+            background: linear-gradient(90deg, #4a1a1a, #6a2a2a);
+            border: 1px solid #f44336;
+            color: #ffcccc;
         }
         
-        @media (min-width: 768px) {
-            .mobile-view {
-                display: none;
-            }
-            
-            .desktop-view {
-                display: block;
-            }
-            
-            .container {
-                max-width: 1400px;
-                padding: 15px;
-            }
-            
-            .desktop-header {
-                background: linear-gradient(to right, #1a1a3a, #2a2a4a);
-                padding: 15px 20px;
-                border-radius: 8px;
-                margin-bottom: 15px;
-                border: 1px solid #333;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-            
-            .desktop-header h1 {
-                color: #4CAF50;
-                font-size: 22px;
-                text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
-            }
-            
-            .desktop-stats {
-                display: flex;
-                gap: 30px;
-            }
-            
-            .desktop-stat {
-                text-align: center;
-            }
-            
-            .desktop-stat .value {
-                font-size: 18px;
-                font-weight: bold;
-                color: #FFD700;
-            }
-            
-            .desktop-stat .label {
-                font-size: 12px;
-                color: #888;
-            }
-            
-            .desktop-grid {
-                display: grid;
-                grid-template-columns: 300px 1fr 300px;
-                gap: 15px;
-                height: calc(100vh - 120px);
-            }
-            
-            .left-panel {
-                background: #1a1a2a;
-                border-radius: 8px;
-                border: 1px solid #333;
-                padding: 15px;
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .center-panel {
-                background: #1a1a2a;
-                border-radius: 8px;
-                border: 1px solid #333;
-                padding: 15px;
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .right-panel {
-                background: #1a1a2a;
-                border-radius: 8px;
-                border: 1px solid #333;
-                padding: 15px;
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .desktop-chart {
-                height: 200px;
-                margin: 15px 0;
-            }
-            
-            .desktop-cards-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 10px;
-                max-height: 350px;
-                overflow-y: auto;
-            }
-            
-            .catalog-container {
-                max-height: 400px;
-                overflow-y: auto;
-            }
-            
-            .desktop-market-info {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-                margin-top: 15px;
-            }
-            
-            .desktop-market-item {
-                background: #2a2a3a;
-                padding: 10px;
-                border-radius: 6px;
-                text-align: center;
-                border: 1px solid #333;
-            }
-            
-            .desktop-market-value {
-                font-size: 16px;
-                font-weight: bold;
-                margin-top: 5px;
-            }
+        .alert-boom {
+            background: linear-gradient(90deg, #4a4a1a, #6a6a2a);
+            border: 1px solid #FFD700;
+            color: #ffffcc;
         }
         
+        .alert-super-boom {
+            background: linear-gradient(90deg, #1a4a1a, #2a6a2a);
+            border: 2px solid #4CAF50;
+            color: #ccffcc;
+            animation: pulse 1s infinite;
+        }
+        
+        /* Анимации */
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        @keyframes golden-glow {
+            0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
+            100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+        }
+        
+        .golden-glow {
+            animation: golden-glow 2s infinite;
+        }
+        
+        /* Без мерцания */
+        .price-update {
+            transition: all 0.5s ease;
+        }
+        
+        /* Скроллбар */
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
         
         ::-webkit-scrollbar-track {
             background: #1a1a2a;
-            border-radius: 3px;
+            border-radius: 4px;
         }
         
         ::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 3px;
+            background: #3a3a4a;
+            border-radius: 4px;
         }
         
         ::-webkit-scrollbar-thumb:hover {
-            background: #444;
+            background: #4a4a5a;
         }
         
-        .fade-in {
-            animation: fadeIn 0.3s ease-in;
+        /* Адаптивность */
+        @media (max-width: 1200px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .swipe-area {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 20px;
-            z-index: 100;
-        }
-        
-        .swipe-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #333;
-            transition: background 0.3s;
-        }
-        
-        .swipe-dot.active {
-            background: #4CAF50;
-        }
-        
-        .price-limit {
-            font-size: 10px;
-            color: #888;
-            text-align: center;
-            margin-top: 5px;
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .header-stats {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="mobile-view">
-        <div class="container">
-            <div class="mobile-header">
-                <h1><i class="fa fa-btc"></i> FarmCoin</h1>
-                <div class="mobile-stats">
-                    <div class="mobile-stat">
-                        <div class="value" id="mobile-balance">0.000000</div>
-                        <div class="label">FARM</div>
-                    </div>
-                    <div class="mobile-stat">
-                        <div class="value" id="mobile-price">50.00</div>
-                        <div class="label">₽</div>
-                    </div>
+    <div class="container">
+        <!-- Хедер -->
+        <header>
+            <h1><i class="fa fa-btc"></i> FarmCoin Pro Майнинг</h1>
+            <div class="header-stats">
+                <div class="header-stat">
+                    <div class="header-value" id="balance-rub">0.00 ₽</div>
+                    <div class="header-label">Баланс в рублях</div>
+                </div>
+                <div class="header-stat">
+                    <div class="header-value" id="balance-farm">0.000000 FARM</div>
+                    <div class="header-label">Баланс FarmCoin</div>
+                </div>
+                <div class="header-stat">
+                    <div class="header-value" id="current-price">50.00 ₽</div>
+                    <div class="header-label">Курс FarmCoin</div>
                 </div>
             </div>
-            
-            <div class="mobile-panel">
-                <div class="panel-title"><i class="fa fa-cogs"></i> Майнинг</div>
-                <div class="mining-controls">
-                    <button class="mining-btn" id="mobile-mine-btn">
-                        <i class="fa fa-play"></i> Старт
-                    </button>
-                    <button class="mining-btn auto-btn" id="mobile-auto-btn">
-                        <i class="fa fa-robot"></i> Авто
-                    </button>
-                </div>
-                
-                <div class="power-info">
-                    <div style="font-size: 12px; color: #888;">Мощность</div>
-                    <div class="power-value" id="mobile-power">1.0 MH/s</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="mobile-progress"></div>
-                    </div>
-                    <div style="font-size: 11px; color: #888; margin-top: 5px;">
-                        Следующая добыча: <span id="mobile-timer">3.0</span>с
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mobile-panel">
-                <div class="panel-title"><i class="fa fa-line-chart"></i> Курс FarmCoin</div>
-                <div class="price-limit">Лимит: 5 - 150 ₽</div>
-                <div class="chart-container">
-                    <canvas id="mobile-chart"></canvas>
-                </div>
-                
-                <div class="market-info-grid">
-                    <div class="market-item">
-                        <div>Текущий курс</div>
-                        <div class="market-value" id="mobile-current-price">50.00 ₽</div>
-                    </div>
-                    <div class="market-item">
-                        <div>Изменение</div>
-                        <div class="market-value" id="mobile-daily-change">+0.00%</div>
-                    </div>
-                </div>
-                
-                <div class="market-alerts">
-                    <div class="crash-alert" id="mobile-crash-alert">
-                        <i class="fa fa-exclamation-triangle"></i> КРАХ! Цены падают
-                    </div>
-                    <div class="boom-alert" id="mobile-boom-alert">
-                        <i class="fa fa-rocket"></i> БУМ! Цены растут
-                    </div>
-                    <div class="recovery-alert" id="mobile-recovery-alert">
-                        <i class="fa fa-arrow-up"></i> ВОССТАНОВЛЕНИЕ
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mobile-panel">
-                <div class="cards-tabs">
-                    <div class="cards-tab active" id="tab-owned" onclick="switchTab('owned')">
-                        Мои карты
-                    </div>
-                    <div class="cards-tab" id="tab-catalog" onclick="switchTab('catalog')">
-                        Каталог
-                    </div>
-                </div>
-                
-                <div class="search-box" id="search-box" style="display: none;">
-                    <input type="text" class="search-input" placeholder="Поиск карты..." id="mobile-card-search">
-                </div>
-                
-                <div class="cards-container" id="mobile-cards-container">
-                </div>
-            </div>
-            
-            <div class="mobile-panel">
-                <div class="panel-title"><i class="fa fa-history"></i> Журнал</div>
-                <div class="event-log" id="mobile-event-log">
-                    <div class="event-item">
-                        <span class="event-time">[00:00]</span>
-                        <span class="event-message info">Добро пожаловать!</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </header>
         
-        <div class="swipe-area">
-            <div class="swipe-dot active" id="dot1"></div>
-            <div class="swipe-dot" id="dot2"></div>
-            <div class="swipe-dot" id="dot3"></div>
+        <!-- Основная сетка -->
+        <div class="main-grid">
+            <!-- Левая панель -->
+            <div class="left-panel">
+                <!-- Управление майнингом -->
+                <div class="card">
+                    <div class="card-title"><i class="fa fa-cogs"></i> Управление майнингом</div>
+                    <div class="mining-controls">
+                        <button class="btn btn-primary" id="mine-btn">
+                            <i class="fa fa-play"></i> Старт майнинга
+                        </button>
+                        <button class="btn btn-secondary" id="auto-btn">
+                            <i class="fa fa-robot"></i> Автомайнинг: <span id="auto-status">ВЫКЛ</span>
+                        </button>
+                        <button class="btn btn-gold" onclick="openRepairModal()">
+                            <i class="fa fa-wrench"></i> Ремонт оборудования
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Мощность -->
+                <div class="card">
+                    <div class="card-title"><i class="fa fa-bolt"></i> Мощность системы</div>
+                    <div class="power-display">
+                        <div id="mining-power">1.0 MH/s</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="mining-progress"></div>
+                        </div>
+                        <div style="font-size: 12px; color: #888; margin-top: 10px;">
+                            Следующая добыча: <span id="mining-timer">3.0</span>с
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Торговля -->
+                <div class="card">
+                    <div class="card-title"><i class="fa fa-exchange"></i> Торговля</div>
+                    <div class="mining-controls">
+                        <button class="btn btn-primary" onclick="openBuyModal()">
+                            <i class="fa fa-shopping-cart"></i> Купить FarmCoin
+                        </button>
+                        <button class="btn btn-red" onclick="openSellModal()">
+                            <i class="fa fa-money"></i> Продать FarmCoin
+                        </button>
+                        <button class="btn btn-secondary" onclick="openAnalysisModal()">
+                            <i class="fa fa-line-chart"></i> Анализ рынка
+                        </button>
+                        <button class="btn btn-secondary" onclick="openWithdrawModal()">
+                            <i class="fa fa-credit-card"></i> Вывод средств
+                        </button>
+                        <button class="btn btn-secondary" onclick="openHistoryModal()">
+                            <i class="fa fa-history"></i> История операций
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- История купонов -->
+                <div class="card">
+                    <div class="card-title"><i class="fa fa-ticket"></i> История купонов</div>
+                    <div class="coupons-container" id="coupons-list">
+                        <!-- Купоны появятся здесь -->
+                        <div style="text-align: center; color: #888; padding: 20px;">
+                            У вас еще нет купонов<br>
+                            <small>Купоны появляются при выводе средств</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Центральная панель -->
+            <div class="center-panel">
+                <!-- График -->
+                <div class="card">
+                    <div class="card-title"><i class="fa fa-line-chart"></i> Курс FarmCoin</div>
+                    <div class="price-update" style="text-align: center; color: #888; font-size: 12px; margin-bottom: 10px;">
+                        Диапазон: 5 ₽ - 150 ₽
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="price-chart"></canvas>
+                    </div>
+                    <div class="market-alerts">
+                        <div class="alert alert-crash" id="crash-alert">
+                            <i class="fa fa-exclamation-triangle"></i> КРИТИЧЕСКИЙ КРАХ! Курс падает!
+                        </div>
+                        <div class="alert alert-boom" id="boom-alert">
+                            <i class="fa fa-rocket"></i> БУМ РЫНКА! Курс растет!
+                        </div>
+                        <div class="alert alert-super-boom" id="super-boom-alert">
+                            <i class="fa fa-star"></i> СУПЕР БУМ! Курс достиг максимума 150 ₽!
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Ваши видеокарты -->
+                <div class="card">
+                    <div class="card-title"><i class="fa fa-desktop"></i> Ваше оборудование</div>
+                    <div class="cards-container" id="owned-cards">
+                        <!-- Купленные карты появятся здесь -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Правая панель -->
+            <div class="right-panel">
+                <!-- Каталог видеокарт -->
+                <div class="card">
+                    <div class="card-title"><i class="fa fa-list"></i> Каталог видеокарт</div>
+                    <div class="cards-tabs">
+                        <div class="cards-tab active" onclick="switchCardsTab('nvidia')">
+                            NVIDIA
+                        </div>
+                        <div class="cards-tab" onclick="switchCardsTab('amd')">
+                            AMD
+                        </div>
+                        <div class="cards-tab" onclick="switchCardsTab('asic')">
+                            ASIC
+                        </div>
+                    </div>
+                    <div class="cards-container">
+                        <div class="cards-grid" id="cards-catalog">
+                            <!-- Видеокарты появятся здесь -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Статус рынка -->
+                <div class="card">
+                    <div class="card-title"><i class="fa fa-info-circle"></i> Статус рынка</div>
+                    <div style="padding: 10px; background: #2a2a3a; border-radius: 8px; font-size: 13px;">
+                        <div>Состояние: <span id="market-status">Стабильное</span></div>
+                        <div>Тренд: <span id="market-trend">Нейтральный</span></div>
+                        <div>Волатильность: <span id="market-volatility">Средняя</span></div>
+                        <div>Шанс супер бума: <span id="super-boom-chance">0.6%</span></div>
+                        <div>Шанс критического краха: <span id="critical-crash-chance">0.3%</span></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     
-    <div class="desktop-view">
-        <div class="container">
-            <div class="desktop-header">
-                <h1><i class="fa fa-btc"></i> FarmCoin Майнинг Симулятор</h1>
-                <div class="desktop-stats">
-                    <div class="desktop-stat">
-                        <div class="value" id="desktop-balance">0.000000 FARM</div>
-                        <div class="label">Баланс</div>
-                    </div>
-                    <div class="desktop-stat">
-                        <div class="value" id="desktop-price">50.00 ₽</div>
-                        <div class="label">Курс FarmCoin</div>
-                    </div>
-                    <div class="desktop-stat">
-                        <div class="value" id="desktop-total">0 FARM</div>
-                        <div class="label">Всего добыто</div>
-                    </div>
+    <!-- Модальные окна -->
+    
+    <!-- Купить FarmCoin -->
+    <div class="modal-overlay" id="buy-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa fa-shopping-cart"></i> Покупка FarmCoin</h3>
+                <button class="close-modal" onclick="closeModal('buy-modal')">&times;</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Курс: <span id="buy-price">50.00</span> ₽ за 1 FARM</label>
+                <input type="number" class="form-input" id="buy-amount" placeholder="Сумма в рублях" min="10" step="10">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Вы получите: <span id="buy-receive">0.000000</span> FARM</label>
+            </div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="buyFarmCoin()">
+                <i class="fa fa-check"></i> Купить
+            </button>
+        </div>
+    </div>
+    
+    <!-- Продать FarmCoin -->
+    <div class="modal-overlay" id="sell-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa fa-money"></i> Продажа FarmCoin</h3>
+                <button class="close-modal" onclick="closeModal('sell-modal')">&times;</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Курс: <span id="sell-price">50.00</span> ₽ за 1 FARM</label>
+                <input type="number" class="form-input" id="sell-amount" placeholder="Количество FARM" min="0.000001" step="0.000001">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Вы получите: <span id="sell-receive">0.00</span> ₽</label>
+            </div>
+            <button class="btn btn-red" style="width: 100%;" onclick="sellFarmCoin()">
+                <i class="fa fa-check"></i> Продать
+            </button>
+        </div>
+    </div>
+    
+    <!-- Анализ рынка -->
+    <div class="modal-overlay" id="analysis-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa fa-line-chart"></i> Анализ рынка</h3>
+                <button class="close-modal" onclick="closeModal('analysis-modal')">&times;</button>
+            </div>
+            <div style="padding: 15px; background: #2a2a3a; border-radius: 8px; margin-bottom: 20px;">
+                <div id="analysis-text">Анализ загружается...</div>
+            </div>
+            <button class="btn btn-secondary" style="width: 100%;" onclick="updateAnalysis()">
+                <i class="fa fa-refresh"></i> Обновить анализ
+            </button>
+        </div>
+    </div>
+    
+    <!-- Ремонт оборудования -->
+    <div class="modal-overlay" id="repair-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa fa-wrench"></i> Ремонт оборудования</h3>
+                <button class="close-modal" onclick="closeModal('repair-modal')">&times;</button>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <p style="color: #ccc; margin-bottom: 15px;">Ремонт устраняет сбои в работе видеокарт и увеличивает их эффективность.</p>
+                <div style="background: #2a2a3a; padding: 15px; border-radius: 8px;">
+                    <div style="color: #4CAF50; margin-bottom: 10px;">Текущее состояние:</div>
+                    <div>Исправность: <span id="repair-health">100%</span></div>
+                    <div>Эффективность: <span id="repair-efficiency">100%</span></div>
+                    <div>Стоимость ремонта: <span id="repair-cost">10</span> ₽</div>
                 </div>
             </div>
-            
-            <div class="desktop-grid">
-                <div class="left-panel">
-                    <div class="panel-title"><i class="fa fa-cogs"></i> Управление</div>
-                    <button class="mining-btn" id="desktop-mine-btn">
-                        <i class="fa fa-play"></i> Старт майнинга
-                    </button>
-                    <button class="mining-btn auto-btn" id="desktop-auto-btn">
-                        <i class="fa fa-robot"></i> Автоматический майнинг
-                    </button>
-                    
-                    <div class="power-info">
-                        <div>Мощность майнинга</div>
-                        <div class="power-value" id="desktop-power">1.0 MH/s</div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="desktop-progress"></div>
-                        </div>
-                        <div style="text-align: center; font-size: 12px; color: #888; margin-top: 5px;">
-                            Следующая добыча: <span id="desktop-timer">3.0</span>с
-                        </div>
-                    </div>
-                    
-                    <div class="panel-title"><i class="fa fa-exclamation-circle"></i> Статус рынка</div>
-                    <div style="background: #222; padding: 10px; border-radius: 6px; font-size: 12px;">
-                        <div>Состояние: <span id="desktop-status">Стабильное</span></div>
-                        <div>Диапазон цены: <span style="color:#4CAF50">5 - 150 ₽</span></div>
-                        
-                        <div class="status-indicator">
-                            <div class="status-dot" id="desktop-status-dot"></div>
-                            <span id="desktop-status-text">Рынок стабилен</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="center-panel">
-                    <div class="panel-title"><i class="fa fa-line-chart"></i> Курс FarmCoin</div>
-                    <div class="price-limit">Диапазон цены: 5 ₽ - 150 ₽ (никогда не превышает)</div>
-                    <div class="chart-container desktop-chart">
-                        <canvas id="desktop-chart"></canvas>
-                    </div>
-                    
-                    <div class="desktop-market-info">
-                        <div class="desktop-market-item">
-                            <div>Текущий курс</div>
-                            <div class="desktop-market-value" id="desktop-current-price">50.00 ₽</div>
-                        </div>
-                        <div class="desktop-market-item">
-                            <div>Изменение за день</div>
-                            <div class="desktop-market-value" id="desktop-daily-change">+0.00%</div>
-                        </div>
-                    </div>
-                    
-                    <div class="market-alerts">
-                        <div class="crash-alert" id="desktop-crash-alert">
-                            <i class="fa fa-exclamation-triangle"></i> КРАХ РЫНКА! Цены падают до 5 ₽
-                        </div>
-                        <div class="boom-alert" id="desktop-boom-alert">
-                            <i class="fa fa-rocket"></i> БУМ РЫНКА! Цены растут до 150 ₽
-                        </div>
-                        <div class="recovery-alert" id="desktop-recovery-alert">
-                            <i class="fa fa-arrow-up"></i> ВОССТАНОВЛЕНИЕ ПОСЛЕ КРАХА
-                        </div>
-                    </div>
-                    
-                    <div class="panel-title"><i class="fa fa-desktop"></i> Ваши видеокарты</div>
-                    <div class="desktop-cards-grid" id="desktop-cards-grid">
-                    </div>
-                </div>
-                
-                <div class="right-panel">
-                    <div class="panel-title"><i class="fa fa-list"></i> Каталог (25 карт)</div>
-                    <div class="search-box">
-                        <input type="text" class="search-input" placeholder="Поиск видеокарты..." id="desktop-card-search">
-                    </div>
-                    
-                    <div class="catalog-container" id="desktop-catalog">
-                    </div>
-                    
-                    <div class="panel-title"><i class="fa fa-history"></i> Журнал событий</div>
-                    <div class="event-log" id="desktop-event-log">
-                        <div class="event-item">
-                            <span class="event-time">[00:00:00]</span>
-                            <span class="event-message info">Добро пожаловать в FarmCoin!</span>
-                        </div>
-                    </div>
-                </div>
+            <button class="btn btn-gold" style="width: 100%;" onclick="repairEquipment()">
+                <i class="fa fa-medkit"></i> Выполнить ремонт (10 ₽)
+            </button>
+        </div>
+    </div>
+    
+    <!-- Вывод средств -->
+    <div class="modal-overlay" id="withdraw-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa fa-credit-card"></i> Вывод средств</h3>
+                <button class="close-modal" onclick="closeModal('withdraw-modal')">&times;</button>
             </div>
+            <div class="form-group">
+                <label class="form-label">Доступно для вывода: <span id="available-balance">0.00</span> ₽</label>
+                <input type="number" class="form-input" id="withdraw-amount" placeholder="Сумма вывода в рублях" min="10" step="10">
+            </div>
+            <div style="background: #2a2a3a; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #4CAF50;">
+                <div style="color: #4CAF50; font-weight: bold; margin-bottom: 5px;">Будет сгенерирован купон:</div>
+                <div id="withdraw-coupon">Введите сумму для генерации купона</div>
+            </div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="generateWithdrawCoupon()">
+                <i class="fa fa-ticket"></i> Сгенерировать купон
+            </button>
+            <button class="btn btn-gold" style="width: 100%; margin-top: 10px; display: none;" id="confirm-withdraw-btn" onclick="confirmWithdraw()">
+                <i class="fa fa-check-circle"></i> Подтвердить вывод
+            </button>
+        </div>
+    </div>
+    
+    <!-- История операций -->
+    <div class="modal-overlay" id="history-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa fa-history"></i> История операций</h3>
+                <button class="close-modal" onclick="closeModal('history-modal')">&times;</button>
+            </div>
+            <div class="history-container" id="history-list">
+                <!-- История появится здесь -->
+            </div>
+            <button class="btn btn-secondary" style="width: 100%; margin-top: 15px;" onclick="clearHistory()">
+                <i class="fa fa-trash"></i> Очистить историю
+            </button>
+        </div>
+    </div>
+    
+    <!-- История купонов (модальное окно) -->
+    <div class="modal-overlay" id="coupons-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa fa-ticket"></i> История купонов</h3>
+                <button class="close-modal" onclick="closeModal('coupons-modal')">&times;</button>
+            </div>
+            <div class="coupons-container" id="coupons-modal-list">
+                <!-- Купоны появятся здесь -->
+            </div>
+            <button class="btn btn-secondary" style="width: 100%; margin-top: 15px;" onclick="clearCoupons()">
+                <i class="fa fa-trash"></i> Очистить историю купонов
+            </button>
         </div>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Основные переменные
+        // ========== ОСНОВНЫЕ ПЕРЕМЕННЫЕ ==========
         let farmcoinBalance = 0;
+        let rubleBalance = 1000; // Уменьшил стартовый баланс до 1000 рублей
         let totalMined = 0;
         let miningPower = 1.0;
         let miningActive = false;
@@ -830,123 +906,353 @@
         let miningLuck = 50;
         let marketCrash = false;
         let marketBoom = false;
+        let superBoom = false;
+        let criticalCrash = false;
         let crashRecovery = false;
         let crashTimer = 0;
         let boomTimer = 0;
+        let superBoomTimer = 0;
+        let criticalCrashTimer = 0;
         let recoveryTimer = 0;
-        let currentTab = 'owned';
+        let currentCardsTab = 'nvidia';
+        let equipmentHealth = 100;
+        let equipmentEfficiency = 1.0;
+        let operationHistory = [];
+        let couponHistory = [];
         
-        const MAX_PRICE = 150.0;
-        const MIN_PRICE = 5.0;
-        
-        // 25 видеокарт
-        const graphicsCards = {
-            gtx750ti: { name: "GTX 750 Ti", owned: 0, power: 0.5, luck: 1, basePrice: 10 },
-            gtx950: { name: "GTX 950", owned: 0, power: 0.8, luck: 2, basePrice: 15 },
-            gtx960: { name: "GTX 960", owned: 0, power: 1.0, luck: 3, basePrice: 20 },
-            gtx970: { name: "GTX 970", owned: 0, power: 1.5, luck: 4, basePrice: 30 },
-            gtx980: { name: "GTX 980", owned: 0, power: 2.0, luck: 5, basePrice: 40 },
-            gtx1050: { name: "GTX 1050", owned: 0, power: 1.2, luck: 3, basePrice: 25 },
-            gtx1050ti: { name: "GTX 1050 Ti", owned: 0, power: 1.8, luck: 4, basePrice: 35 },
-            gtx1060_3gb: { name: "GTX 1060 3GB", owned: 0, power: 2.2, luck: 5, basePrice: 45 },
-            gtx1060_6gb: { name: "GTX 1060 6GB", owned: 0, power: 2.8, luck: 6, basePrice: 55 },
-            gtx1070: { name: "GTX 1070", owned: 0, power: 3.5, luck: 7, basePrice: 70 },
-            gtx1070ti: { name: "GTX 1070 Ti", owned: 0, power: 4.0, luck: 8, basePrice: 85 },
-            gtx1080: { name: "GTX 1080", owned: 0, power: 4.5, luck: 9, basePrice: 100 },
-            gtx1080ti: { name: "GTX 1080 Ti", owned: 0, power: 5.5, luck: 11, basePrice: 130 },
-            rtx2060: { name: "RTX 2060", owned: 0, power: 6.0, luck: 12, basePrice: 150 },
-            rtx2060super: { name: "RTX 2060 Super", owned: 0, power: 7.0, luck: 14, basePrice: 180 },
-            rtx2070: { name: "RTX 2070", owned: 0, power: 8.0, luck: 16, basePrice: 220 },
-            rtx2070super: { name: "RTX 2070 Super", owned: 0, power: 9.0, luck: 18, basePrice: 270 },
-            rtx2080: { name: "RTX 2080", owned: 0, power: 10.0, luck: 20, basePrice: 320 },
-            rtx2080ti: { name: "RTX 2080 Ti", owned: 0, power: 12.0, luck: 22, basePrice: 400 },
-            rtx3060: { name: "RTX 3060", owned: 0, power: 11.0, luck: 18, basePrice: 300 },
-            rtx3060ti: { name: "RTX 3060 Ti", owned: 0, power: 13.0, luck: 20, basePrice: 350 },
-            rtx3070: { name: "RTX 3070", owned: 0, power: 15.0, luck: 22, basePrice: 420 },
-            rtx3080: { name: "RTX 3080", owned: 0, power: 20.0, luck: 25, basePrice: 550 },
-            rtx3090: { name: "RTX 3090", owned: 0, power: 25.0, luck: 28, basePrice: 700 },
-            asic_s9: { name: "ASIC S9", owned: 0, power: 50.0, luck: 35, basePrice: 1500 }
+        // Настройки ценообразования
+        const PRICE_SETTINGS = {
+            MIN_PRICE: 5.0,
+            MAX_PRICE: 150.0,
+            BASE_VOLATILITY: 0.3,
+            TREND_PERSISTENCE: 0.85,
+            SUPER_BOOM_CHANCE: 0.006,
+            CRITICAL_CRASH_CHANCE: 0.003,
+            REGULAR_BOOM_CHANCE: 0.01,
+            REGULAR_CRASH_CHANCE: 0.008,
+            SUPER_BOOM_DURATION: { min: 400, max: 500 },
+            CRITICAL_CRASH_DURATION: { min: 15, max: 25 },
+            REGULAR_BOOM_DURATION: { min: 15, max: 35 },
+            REGULAR_CRASH_DURATION: { min: 10, max: 25 },
+            RECOVERY_DURATION: { min: 15, max: 30 }
         };
         
-        const mobileBalance = document.getElementById('mobile-balance');
-        const mobilePrice = document.getElementById('mobile-price');
-        const mobileMineBtn = document.getElementById('mobile-mine-btn');
-        const mobileAutoBtn = document.getElementById('mobile-auto-btn');
-        const mobilePower = document.getElementById('mobile-power');
-        const mobileProgress = document.getElementById('mobile-progress');
-        const mobileTimer = document.getElementById('mobile-timer');
-        const mobileCurrentPrice = document.getElementById('mobile-current-price');
-        const mobileDailyChange = document.getElementById('mobile-daily-change');
-        const mobileCrashAlert = document.getElementById('mobile-crash-alert');
-        const mobileBoomAlert = document.getElementById('mobile-boom-alert');
-        const mobileRecoveryAlert = document.getElementById('mobile-recovery-alert');
-        const mobileCardsContainer = document.getElementById('mobile-cards-container');
-        const mobileEventLog = document.getElementById('mobile-event-log');
-        const mobileCardSearch = document.getElementById('mobile-card-search');
-        const searchBox = document.getElementById('search-box');
+        // ========== ВИДЕОКАРТЫ С РЕАЛИСТИЧНЫМИ ЦЕНАМИ ==========
+        const graphicsCards = {
+            // NVIDIA GTX серия (бюджетная)
+            'gtx1660': { 
+                name: "GTX 1660 SUPER", 
+                brand: 'nvidia', 
+                owned: 0, 
+                power: 8.0, 
+                luck: 10, 
+                basePrice: 4200,
+                priceRange: { min: 4200, max: 6500 },
+                type: 'nvidia',
+                tier: 'budget'
+            },
+            
+            // NVIDIA RTX 20 серия (средний уровень)
+            'rtx2060': { 
+                name: "RTX 2060", 
+                brand: 'nvidia', 
+                owned: 0, 
+                power: 12.0, 
+                luck: 15, 
+                basePrice: 19500,
+                priceRange: { min: 19000, max: 24000 },
+                type: 'nvidia',
+                tier: 'mid'
+            },
+            'rtx2070': { 
+                name: "RTX 2070 SUPER", 
+                brand: 'nvidia', 
+                owned: 0, 
+                power: 18.0, 
+                luck: 20, 
+                basePrice: 26500,
+                priceRange: { min: 26000, max: 32000 },
+                type: 'nvidia',
+                tier: 'mid-high'
+            },
+            
+            // NVIDIA RTX 30 серия (высокий уровень)
+            'rtx3060': { 
+                name: "RTX 3060", 
+                brand: 'nvidia', 
+                owned: 0, 
+                power: 25.0, 
+                luck: 22, 
+                basePrice: 31500,
+                priceRange: { min: 31000, max: 38000 },
+                type: 'nvidia',
+                tier: 'high'
+            },
+            'rtx3070': { 
+                name: "RTX 3070", 
+                brand: 'nvidia', 
+                owned: 0, 
+                power: 35.0, 
+                luck: 28, 
+                basePrice: 42500,
+                priceRange: { min: 42000, max: 52000 },
+                type: 'nvidia',
+                tier: 'high'
+            },
+            'rtx3080': { 
+                name: "RTX 3080", 
+                brand: 'nvidia', 
+                owned: 0, 
+                power: 48.0, 
+                luck: 35, 
+                basePrice: 59500,
+                priceRange: { min: 59000, max: 75000 },
+                type: 'nvidia',
+                tier: 'premium'
+            },
+            'rtx3090': { 
+                name: "RTX 3090", 
+                brand: 'nvidia', 
+                owned: 0, 
+                power: 60.0, 
+                luck: 40, 
+                basePrice: 85000,
+                priceRange: { min: 85000, max: 110000 },
+                type: 'nvidia',
+                tier: 'premium'
+            },
+            
+            // NVIDIA RTX 40 серия (топовый уровень)
+            'rtx4060': { 
+                name: "RTX 4060 Ti", 
+                brand: 'nvidia', 
+                owned: 0, 
+                power: 30.0, 
+                luck: 25, 
+                basePrice: 36500,
+                priceRange: { min: 36000, max: 45000 },
+                type: 'nvidia',
+                tier: 'high'
+            },
+            'rtx4070': { 
+                name: "RTX 4070 SUPER", 
+                brand: 'nvidia', 
+                owned: 0, 
+                power: 45.0, 
+                luck: 32, 
+                basePrice: 62500,
+                priceRange: { min: 62000, max: 78000 },
+                type: 'nvidia',
+                tier: 'premium'
+            },
+            'rtx4080': { 
+                name: "RTX 4080 SUPER", 
+                brand: 'nvidia', 
+                owned: 0, 
+                power: 65.0, 
+                luck: 45, 
+                basePrice: 98500,
+                priceRange: { min: 98000, max: 125000 },
+                type: 'nvidia',
+                tier: 'premium'
+            },
+            'rtx4090': { 
+                name: "RTX 4090", 
+                brand: 'nvidia', 
+                owned: 0, 
+                power: 85.0, 
+                luck: 55, 
+                basePrice: 165000,
+                priceRange: { min: 165000, max: 210000 },
+                type: 'nvidia',
+                tier: 'flagship',
+                special: true
+            },
+            
+            // AMD RX 6000 серия
+            'rx6600': { 
+                name: "RX 6600", 
+                brand: 'amd', 
+                owned: 0, 
+                power: 15.0, 
+                luck: 18, 
+                basePrice: 16800,
+                priceRange: { min: 16500, max: 21000 },
+                type: 'amd',
+                tier: 'budget'
+            },
+            'rx6700xt': { 
+                name: "RX 6700 XT", 
+                brand: 'amd', 
+                owned: 0, 
+                power: 28.0, 
+                luck: 25, 
+                basePrice: 28500,
+                priceRange: { min: 28000, max: 35000 },
+                type: 'amd',
+                tier: 'mid'
+            },
+            'rx6800': { 
+                name: "RX 6800", 
+                brand: 'amd', 
+                owned: 0, 
+                power: 38.0, 
+                luck: 30, 
+                basePrice: 38500,
+                priceRange: { min: 38000, max: 48000 },
+                type: 'amd',
+                tier: 'mid-high'
+            },
+            'rx6800xt': { 
+                name: "RX 6800 XT", 
+                brand: 'amd', 
+                owned: 0, 
+                power: 45.0, 
+                luck: 35, 
+                basePrice: 43500,
+                priceRange: { min: 43000, max: 55000 },
+                type: 'amd',
+                tier: 'high'
+            },
+            'rx6900xt': { 
+                name: "RX 6900 XT", 
+                brand: 'amd', 
+                owned: 0, 
+                power: 55.0, 
+                luck: 40, 
+                basePrice: 58500,
+                priceRange: { min: 58000, max: 73000 },
+                type: 'amd',
+                tier: 'high'
+            },
+            
+            // AMD RX 7000 серия
+            'rx7700xt': { 
+                name: "RX 7700 XT", 
+                brand: 'amd', 
+                owned: 0, 
+                power: 35.0, 
+                luck: 28, 
+                basePrice: 32500,
+                priceRange: { min: 32000, max: 40000 },
+                type: 'amd',
+                tier: 'mid-high'
+            },
+            'rx7800xt': { 
+                name: "RX 7800 XT", 
+                brand: 'amd', 
+                owned: 0, 
+                power: 50.0, 
+                luck: 38, 
+                basePrice: 48500,
+                priceRange: { min: 48000, max: 60000 },
+                type: 'amd',
+                tier: 'high',
+                special: true
+            },
+            'rx7900xt': { 
+                name: "RX 7900 XT", 
+                brand: 'amd', 
+                owned: 0, 
+                power: 65.0, 
+                luck: 45, 
+                basePrice: 78500,
+                priceRange: { min: 78000, max: 98000 },
+                type: 'amd',
+                tier: 'premium'
+            },
+            'rx7900xtx': { 
+                name: "RX 7900 XTX", 
+                brand: 'amd', 
+                owned: 0, 
+                power: 75.0, 
+                luck: 50, 
+                basePrice: 98500,
+                priceRange: { min: 98000, max: 125000 },
+                type: 'amd',
+                tier: 'flagship'
+            },
+            
+            // ASIC майнеры (очень дорогие)
+            'asic_s9': { 
+                name: "Antminer S19 Pro", 
+                brand: 'asic', 
+                owned: 0, 
+                power: 150.0, 
+                luck: 70, 
+                basePrice: 185000,
+                priceRange: { min: 180000, max: 230000 },
+                type: 'asic',
+                tier: 'asic'
+            },
+            'asic_s19xp': { 
+                name: "Antminer S19 XP", 
+                brand: 'asic', 
+                owned: 0, 
+                power: 250.0, 
+                luck: 80, 
+                basePrice: 325000,
+                priceRange: { min: 320000, max: 400000 },
+                type: 'asic',
+                tier: 'asic'
+            },
+            'asic_whatsminer': { 
+                name: "Whatsminer M60", 
+                brand: 'asic', 
+                owned: 0, 
+                power: 180.0, 
+                luck: 75, 
+                basePrice: 245000,
+                priceRange: { min: 240000, max: 300000 },
+                type: 'asic',
+                tier: 'asic'
+            }
+        };
         
-        const desktopBalance = document.getElementById('desktop-balance');
-        const desktopPrice = document.getElementById('desktop-price');
-        const desktopTotal = document.getElementById('desktop-total');
-        const desktopMineBtn = document.getElementById('desktop-mine-btn');
-        const desktopAutoBtn = document.getElementById('desktop-auto-btn');
-        const desktopPower = document.getElementById('desktop-power');
-        const desktopProgress = document.getElementById('desktop-progress');
-        const desktopTimer = document.getElementById('desktop-timer');
-        const desktopCurrentPrice = document.getElementById('desktop-current-price');
-        const desktopDailyChange = document.getElementById('desktop-daily-change');
-        const desktopStatus = document.getElementById('desktop-status');
-        const desktopStatusDot = document.getElementById('desktop-status-dot');
-        const desktopStatusText = document.getElementById('desktop-status-text');
-        const desktopCrashAlert = document.getElementById('desktop-crash-alert');
-        const desktopBoomAlert = document.getElementById('desktop-boom-alert');
-        const desktopRecoveryAlert = document.getElementById('desktop-recovery-alert');
-        const desktopCardsGrid = document.getElementById('desktop-cards-grid');
-        const desktopEventLog = document.getElementById('desktop-event-log');
-        const desktopCardSearch = document.getElementById('desktop-card-search');
-        const desktopCatalog = document.getElementById('desktop-catalog');
+        // ========== ИНИЦИАЛИЗАЦИЯ ==========
+        let priceChart;
+        let miningInterval;
+        let miningTime = 0;
+        const miningCycleTime = 3.0;
         
-        let mobileChart, desktopChart;
+        function init() {
+            loadGame();
+            initChart();
+            updateUI();
+            updateCardsCatalog();
+            updateOwnedCards();
+            updateCouponsList();
+            
+            // Обработчики событий
+            document.getElementById('mine-btn').addEventListener('click', toggleMining);
+            document.getElementById('auto-btn').addEventListener('click', toggleAutoMining);
+            
+            // Обновление цен без мерцания
+            document.getElementById('buy-amount').addEventListener('input', updateBuyCalculation);
+            document.getElementById('sell-amount').addEventListener('input', updateSellCalculation);
+            document.getElementById('withdraw-amount').addEventListener('input', updateWithdrawCalculation);
+            
+            // Автообновление
+            setInterval(updateMarket, 3000);
+            setInterval(saveGame, 10000);
+            
+            addHistory('Игра запущена', 'system');
+            addEvent('FarmCoin Pro Майнинг запущен! Стартовый капитал: 1,000 ₽', 'info');
+        }
         
-        function initCharts() {
+        // ========== ГРАФИК ==========
+        function initChart() {
+            const ctx = document.getElementById('price-chart').getContext('2d');
+            
+            // Начальные данные
             for (let i = 0; i < 30; i++) {
                 priceHistory.push({
                     time: i,
-                    price: 50 + (Math.random() - 0.5) * 20
+                    price: 50 + (Math.random() - 0.5) * 10
                 });
             }
             
-            const mobileCtx = document.getElementById('mobile-chart').getContext('2d');
-            mobileChart = new Chart(mobileCtx, {
-                type: 'line',
-                data: {
-                    labels: priceHistory.map(p => p.time),
-                    datasets: [{
-                        data: priceHistory.map(p => p.price),
-                        borderColor: '#4CAF50',
-                        backgroundColor: 'rgba(76, 175, 80, 0.1)',
-                        borderWidth: 1.5,
-                        fill: true,
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: { display: false },
-                        y: {
-                            display: false,
-                            min: MIN_PRICE,
-                            max: MAX_PRICE
-                        }
-                    }
-                }
-            });
-            
-            const desktopCtx = document.getElementById('desktop-chart').getContext('2d');
-            desktopChart = new Chart(desktopCtx, {
+            priceChart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: priceHistory.map(p => p.time),
@@ -974,98 +1280,233 @@
                     scales: {
                         x: { display: false },
                         y: {
-                            min: MIN_PRICE,
-                            max: MAX_PRICE,
+                            min: PRICE_SETTINGS.MIN_PRICE,
+                            max: PRICE_SETTINGS.MAX_PRICE,
                             grid: { color: 'rgba(100, 100, 100, 0.2)' },
                             ticks: {
                                 color: '#ccc',
                                 callback: value => value + ' ₽'
                             }
                         }
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeOutQuart'
                     }
                 }
             });
         }
         
+        // ========== УСЛОЖНЕННЫЙ АЛГОРИТМ РЫНКА ==========
         function updateMarket() {
-            let trendChange = (Math.random() - 0.5) * 0.025;
+            let trendChange = (Math.random() - 0.5) * 0.015;
             
+            // Специальные события
+            if (!marketCrash && !marketBoom && !superBoom && !criticalCrash && !crashRecovery) {
+                const random = Math.random();
+                
+                // Супер бум (0.6% шанс)
+                if (random < PRICE_SETTINGS.SUPER_BOOM_CHANCE) {
+                    triggerSuperBoom();
+                    return;
+                }
+                
+                // Критический крах (0.3% шанс)
+                if (random < (PRICE_SETTINGS.SUPER_BOOM_CHANCE + PRICE_SETTINGS.CRITICAL_CRASH_CHANCE)) {
+                    triggerCriticalCrash();
+                    return;
+                }
+                
+                // Обычный бум (1% шанс)
+                if (random < (PRICE_SETTINGS.SUPER_BOOM_CHANCE + PRICE_SETTINGS.CRITICAL_CRASH_CHANCE + PRICE_SETTINGS.REGULAR_BOOM_CHANCE)) {
+                    marketBoom = true;
+                    boomTimer = PRICE_SETTINGS.REGULAR_BOOM_DURATION.min + 
+                               Math.floor(Math.random() * (PRICE_SETTINGS.REGULAR_BOOM_DURATION.max - PRICE_SETTINGS.REGULAR_BOOM_DURATION.min));
+                    document.getElementById('boom-alert').style.display = 'block';
+                    addEvent('БУМ РЫНКА! Курс начал расти!', 'warning');
+                    addHistory('Начало бума рынка', 'market');
+                }
+                
+                // Обычный крах (0.8% шанс)
+                if (random < (PRICE_SETTINGS.SUPER_BOOM_CHANCE + PRICE_SETTINGS.CRITICAL_CRASH_CHANCE + 
+                             PRICE_SETTINGS.REGULAR_BOOM_CHANCE + PRICE_SETTINGS.REGULAR_CRASH_CHANCE)) {
+                    marketCrash = true;
+                    crashTimer = PRICE_SETTINGS.REGULAR_CRASH_DURATION.min + 
+                                Math.floor(Math.random() * (PRICE_SETTINGS.REGULAR_CRASH_DURATION.max - PRICE_SETTINGS.REGULAR_CRASH_DURATION.min));
+                    document.getElementById('crash-alert').style.display = 'block';
+                    addEvent('КРАХ РЫНКА! Курс начал падать!', 'error');
+                    addHistory('Начало краха рынка', 'market');
+                }
+            }
+            
+            // Обработка активных событий
+            handleMarketEvents();
+            
+            // Расчет изменения цены
+            calculatePriceChange(trendChange);
+            
+            // Обновление истории цен
+            updatePriceHistory();
+            
+            // Обновление интерфейса
+            updateMarketUI();
+            updateCardsCatalog();
+            saveGame();
+        }
+        
+        function handleMarketEvents() {
+            // Супер бум
+            if (superBoom) {
+                superBoomTimer--;
+                if (superBoomTimer <= 0) {
+                    superBoom = false;
+                    document.getElementById('super-boom-alert').style.display = 'none';
+                    addEvent('Супер бум завершился', 'info');
+                    addHistory('Завершение супер бума', 'market');
+                }
+                return;
+            }
+            
+            // Критический крах
+            if (criticalCrash) {
+                criticalCrashTimer--;
+                if (criticalCrashTimer <= 0) {
+                    criticalCrash = false;
+                    crashRecovery = true;
+                    recoveryTimer = PRICE_SETTINGS.RECOVERY_DURATION.min + 
+                                  Math.floor(Math.random() * (PRICE_SETTINGS.RECOVERY_DURATION.max - PRICE_SETTINGS.RECOVERY_DURATION.min));
+                    addEvent('Критический крах завершен. Началось восстановление.', 'info');
+                    addHistory('Завершение критического краха', 'market');
+                }
+                return;
+            }
+            
+            // Обычный бум
+            if (marketBoom) {
+                boomTimer--;
+                if (boomTimer <= 0) {
+                    marketBoom = false;
+                    document.getElementById('boom-alert').style.display = 'none';
+                    addEvent('Бум рынка завершился', 'info');
+                }
+            }
+            
+            // Обычный крах
             if (marketCrash) {
-                trendChange = -0.08 - Math.random() * 0.12;
                 crashTimer--;
                 if (crashTimer <= 0) {
                     marketCrash = false;
                     crashRecovery = true;
-                    recoveryTimer = 10;
-                    mobileCrashAlert.style.display = 'none';
-                    desktopCrashAlert.style.display = 'none';
-                    mobileRecoveryAlert.style.display = 'block';
-                    desktopRecoveryAlert.style.display = 'block';
-                    addEvent('Крах завершен. Начинается восстановление!', 'info');
+                    recoveryTimer = PRICE_SETTINGS.RECOVERY_DURATION.min + 
+                                  Math.floor(Math.random() * (PRICE_SETTINGS.RECOVERY_DURATION.max - PRICE_SETTINGS.RECOVERY_DURATION.min));
+                    document.getElementById('crash-alert').style.display = 'none';
+                    addEvent('Крах завершен. Начинается восстановление.', 'info');
                 }
-            } else if (marketBoom) {
-                trendChange = 0.08 + Math.random() * 0.12;
-                boomTimer--;
-                if (boomTimer <= 0) {
-                    marketBoom = false;
-                    mobileBoomAlert.style.display = 'none';
-                    desktopBoomAlert.style.display = 'none';
-                    addEvent('Бум рынка завершился', 'info');
-                }
-            } else if (crashRecovery) {
-                trendChange = 0.05 + Math.random() * 0.08;
+            }
+            
+            // Восстановление
+            if (crashRecovery) {
                 recoveryTimer--;
                 if (recoveryTimer <= 0) {
                     crashRecovery = false;
-                    mobileRecoveryAlert.style.display = 'none';
-                    desktopRecoveryAlert.style.display = 'none';
-                    addEvent('Восстановление завершено', 'info');
+                    addEvent('Восстановление рынка завершено', 'info');
                 }
             }
-            
-            if (!marketCrash && !marketBoom && !crashRecovery) {
-                const eventChance = Math.random();
-                
-                if (eventChance < 0.0035) {
-                    marketCrash = true;
-                    crashTimer = 8 + Math.floor(Math.random() * 12);
-                    mobileCrashAlert.style.display = 'block';
-                    desktopCrashAlert.style.display = 'block';
-                    mobileRecoveryAlert.style.display = 'none';
-                    desktopRecoveryAlert.style.display = 'none';
-                    addEvent('КРАХ РЫНКА! Цены падают до 5 ₽', 'error');
-                } else if (eventChance < 0.007) {
-                    marketBoom = true;
-                    boomTimer = 7 + Math.floor(Math.random() * 10);
-                    mobileBoomAlert.style.display = 'block';
-                    desktopBoomAlert.style.display = 'block';
-                    addEvent('БУМ РЫНКА! Цены растут до 150 ₽', 'warning');
-                }
-            }
-            
-            marketTrend += trendChange;
+        }
+        
+        function calculatePriceChange(trendChange) {
+            // Сохраняем стабильность тренда
+            marketTrend = marketTrend * PRICE_SETTINGS.TREND_PERSISTENCE + trendChange * (1 - PRICE_SETTINGS.TREND_PERSISTENCE);
             marketTrend = Math.max(-1, Math.min(1, marketTrend));
-            marketVolatility = 0.3 + Math.abs(marketTrend) * 0.4 + Math.random() * 0.3;
             
-            let priceChange = marketTrend * 0.012;
-            priceChange += (Math.random() - 0.5) * marketVolatility * 0.02;
+            // Динамическая волатильность
+            marketVolatility = PRICE_SETTINGS.BASE_VOLATILITY + 
+                              Math.abs(marketTrend) * 0.4 + 
+                              (Math.random() * 0.4 - 0.2);
             
-            if (marketCrash) priceChange = Math.min(priceChange, -0.1);
-            if (marketBoom) priceChange = Math.max(priceChange, 0.1);
-            if (crashRecovery) priceChange = Math.max(priceChange, 0.05);
+            // Базовое изменение цены
+            let priceChange = marketTrend * 0.008;
             
-            const oldPrice = farmcoinPrice;
-            farmcoinPrice += farmcoinPrice * priceChange;
-            
-            farmcoinPrice = Math.max(MIN_PRICE, Math.min(MAX_PRICE, farmcoinPrice));
-            
-            for (let card in graphicsCards) {
-                if (Math.random() < 0.1) {
-                    const change = (Math.random() - 0.5) * 0.3;
-                    graphicsCards[card].basePrice = Math.max(5, graphicsCards[card].basePrice * (1 + change));
-                }
+            // Случайные всплески
+            if (Math.random() < 0.1) {
+                priceChange += (Math.random() - 0.5) * marketVolatility * 0.03;
             }
             
+            // Долгосрочные циклы
+            const timeFactor = Date.now() / 1000 / 60 / 60;
+            const cycleWave = Math.sin(timeFactor * 0.01) * 0.015;
+            priceChange += cycleWave;
+            
+            // Модификаторы событий
+            if (superBoom) {
+                priceChange = 0.02 + (Math.random() * 0.04 - 0.02);
+                farmcoinPrice = Math.min(PRICE_SETTINGS.MAX_PRICE, farmcoinPrice * (1 + priceChange));
+            } else if (criticalCrash) {
+                priceChange = -0.2 - Math.random() * 0.15;
+                if (Math.random() < 0.05) {
+                    priceChange = 0.1 + Math.random() * 0.1;
+                }
+            } else if (marketBoom) {
+                priceChange = Math.max(priceChange, 0.04);
+                priceChange += Math.random() * 0.03;
+                if (Math.random() < 0.1) {
+                    priceChange *= -0.5;
+                }
+            } else if (marketCrash) {
+                priceChange = Math.min(priceChange, -0.02);
+                priceChange -= Math.random() * 0.02;
+                if (Math.random() < 0.08) {
+                    priceChange = Math.abs(priceChange) * 0.8;
+                }
+            } else if (crashRecovery) {
+                priceChange = Math.max(priceChange, 0.015);
+                priceChange += Math.random() * 0.015;
+            } else {
+                priceChange += (Math.random() - 0.5) * marketVolatility * 0.01;
+            }
+            
+            // Гарантированный долгосрочный рост
+            const guaranteedGrowth = 0.0003;
+            priceChange += guaranteedGrowth;
+            
+            // Применяем изменение
+            farmcoinPrice = farmcoinPrice * (1 + priceChange);
+            
+            // Ограничиваем пределы
+            farmcoinPrice = Math.max(
+                PRICE_SETTINGS.MIN_PRICE, 
+                Math.min(PRICE_SETTINGS.MAX_PRICE, farmcoinPrice)
+            );
+            
+            // Сглаживание
+            if (priceHistory.length > 10) {
+                const recentAvg = priceHistory.slice(-10).reduce((sum, p) => sum + p.price, 0) / 10;
+                if (Math.abs(farmcoinPrice - recentAvg) / recentAvg < 0.01) {
+                    farmcoinPrice *= 1 + (Math.random() - 0.5) * 0.02;
+                }
+            }
+        }
+        
+        function triggerSuperBoom() {
+            superBoom = true;
+            superBoomTimer = PRICE_SETTINGS.SUPER_BOOM_DURATION.min + 
+                            Math.floor(Math.random() * (PRICE_SETTINGS.SUPER_BOOM_DURATION.max - PRICE_SETTINGS.SUPER_BOOM_DURATION.min));
+            farmcoinPrice = Math.min(PRICE_SETTINGS.MAX_PRICE, farmcoinPrice * 1.5);
+            document.getElementById('super-boom-alert').style.display = 'block';
+            addEvent('СУПЕР БУМ! Курс мгновенно вырос! Идеальное время для продажи!', 'success');
+            addHistory('Начало супер бума', 'market');
+        }
+        
+        function triggerCriticalCrash() {
+            criticalCrash = true;
+            criticalCrashTimer = PRICE_SETTINGS.CRITICAL_CRASH_DURATION.min + 
+                               Math.floor(Math.random() * (PRICE_SETTINGS.CRITICAL_CRASH_DURATION.max - PRICE_SETTINGS.CRITICAL_CRASH_DURATION.min));
+            farmcoinPrice *= 0.5;
+            addEvent('КРИТИЧЕСКИЙ КРАХ! Курс обвалился! Покупайте по дешевке!', 'error');
+            addHistory('Начало критического краха', 'market');
+        }
+        
+        function updatePriceHistory() {
             priceHistory.push({
                 time: priceHistory.length,
                 price: farmcoinPrice
@@ -1075,146 +1516,90 @@
                 priceHistory.shift();
             }
             
-            if (mobileChart) {
-                mobileChart.data.labels = priceHistory.map(p => p.time);
-                mobileChart.data.datasets[0].data = priceHistory.map(p => p.price);
-                mobileChart.update();
+            if (priceChart) {
+                priceChart.data.labels = priceHistory.map(p => p.time);
+                priceChart.data.datasets[0].data = priceHistory.map(p => p.price);
+                priceChart.update();
             }
-            
-            if (desktopChart) {
-                desktopChart.data.labels = priceHistory.map(p => p.time);
-                desktopChart.data.datasets[0].data = priceHistory.map(p => p.price);
-                desktopChart.update();
-            }
-            
-            updateMarketUI(oldPrice);
-            updateCardsDisplay();
-            saveGame();
         }
         
-        function updateMarketUI(oldPrice) {
-            const changePercent = ((farmcoinPrice - oldPrice) / oldPrice) * 100;
-            
-            mobileBalance.textContent = farmcoinBalance.toFixed(6);
-            mobilePrice.textContent = farmcoinPrice.toFixed(2);
-            mobileCurrentPrice.textContent = farmcoinPrice.toFixed(2) + ' ₽';
-            mobileDailyChange.textContent = (changePercent >= 0 ? '+' : '') + changePercent.toFixed(1) + '%';
-            mobileDailyChange.className = 'market-value ' + (changePercent >= 0 ? 'market-up' : 'market-down');
-            
-            desktopBalance.textContent = farmcoinBalance.toFixed(6) + ' FARM';
-            desktopPrice.textContent = farmcoinPrice.toFixed(2) + ' ₽';
-            desktopTotal.textContent = totalMined.toFixed(4) + ' FARM';
-            desktopCurrentPrice.textContent = farmcoinPrice.toFixed(2) + ' ₽';
-            desktopDailyChange.textContent = (changePercent >= 0 ? '+' : '') + changePercent.toFixed(2) + '%';
-            desktopDailyChange.className = 'desktop-market-value ' + (changePercent >= 0 ? 'market-up' : 'market-down');
-            
-            let statusText;
-            
-            if (marketCrash) {
-                statusText = 'КРАХ';
-                desktopStatus.style.color = '#f44336';
-                desktopStatusDot.className = 'status-dot crash';
-                desktopStatusText.textContent = 'Цены падают до 5 ₽';
-                desktopStatusText.style.color = '#f44336';
-            } else if (marketBoom) {
-                statusText = 'БУМ';
-                desktopStatus.style.color = '#FFD700';
-                desktopStatusDot.className = 'status-dot boom';
-                desktopStatusText.textContent = 'Цены растут до 150 ₽';
-                desktopStatusText.style.color = '#FFD700';
-            } else if (crashRecovery) {
-                statusText = 'ВОССТАНОВЛЕНИЕ';
-                desktopStatus.style.color = '#4CAF50';
-                desktopStatusDot.className = 'status-dot recovery';
-                desktopStatusText.textContent = 'Рынок восстанавливается';
-                desktopStatusText.style.color = '#4CAF50';
-            } else {
-                if (marketTrend > 0.2) {
-                    statusText = 'РОСТ';
-                    desktopStatus.style.color = '#4CAF50';
-                    desktopStatusDot.className = 'status-dot';
-                    desktopStatusText.textContent = 'Цены умеренно растут';
-                    desktopStatusText.style.color = '#4CAF50';
-                } else if (marketTrend < -0.2) {
-                    statusText = 'СПАД';
-                    desktopStatus.style.color = '#FF9800';
-                    desktopStatusDot.className = 'status-dot';
-                    desktopStatusText.textContent = 'Цены умеренно падают';
-                    desktopStatusText.style.color = '#FF9800';
-                } else {
-                    statusText = 'СТАБИЛЬНО';
-                    desktopStatus.style.color = '#2196F3';
-                    desktopStatusDot.className = 'status-dot';
-                    desktopStatusText.textContent = 'Рынок стабилен';
-                    desktopStatusText.style.color = '#2196F3';
-                }
-            }
-            
-            desktopStatus.textContent = statusText;
-        }
-        
-        function calculateMiningPower() {
-            let totalPower = 1.0;
-            for (let card in graphicsCards) {
-                totalPower += graphicsCards[card].owned * graphicsCards[card].power;
-            }
-            miningPower = totalPower;
-            mobilePower.textContent = miningPower.toFixed(1) + ' MH/s';
-            desktopPower.textContent = miningPower.toFixed(1) + ' MH/s';
-        }
-        
-        function calculateMiningLuck() {
-            let totalLuck = 50;
-            for (let card in graphicsCards) {
-                totalLuck += graphicsCards[card].owned * graphicsCards[card].luck;
-            }
-            miningLuck = Math.min(totalLuck, 95);
-        }
-        
+        // ========== УСЛОЖНЕННЫЙ АЛГОРИТМ ЦЕНООБРАЗОВАНИЯ ОБОРУДОВАНИЯ ==========
         function getCardPrice(cardId) {
             const card = graphicsCards[cardId];
-            let price = card.basePrice;
+            if (!card) return card.basePrice;
             
-            if (marketCrash) {
-                price *= 0.6;
-            } else if (marketBoom) {
-                price *= 1.6;
-            } else if (marketTrend > 0.3) {
-                price *= 1.3;
-            } else if (marketTrend < -0.3) {
-                price *= 0.7;
+            // Распределение цен (65% высокие, 25% средние, 10% низкие)
+            let priceMultiplier;
+            const rand = Math.random();
+            
+            if (rand < 0.65) {
+                priceMultiplier = 0.85 + Math.random() * 0.20;
+            } else if (rand < 0.90) {
+                priceMultiplier = 0.70 + Math.random() * 0.15;
+            } else {
+                priceMultiplier = 0.50 + Math.random() * 0.20;
             }
             
-            return Math.max(price, 5);
+            let price = card.basePrice * priceMultiplier;
+            
+            // Влияние рынка FarmCoin
+            const farmPriceRatio = farmcoinPrice / 50;
+            
+            if (superBoom) {
+                price *= 1.8 + Math.random() * 0.4;
+            } else if (criticalCrash) {
+                price *= 0.4 + Math.random() * 0.3;
+            } else if (marketBoom) {
+                price *= 1.3 + Math.random() * 0.2;
+            } else if (marketCrash) {
+                price *= 0.7 + Math.random() * 0.2;
+            } else {
+                price *= 0.9 + farmPriceRatio * 0.2;
+            }
+            
+            // Сезонные колебания
+            const timeFactor = Date.now() / 1000 / 60 / 60 / 24;
+            const seasonalFactor = Math.sin(timeFactor * 0.02) * 0.15 + 1;
+            
+            price *= seasonalFactor;
+            
+            // Гарантируем минимальную цену
+            const minPrice = card.priceRange.min;
+            const maxPrice = card.priceRange.max;
+            
+            price = Math.max(minPrice, Math.min(maxPrice, price));
+            
+            // Округляем до кратного 100
+            price = Math.round(price / 100) * 100;
+            
+            return price;
         }
         
-        let miningInterval;
-        let miningTime = 0;
-        const miningCycleTime = 3.0;
+        // ========== МАЙНИНГ ==========
+        function toggleMining() {
+            if (miningActive) {
+                stopMining();
+            } else {
+                startMining();
+            }
+        }
         
         function startMining() {
             if (miningActive) return;
             
             miningActive = true;
-            mobileMineBtn.innerHTML = '<i class="fa fa-pause"></i> Пауза';
-            desktopMineBtn.innerHTML = '<i class="fa fa-pause"></i> Пауза майнинга';
-            mobileMineBtn.style.background = 'linear-gradient(to bottom, #f44336, #d32f2f)';
-            desktopMineBtn.style.background = 'linear-gradient(to bottom, #f44336, #d32f2f)';
+            document.getElementById('mine-btn').innerHTML = '<i class="fa fa-pause"></i> Пауза майнинга';
             
             miningInterval = setInterval(() => {
                 miningTime += 0.1;
                 const progressPercent = (miningTime / miningCycleTime) * 100;
-                mobileProgress.style.width = `${Math.min(progressPercent, 100)}%`;
-                desktopProgress.style.width = `${Math.min(progressPercent, 100)}%`;
-                mobileTimer.textContent = (miningCycleTime - miningTime).toFixed(1);
-                desktopTimer.textContent = (miningCycleTime - miningTime).toFixed(1);
+                document.getElementById('mining-progress').style.width = `${Math.min(progressPercent, 100)}%`;
+                document.getElementById('mining-timer').textContent = (miningCycleTime - miningTime).toFixed(1);
                 
                 if (miningTime >= miningCycleTime) {
                     attemptMine();
                     miningTime = 0;
                 }
-                
-                saveGame();
             }, 100);
         }
         
@@ -1222,297 +1607,660 @@
             if (!miningActive) return;
             
             miningActive = false;
-            mobileMineBtn.innerHTML = '<i class="fa fa-play"></i> Старт';
-            desktopMineBtn.innerHTML = '<i class="fa fa-play"></i> Старт майнинга';
-            mobileMineBtn.style.background = 'linear-gradient(to bottom, #4CAF50, #2E7D32)';
-            desktopMineBtn.style.background = 'linear-gradient(to bottom, #4CAF50, #2E7D32)';
+            document.getElementById('mine-btn').innerHTML = '<i class="fa fa-play"></i> Старт майнинга';
             clearInterval(miningInterval);
-            saveGame();
-        }
-        
-        function attemptMine() {
-            let baseChance = 0.4;
-            let totalChance = Math.min(baseChance + (miningLuck / 100), 0.95);
-            
-            const marketEffect = 1 + (marketTrend * 0.3);
-            totalChance *= marketEffect;
-            
-            if (marketCrash) totalChance *= 0.6;
-            if (marketBoom) totalChance *= 1.3;
-            if (crashRecovery) totalChance *= 1.1;
-            
-            const isSuccess = Math.random() < totalChance;
-            
-            if (isSuccess) {
-                const baseReward = 0.001;
-                const powerBonus = miningPower * 0.0003;
-                const randomBonus = Math.random() * 0.0005;
-                
-                let minedAmount = baseReward + powerBonus + randomBonus;
-                
-                if (marketCrash) minedAmount *= 0.4;
-                if (marketBoom) minedAmount *= 1.8;
-                if (crashRecovery) minedAmount *= 1.2;
-                
-                farmcoinBalance += minedAmount;
-                totalMined += minedAmount;
-                
-                addEvent(`Добыто: ${minedAmount.toFixed(6)} FARM`, 'success');
-            } else {
-                addEvent('Добыча не удалась', 'error');
-            }
-            
-            updateUI();
-            saveGame();
-        }
-        
-        function updateUI() {
-            calculateMiningPower();
-            calculateMiningLuck();
-            updateCardsDisplay();
-        }
-        
-        function updateCardsDisplay() {
-            if (currentTab === 'owned') {
-                updateMobileOwnedCards();
-            } else {
-                updateMobileCatalog();
-            }
-            
-            updateDesktopOwnedCards();
-            updateDesktopCatalog();
-        }
-        
-        function updateMobileOwnedCards() {
-            mobileCardsContainer.innerHTML = '';
-            searchBox.style.display = 'none';
-            
-            let hasCards = false;
-            for (let cardId in graphicsCards) {
-                const card = graphicsCards[cardId];
-                if (card.owned > 0) {
-                    hasCards = true;
-                    const price = getCardPrice(cardId);
-                    const cardElement = document.createElement('div');
-                    cardElement.className = 'card-item owned fade-in';
-                    cardElement.innerHTML = `
-                        <div class="card-header">
-                            <div class="card-name">${card.name}</div>
-                            <div style="color: #4CAF50; font-size: 11px;">x${card.owned}</div>
-                        </div>
-                        <div class="card-specs">
-                            ${card.power} MH/s | +${card.luck}% удачи
-                        </div>
-                        <button class="buy-btn" onclick="buyCard('${cardId}')" 
-                                ${farmcoinBalance >= price ? '' : 'disabled'}>
-                            Купить еще (${price.toFixed(1)} FARM)
-                        </button>
-                    `;
-                    mobileCardsContainer.appendChild(cardElement);
-                }
-            }
-            
-            if (!hasCards) {
-                mobileCardsContainer.innerHTML = `
-                    <div style="text-align: center; color: #888; padding: 20px; font-size: 12px;">
-                        У вас нет видеокарт.<br>
-                        Перейдите в каталог для покупки.
-                    </div>
-                `;
-            }
-        }
-        
-        function updateMobileCatalog() {
-            mobileCardsContainer.innerHTML = '';
-            searchBox.style.display = 'block';
-            
-            const searchTerm = mobileCardSearch.value.toLowerCase();
-            let cardsFound = false;
-            
-            for (let cardId in graphicsCards) {
-                const card = graphicsCards[cardId];
-                
-                if (searchTerm && !card.name.toLowerCase().includes(searchTerm)) {
-                    continue;
-                }
-                
-                cardsFound = true;
-                const price = getCardPrice(cardId);
-                const cardElement = document.createElement('div');
-                cardElement.className = 'card-item fade-in';
-                cardElement.innerHTML = `
-                    <div class="card-header">
-                        <div class="card-name">${card.name}</div>
-                        <div class="card-price">${price.toFixed(1)} FARM</div>
-                    </div>
-                    <div class="card-specs">
-                        ${card.power} MH/s | +${card.luck}% удачи
-                    </div>
-                    <button class="buy-btn" onclick="buyCard('${cardId}')" 
-                            ${farmcoinBalance >= price ? '' : 'disabled'}>
-                        Купить
-                    </button>
-                `;
-                mobileCardsContainer.appendChild(cardElement);
-            }
-            
-            if (!cardsFound) {
-                mobileCardsContainer.innerHTML = `
-                    <div style="text-align: center; color: #888; padding: 20px; font-size: 12px;">
-                        Видеокарты не найдены
-                    </div>
-                `;
-            }
-        }
-        
-        function updateDesktopOwnedCards() {
-            desktopCardsGrid.innerHTML = '';
-            
-            let hasCards = false;
-            for (let cardId in graphicsCards) {
-                const card = graphicsCards[cardId];
-                if (card.owned > 0) {
-                    hasCards = true;
-                    const price = getCardPrice(cardId);
-                    const cardElement = document.createElement('div');
-                    cardElement.className = 'card-item owned fade-in';
-                    cardElement.innerHTML = `
-                        <div class="card-header">
-                            <div class="card-name">${card.name}</div>
-                            <div style="color: #4CAF50; font-size: 12px;">x${card.owned}</div>
-                        </div>
-                        <div class="card-specs">
-                            Мощность: ${card.power} MH/s<br>
-                            Удача: +${card.luck}%
-                        </div>
-                        <button class="buy-btn" onclick="buyCard('${cardId}')" 
-                                ${farmcoinBalance >= price ? '' : 'disabled'}
-                                style="font-size: 11px; padding: 6px;">
-                            Купить еще (${price.toFixed(1)} FARM)
-                        </button>
-                    `;
-                    desktopCardsGrid.appendChild(cardElement);
-                }
-            }
-            
-            if (!hasCards) {
-                desktopCardsGrid.innerHTML = `
-                    <div style="text-align: center; color: #888; padding: 30px; font-size: 13px; grid-column: 1 / -1;">
-                        У вас нет видеокарт.<br>
-                        Купите их в каталоге справа.
-                    </div>
-                `;
-            }
-        }
-        
-        function updateDesktopCatalog() {
-            desktopCatalog.innerHTML = '';
-            const searchTerm = desktopCardSearch.value.toLowerCase();
-            
-            for (let cardId in graphicsCards) {
-                const card = graphicsCards[cardId];
-                
-                if (searchTerm && !card.name.toLowerCase().includes(searchTerm)) {
-                    continue;
-                }
-                
-                const price = getCardPrice(cardId);
-                const cardElement = document.createElement('div');
-                cardElement.className = 'card-item fade-in';
-                cardElement.innerHTML = `
-                    <div class="card-header">
-                        <div class="card-name">${card.name}</div>
-                        <div class="card-price">${price.toFixed(1)} FARM</div>
-                    </div>
-                    <div class="card-specs">
-                        Мощность: ${card.power} MH/s<br>
-                        Удача: +${card.luck}%
-                    </div>
-                    <button class="buy-btn" onclick="buyCard('${cardId}')" 
-                            ${farmcoinBalance >= price ? '' : 'disabled'}
-                            style="font-size: 11px; padding: 6px;">
-                        Купить
-                    </button>
-                `;
-                desktopCatalog.appendChild(cardElement);
-            }
-        }
-        
-        function switchTab(tab) {
-            currentTab = tab;
-            document.getElementById('tab-owned').classList.remove('active');
-            document.getElementById('tab-catalog').classList.remove('active');
-            document.getElementById(`tab-${tab}`).classList.add('active');
-            
-            updateSwipeDots(tab === 'owned' ? 0 : 1);
-            updateCardsDisplay();
-        }
-        
-        function updateSwipeDots(index) {
-            document.getElementById('dot1').classList.remove('active');
-            document.getElementById('dot2').classList.remove('active');
-            document.getElementById('dot3').classList.remove('active');
-            document.getElementById(`dot${index + 1}`).classList.add('active');
-        }
-        
-        function buyCard(cardId) {
-            const price = getCardPrice(cardId);
-            
-            if (farmcoinBalance >= price) {
-                farmcoinBalance -= price;
-                graphicsCards[cardId].owned += 1;
-                
-                addEvent(`Куплена ${graphicsCards[cardId].name}`, 'info');
-                updateUI();
-                saveGame();
-            } else {
-                addEvent(`Недостаточно FARM для ${graphicsCards[cardId].name}`, 'error');
-            }
-        }
-        
-        function addEvent(message, type) {
-            const now = new Date();
-            const timeString = window.innerWidth < 768 
-                ? `[${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}]`
-                : `[${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}]`;
-            
-            const eventItem = document.createElement('div');
-            eventItem.className = 'event-item fade-in';
-            eventItem.innerHTML = `
-                <span class="event-time">${timeString}</span>
-                <span class="event-message ${type}">${message}</span>
-            `;
-            
-            mobileEventLog.prepend(eventItem);
-            desktopEventLog.prepend(eventItem);
-            
-            if (mobileEventLog.children.length > 20) {
-                mobileEventLog.removeChild(mobileEventLog.lastChild);
-                desktopEventLog.removeChild(desktopEventLog.lastChild);
-            }
         }
         
         function toggleAutoMining() {
             autoMining = !autoMining;
             
             if (autoMining) {
-                mobileAutoBtn.classList.add('active');
-                desktopAutoBtn.classList.add('active');
+                document.getElementById('auto-btn').classList.add('active');
+                document.getElementById('auto-status').textContent = 'ВКЛ';
                 startMining();
                 addEvent('Автоматический майнинг включен', 'info');
             } else {
-                mobileAutoBtn.classList.remove('active');
-                desktopAutoBtn.classList.remove('active');
+                document.getElementById('auto-btn').classList.remove('active');
+                document.getElementById('auto-status').textContent = 'ВЫКЛ';
                 if (miningActive) stopMining();
                 addEvent('Автоматический майнинг выключен', 'info');
             }
-            
-            saveGame();
         }
         
+        function attemptMine() {
+            const efficiency = equipmentHealth / 100 * equipmentEfficiency;
+            
+            let baseChance = 0.35 * efficiency;
+            let totalChance = Math.min(baseChance + (miningLuck / 120), 0.9);
+            
+            const marketEffect = 1 + (marketTrend * 0.25);
+            totalChance *= marketEffect;
+            
+            if (marketCrash || criticalCrash) totalChance *= 0.5;
+            if (marketBoom) totalChance *= 1.5;
+            if (superBoom) totalChance *= 2.0;
+            if (crashRecovery) totalChance *= 1.3;
+            
+            const isSuccess = Math.random() < totalChance;
+            
+            if (isSuccess) {
+                const baseReward = 0.0008 * efficiency;
+                const powerBonus = miningPower * 0.00015 * efficiency;
+                const randomBonus = Math.random() * 0.0003 * efficiency;
+                
+                let minedAmount = baseReward + powerBonus + randomBonus;
+                
+                if (marketCrash) minedAmount *= 0.3;
+                if (criticalCrash) minedAmount *= 0.2;
+                if (marketBoom) minedAmount *= 2.0;
+                if (superBoom) minedAmount *= 3.0;
+                if (crashRecovery) minedAmount *= 1.5;
+                
+                farmcoinBalance += minedAmount;
+                totalMined += minedAmount;
+                
+                const wearRate = 0.2 + (miningPower / 100) * 0.3;
+                equipmentHealth -= Math.random() * wearRate;
+                if (equipmentHealth < 0) equipmentHealth = 0;
+                
+                if (equipmentHealth < 30) {
+                    equipmentEfficiency *= 0.999;
+                }
+                
+                addEvent(`Добыто: ${minedAmount.toFixed(6)} FARM`, 'success');
+                addHistory(`Добыча: ${minedAmount.toFixed(6)} FARM`, 'mining');
+            } else {
+                addEvent('Добыча не удалась', 'error');
+            }
+            
+            updateUI();
+        }
+        
+        // ========== ВИДЕОКАРТЫ ==========
+        function calculateMiningPower() {
+            let totalPower = 1.0;
+            for (let cardId in graphicsCards) {
+                totalPower += graphicsCards[cardId].owned * graphicsCards[cardId].power * equipmentEfficiency;
+            }
+            miningPower = totalPower;
+            document.getElementById('mining-power').textContent = miningPower.toFixed(1) + ' MH/s';
+        }
+        
+        function calculateMiningLuck() {
+            let totalLuck = 50;
+            for (let cardId in graphicsCards) {
+                totalLuck += graphicsCards[cardId].owned * graphicsCards[cardId].luck;
+            }
+            miningLuck = Math.min(totalLuck, 95);
+        }
+        
+        function switchCardsTab(tab) {
+            currentCardsTab = tab;
+            document.querySelectorAll('.cards-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            updateCardsCatalog();
+        }
+        
+        function updateCardsCatalog() {
+            const container = document.getElementById('cards-catalog');
+            container.innerHTML = '';
+            
+            for (let cardId in graphicsCards) {
+                const card = graphicsCards[cardId];
+                
+                if (card.type !== currentCardsTab) continue;
+                
+                const price = getCardPrice(cardId);
+                const cardElement = document.createElement('div');
+                cardElement.className = `card-item ${card.special ? 'golden golden-glow' : ''}`;
+                
+                const tierClass = `tier-${card.tier}`;
+                const tierLabel = getTierLabel(card.tier);
+                
+                cardElement.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-name">${card.name}</div>
+                        ${card.special ? '<i class="fa fa-star" style="color:#FFD700;"></i>' : ''}
+                    </div>
+                    <div class="card-specs">
+                        Мощность: ${card.power} MH/s<br>
+                        Удача: +${card.luck}%<br>
+                        Производитель: ${card.brand.toUpperCase()}
+                    </div>
+                    <div class="card-price">${formatPrice(price)} ₽</div>
+                    <div class="card-tier ${tierClass}">${tierLabel}</div>
+                    <button class="btn btn-primary" style="width:100%; margin-top:8px; font-size:12px; padding:8px;" 
+                            onclick="buyCard('${cardId}')" 
+                            ${rubleBalance >= price ? '' : 'disabled'}>
+                        Купить
+                    </button>
+                `;
+                
+                container.appendChild(cardElement);
+            }
+        }
+        
+        function getTierLabel(tier) {
+            const labels = {
+                'budget': 'Бюджет',
+                'mid': 'Средний',
+                'mid-high': 'Средний+',
+                'high': 'Высокий',
+                'premium': 'Премиум',
+                'flagship': 'Флагман',
+                'asic': 'ASIC'
+            };
+            return labels[tier] || tier;
+        }
+        
+        function formatPrice(price) {
+            if (price >= 1000000) {
+                return (price / 1000000).toFixed(1) + 'M';
+            } else if (price >= 1000) {
+                return (price / 1000).toFixed(1) + 'K';
+            }
+            return price.toLocaleString('ru-RU');
+        }
+        
+        function updateOwnedCards() {
+            const container = document.getElementById('owned-cards');
+            container.innerHTML = '';
+            
+            let hasCards = false;
+            let totalInvestment = 0;
+            
+            for (let cardId in graphicsCards) {
+                const card = graphicsCards[cardId];
+                if (card.owned > 0) {
+                    hasCards = true;
+                    const currentPrice = getCardPrice(cardId);
+                    totalInvestment += currentPrice * card.owned;
+                    
+                    const cardElement = document.createElement('div');
+                    cardElement.className = 'card-item owned';
+                    cardElement.innerHTML = `
+                        <div class="card-header">
+                            <div class="card-name">${card.name} ×${card.owned}</div>
+                            <div style="color:#4CAF50; font-size:12px;">${(card.owned * card.power).toFixed(0)} MH/s</div>
+                        </div>
+                        <div class="card-specs">
+                            Мощность: ${card.power} MH/s (каждая)<br>
+                            Удача: +${card.luck}%<br>
+                            Примерная стоимость: ${formatPrice(currentPrice * card.owned)} ₽
+                        </div>
+                    `;
+                    container.appendChild(cardElement);
+                }
+            }
+            
+            if (!hasCards) {
+                container.innerHTML = '<div style="text-align:center; color:#888; padding:30px;">У вас нет оборудования. Начните с GTX 1660 SUPER за ~4,200 ₽</div>';
+            } else {
+                const summary = document.createElement('div');
+                summary.style.marginTop = '15px';
+                summary.style.padding = '10px';
+                summary.style.background = '#2a2a3a';
+                summary.style.borderRadius = '8px';
+                summary.style.fontSize = '12px';
+                summary.innerHTML = `
+                    <strong>Сводка оборудования:</strong><br>
+                    Всего инвестиций: ${formatPrice(totalInvestment)} ₽<br>
+                    Общая мощность: ${miningPower.toFixed(1)} MH/s<br>
+                    Общая удача: ${miningLuck.toFixed(0)}%
+                `;
+                container.appendChild(summary);
+            }
+        }
+        
+        function buyCard(cardId) {
+            const price = getCardPrice(cardId);
+            
+            if (rubleBalance >= price) {
+                rubleBalance -= price;
+                graphicsCards[cardId].owned += 1;
+                
+                addEvent(`Куплена ${graphicsCards[cardId].name} за ${formatPrice(price)} ₽`, 'info');
+                addHistory(`Покупка: ${graphicsCards[cardId].name} за ${formatPrice(price)} ₽`, 'purchase');
+                
+                updateUI();
+                updateOwnedCards();
+                calculateMiningPower();
+                calculateMiningLuck();
+            } else {
+                addEvent(`Недостаточно рублей для покупки ${graphicsCards[cardId].name}`, 'error');
+            }
+        }
+        
+        // ========== ТОРГОВЛЯ ==========
+        function openBuyModal() {
+            document.getElementById('buy-modal').style.display = 'flex';
+            document.getElementById('buy-price').textContent = farmcoinPrice.toFixed(2);
+            updateBuyCalculation();
+        }
+        
+        function updateBuyCalculation() {
+            const amount = parseFloat(document.getElementById('buy-amount').value) || 0;
+            const receive = amount / farmcoinPrice;
+            document.getElementById('buy-receive').textContent = receive.toFixed(6);
+        }
+        
+        function buyFarmCoin() {
+            const rubles = parseFloat(document.getElementById('buy-amount').value);
+            
+            if (isNaN(rubles) || rubles < 10) {
+                addEvent('Минимальная сумма покупки: 10 ₽', 'error');
+                return;
+            }
+            
+            if (rubleBalance < rubles) {
+                addEvent('Недостаточно рублей на балансе', 'error');
+                return;
+            }
+            
+            const farmAmount = rubles / farmcoinPrice;
+            rubleBalance -= rubles;
+            farmcoinBalance += farmAmount;
+            
+            addEvent(`Куплено ${farmAmount.toFixed(6)} FARM за ${formatPrice(rubles)} ₽`, 'success');
+            addHistory(`Покупка FARM: ${farmAmount.toFixed(6)} за ${formatPrice(rubles)} ₽`, 'trade');
+            
+            closeModal('buy-modal');
+            updateUI();
+        }
+        
+        function openSellModal() {
+            document.getElementById('sell-modal').style.display = 'flex';
+            document.getElementById('sell-price').textContent = farmcoinPrice.toFixed(2);
+            updateSellCalculation();
+        }
+        
+        function updateSellCalculation() {
+            const amount = parseFloat(document.getElementById('sell-amount').value) || 0;
+            const receive = amount * farmcoinPrice;
+            document.getElementById('sell-receive').textContent = formatPrice(receive);
+        }
+        
+        function sellFarmCoin() {
+            const farmAmount = parseFloat(document.getElementById('sell-amount').value);
+            
+            if (isNaN(farmAmount) || farmAmount < 0.000001) {
+                addEvent('Минимальная сумма продажи: 0.000001 FARM', 'error');
+                return;
+            }
+            
+            if (farmcoinBalance < farmAmount) {
+                addEvent('Недостаточно FarmCoin на балансе', 'error');
+                return;
+            }
+            
+            const rubles = farmAmount * farmcoinPrice;
+            farmcoinBalance -= farmAmount;
+            rubleBalance += rubles;
+            
+            addEvent(`Продано ${farmAmount.toFixed(6)} FARM за ${formatPrice(rubles)} ₽`, 'success');
+            addHistory(`Продажа FARM: ${farmAmount.toFixed(6)} за ${formatPrice(rubles)} ₽`, 'trade');
+            
+            closeModal('sell-modal');
+            updateUI();
+        }
+        
+        // ========== ИСТОРИЯ КУПОНОВ ==========
+        function addCouponHistory(type, code, amount, description = '') {
+            const time = new Date().toLocaleString();
+            const coupon = {
+                id: Date.now() + Math.random().toString(36).substr(2, 9),
+                type,
+                code,
+                amount,
+                description,
+                time,
+                status: 'активен'
+            };
+            
+            couponHistory.unshift(coupon);
+            
+            if (couponHistory.length > 50) {
+                couponHistory = couponHistory.slice(0, 50);
+            }
+            
+            updateCouponsList();
+            saveGame();
+            
+            return coupon;
+        }
+        
+        function updateCouponsList() {
+            const container = document.getElementById('coupons-list');
+            const modalContainer = document.getElementById('coupons-modal-list');
+            
+            if (couponHistory.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: #888; padding: 20px;">У вас еще нет купонов<br><small>Купоны появляются при выводе средств</small></div>';
+                if (modalContainer) {
+                    modalContainer.innerHTML = '<div style="text-align: center; color: #888; padding: 20px;">У вас еще нет купонов<br><small>Купоны появляются при выводе средств</small></div>';
+                }
+                return;
+            }
+            
+            container.innerHTML = '';
+            if (modalContainer) modalContainer.innerHTML = '';
+            
+            // Показываем только последние 5 в панели
+            const recentCoupons = couponHistory.slice(0, 5);
+            const allCoupons = couponHistory;
+            
+            // Обновляем основную панель
+            recentCoupons.forEach(coupon => {
+                const couponElement = document.createElement('div');
+                couponElement.className = 'coupon-item';
+                couponElement.innerHTML = `
+                    <div class="coupon-code">${coupon.code}</div>
+                    <div class="coupon-details">
+                        ${coupon.type}: ${formatPrice(coupon.amount)} ₽<br>
+                        ${coupon.time}
+                    </div>
+                `;
+                container.appendChild(couponElement);
+            });
+            
+            // Обновляем модальное окно
+            if (modalContainer) {
+                allCoupons.forEach(coupon => {
+                    const couponElement = document.createElement('div');
+                    couponElement.className = 'coupon-item';
+                    couponElement.innerHTML = `
+                        <div class="coupon-code">${coupon.code}</div>
+                        <div class="coupon-details">
+                            ${coupon.type}: ${formatPrice(coupon.amount)} ₽<br>
+                            Статус: ${coupon.status}<br>
+                            ${coupon.description ? coupon.description + '<br>' : ''}
+                            ${coupon.time}
+                        </div>
+                    `;
+                    modalContainer.appendChild(couponElement);
+                });
+            }
+        }
+        
+        function openCouponsModal() {
+            document.getElementById('coupons-modal').style.display = 'flex';
+            updateCouponsList();
+        }
+        
+        function clearCoupons() {
+            if (confirm('Очистить всю историю купонов?')) {
+                couponHistory = [];
+                updateCouponsList();
+                addEvent('История купонов очищена', 'info');
+                addHistory('Очистка истории купонов', 'system');
+            }
+        }
+        
+        // ========== АНАЛИЗ РЫНКА ==========
+        function openAnalysisModal() {
+            document.getElementById('analysis-modal').style.display = 'flex';
+            updateAnalysis();
+        }
+        
+        function updateAnalysis() {
+            let analysis = '';
+            
+            if (superBoom) {
+                analysis = '🔥 <strong>СУПЕР БУМ АКТИВЕН!</strong><br>Курс на максимуме. Идеальное время для продажи!';
+            } else if (criticalCrash) {
+                analysis = '💀 <strong>КРИТИЧЕСКИЙ КРАХ!</strong><br>Курс стремительно падает. Рекомендуется воздержаться от покупок.';
+            } else if (marketBoom) {
+                analysis = '📈 <strong>БУМ РЫНКА</strong><br>Курс растет. Можно продавать для получения прибыли.';
+            } else if (marketCrash) {
+                analysis = '📉 <strong>КРАХ РЫНКА</strong><br>Курс падает. Хорошее время для покупки по низкой цене.';
+            } else if (crashRecovery) {
+                analysis = '🔄 <strong>ВОССТАНОВЛЕНИЕ</strong><br>Рынок восстанавливается после падения. Курс постепенно растет.';
+            } else if (marketTrend > 0.3) {
+                analysis = '↗️ <strong>ВОСХОДЯЩИЙ ТРЕНД</strong><br>Рынок демонстрирует стабильный рост.';
+            } else if (marketTrend < -0.3) {
+                analysis = '↘️ <strong>НИСХОДЯЩИЙ ТРЕНД</strong><br>Рынок в умеренном спаде.';
+            } else {
+                analysis = '➡️ <strong>СТАБИЛЬНЫЙ РЫНОК</strong><br>Курс колеблется в пределах нормы.';
+            }
+            
+            analysis += `<br><br>📊 <strong>Данные:</strong><br>`;
+            analysis += `• Текущий курс: ${farmcoinPrice.toFixed(2)} ₽<br>`;
+            analysis += `• Изменение за день: ${(marketTrend * 100).toFixed(2)}%<br>`;
+            analysis += `• Волатильность: ${marketVolatility.toFixed(2)}<br>`;
+            analysis += `• Рекомендация: ${getTradingRecommendation()}`;
+            
+            document.getElementById('analysis-text').innerHTML = analysis;
+        }
+        
+        function getTradingRecommendation() {
+            if (farmcoinPrice > 120) return 'Продавать (высокая цена)';
+            if (farmcoinPrice < 30) return 'Покупать (низкая цена)';
+            if (marketTrend > 0.2) return 'Держать или частично продавать';
+            if (marketTrend < -0.2) return 'Покупать на падении';
+            return 'Ждать сигналов';
+        }
+        
+        // ========== РЕМОНТ ОБОРУДОВАНИЯ ==========
+        function openRepairModal() {
+            document.getElementById('repair-modal').style.display = 'flex';
+            document.getElementById('repair-health').textContent = equipmentHealth.toFixed(1) + '%';
+            document.getElementById('repair-efficiency').textContent = (equipmentEfficiency * 100).toFixed(1) + '%';
+            
+            // Стоимость ремонта зависит от износа
+            const repairCost = Math.max(100, Math.floor(equipmentHealth * 10));
+            document.getElementById('repair-cost').textContent = formatPrice(repairCost);
+        }
+        
+        function repairEquipment() {
+            const repairCost = Math.max(100, Math.floor(equipmentHealth * 10));
+            
+            if (rubleBalance < repairCost) {
+                addEvent(`Недостаточно рублей для ремонта (требуется ${formatPrice(repairCost)} ₽)`, 'error');
+                return;
+            }
+            
+            rubleBalance -= repairCost;
+            equipmentHealth = 100;
+            equipmentEfficiency = Math.min(1.5, equipmentEfficiency + 0.05);
+            
+            addEvent(`Оборудование отремонтировано! Эффективность повышена. Стоимость: ${formatPrice(repairCost)} ₽`, 'success');
+            addHistory(`Ремонт оборудования за ${formatPrice(repairCost)} ₽`, 'repair');
+            
+            calculateMiningPower();
+            closeModal('repair-modal');
+            updateUI();
+        }
+        
+        // ========== ВЫВОД СРЕДСТВ ==========
+        function openWithdrawModal() {
+            document.getElementById('withdraw-modal').style.display = 'flex';
+            document.getElementById('available-balance').textContent = formatPrice(rubleBalance);
+            document.getElementById('withdraw-amount').value = '';
+            document.getElementById('withdraw-coupon').textContent = 'Введите сумму для генерации купона';
+            document.getElementById('confirm-withdraw-btn').style.display = 'none';
+        }
+        
+        function updateWithdrawCalculation() {
+            const amount = parseFloat(document.getElementById('withdraw-amount').value) || 0;
+            
+            if (amount > rubleBalance) {
+                document.getElementById('withdraw-coupon').innerHTML = 
+                    '<span style="color:#f44336;">Недостаточно средств на балансе</span>';
+                document.getElementById('confirm-withdraw-btn').style.display = 'none';
+                return;
+            }
+            
+            if (amount < 100) {
+                document.getElementById('withdraw-coupon').textContent = 'Минимальная сумма вывода: 100 ₽';
+                document.getElementById('confirm-withdraw-btn').style.display = 'none';
+                return;
+            }
+            
+            const couponCode = 'FARM-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+            document.getElementById('withdraw-coupon').innerHTML = `
+                <strong>Купон на вывод:</strong> ${couponCode}<br>
+                <strong>Сумма:</strong> ${formatPrice(amount)} ₽<br>
+                <strong>Дата:</strong> ${new Date().toLocaleString()}<br>
+                <small style="color:#888;">Сохраните этот купон</small>
+            `;
+            document.getElementById('confirm-withdraw-btn').style.display = 'block';
+        }
+        
+        function generateWithdrawCoupon() {
+            const amount = parseFloat(document.getElementById('withdraw-amount').value);
+            
+            if (isNaN(amount) || amount < 100) {
+                addEvent('Минимальная сумма вывода: 100 ₽', 'error');
+                return;
+            }
+            
+            if (amount > rubleBalance) {
+                addEvent('Недостаточно средств на балансе', 'error');
+                return;
+            }
+            
+            updateWithdrawCalculation();
+        }
+        
+        function confirmWithdraw() {
+            const amount = parseFloat(document.getElementById('withdraw-amount').value);
+            
+            rubleBalance -= amount;
+            const couponCode = 'FARM-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+            
+            // Добавляем купон в историю
+            addCouponHistory('Вывод средств', couponCode, amount, `Вывод ${formatPrice(amount)} ₽`);
+            
+            addEvent(`Вывод ${formatPrice(amount)} ₽ успешно оформлен! Купон: ${couponCode}`, 'success');
+            addHistory(`Вывод средств: ${formatPrice(amount)} ₽ (купон: ${couponCode})`, 'withdraw');
+            
+            closeModal('withdraw-modal');
+            updateUI();
+        }
+        
+        // ========== ИСТОРИЯ ОПЕРАЦИЙ ==========
+        function openHistoryModal() {
+            document.getElementById('history-modal').style.display = 'flex';
+            updateHistoryList();
+        }
+        
+        function updateHistoryList() {
+            const container = document.getElementById('history-list');
+            container.innerHTML = '';
+            
+            if (operationHistory.length === 0) {
+                container.innerHTML = '<div style="text-align:center; color:#888; padding:20px;">История операций пуста</div>';
+                return;
+            }
+            
+            const recentHistory = operationHistory.slice(-50).reverse();
+            
+            recentHistory.forEach(record => {
+                const item = document.createElement('div');
+                item.className = 'history-item';
+                
+                let icon = '📝';
+                if (record.type === 'trade') icon = '💰';
+                if (record.type === 'mining') icon = '⛏️';
+                if (record.type === 'purchase') icon = '🛒';
+                if (record.type === 'market') icon = '📈';
+                if (record.type === 'repair') icon = '🔧';
+                if (record.type === 'withdraw') icon = '💳';
+                if (record.type === 'system') icon = '⚙️';
+                
+                item.innerHTML = `
+                    <span class="history-time">[${record.time}]</span>
+                    ${icon} ${record.message}
+                `;
+                container.appendChild(item);
+            });
+        }
+        
+        function addHistory(message, type) {
+            const time = new Date().toLocaleTimeString();
+            operationHistory.push({ time, message, type });
+            
+            if (operationHistory.length > 1000) {
+                operationHistory = operationHistory.slice(-1000);
+            }
+        }
+        
+        function clearHistory() {
+            if (confirm('Очистить всю историю операций?')) {
+                operationHistory = [];
+                updateHistoryList();
+                addEvent('История операций очищена', 'info');
+            }
+        }
+        
+        // ========== МОДАЛЬНЫЕ ОКНА ==========
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+        
+        // ========== СОБЫТИЯ ==========
+        function addEvent(message, type) {
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+        
+        // ========== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА ==========
+        function updateUI() {
+            document.getElementById('balance-rub').textContent = formatPrice(rubleBalance) + ' ₽';
+            document.getElementById('balance-farm').textContent = farmcoinBalance.toFixed(6) + ' FARM';
+            document.getElementById('current-price').textContent = farmcoinPrice.toFixed(2) + ' ₽';
+            
+            updateMarketUI();
+            calculateMiningPower();
+            calculateMiningLuck();
+        }
+        
+        function updateMarketUI() {
+            let status = 'Стабильное';
+            let trend = 'Нейтральный';
+            let volatility = 'Средняя';
+            
+            if (superBoom) {
+                status = 'СУПЕР БУМ';
+                trend = 'Максимальный рост';
+                volatility = 'Экстремальная';
+            } else if (criticalCrash) {
+                status = 'КРИТИЧЕСКИЙ КРАХ';
+                trend = 'Сильное падение';
+                volatility = 'Экстремальная';
+            } else if (marketBoom) {
+                status = 'БУМ';
+                trend = 'Восходящий';
+                volatility = 'Высокая';
+            } else if (marketCrash) {
+                status = 'КРАХ';
+                trend = 'Нисходящий';
+                volatility = 'Высокая';
+            } else if (crashRecovery) {
+                status = 'ВОССТАНОВЛЕНИЕ';
+                trend = 'Умеренный рост';
+                volatility = 'Средняя';
+            } else if (marketTrend > 0.3) {
+                status = 'РОСТ';
+                trend = 'Восходящий';
+                volatility = 'Высокая';
+            } else if (marketTrend < -0.3) {
+                status = 'СПАД';
+                trend = 'Нисходящий';
+                volatility = 'Высокая';
+            }
+            
+            document.getElementById('market-status').textContent = status;
+            document.getElementById('market-trend').textContent = trend;
+            document.getElementById('market-volatility').textContent = volatility;
+            document.getElementById('super-boom-chance').textContent = '0.6%';
+            document.getElementById('critical-crash-chance').textContent = '0.3%';
+        }
+        
+        // ========== СОХРАНЕНИЕ ==========
         function saveGame() {
             const gameState = {
+                version: '4.0',
                 farmcoinBalance,
+                rubleBalance,
                 totalMined,
                 miningPower,
                 autoMining,
@@ -1525,91 +2273,93 @@
                 priceHistory,
                 marketCrash,
                 marketBoom,
+                superBoom,
+                criticalCrash,
                 crashRecovery,
                 crashTimer,
                 boomTimer,
-                recoveryTimer
+                superBoomTimer,
+                criticalCrashTimer,
+                recoveryTimer,
+                equipmentHealth,
+                equipmentEfficiency,
+                operationHistory,
+                couponHistory
             };
             
             try {
-                localStorage.setItem('farmcoinFinalSimulator', JSON.stringify(gameState));
+                localStorage.setItem('farmcoinProSimulator', JSON.stringify(gameState));
             } catch (e) {
                 console.error('Ошибка сохранения:', e);
             }
         }
         
         function loadGame() {
-            const saved = localStorage.getItem('farmcoinFinalSimulator');
+            const saved = localStorage.getItem('farmcoinProSimulator');
             if (saved) {
                 try {
                     const gameState = JSON.parse(saved);
                     
-                    farmcoinBalance = gameState.farmcoinBalance || 0;
-                    totalMined = gameState.totalMined || 0;
-                    miningPower = gameState.miningPower || 1.0;
-                    autoMining = gameState.autoMining || false;
-                    miningActive = gameState.miningActive || false;
-                    farmcoinPrice = gameState.farmcoinPrice || 50.0;
-                    marketTrend = gameState.marketTrend || 0;
-                    marketVolatility = gameState.marketVolatility || 0.5;
-                    miningLuck = gameState.miningLuck || 50;
-                    priceHistory = gameState.priceHistory || [];
-                    marketCrash = gameState.marketCrash || false;
-                    marketBoom = gameState.marketBoom || false;
-                    crashRecovery = gameState.crashRecovery || false;
-                    crashTimer = gameState.crashTimer || 0;
-                    boomTimer = gameState.boomTimer || 0;
-                    recoveryTimer = gameState.recoveryTimer || 0;
-                    
-                    if (gameState.graphicsCards) {
-                        for (let cardId in gameState.graphicsCards) {
-                            if (graphicsCards[cardId]) {
-                                graphicsCards[cardId].owned = gameState.graphicsCards[cardId].owned || 0;
-                                graphicsCards[cardId].basePrice = gameState.graphicsCards[cardId].basePrice || graphicsCards[cardId].basePrice;
+                    if (gameState.version === '4.0') {
+                        farmcoinBalance = gameState.farmcoinBalance || 0;
+                        rubleBalance = gameState.rubleBalance || 1000;
+                        totalMined = gameState.totalMined || 0;
+                        miningPower = gameState.miningPower || 1.0;
+                        autoMining = gameState.autoMining || false;
+                        miningActive = gameState.miningActive || false;
+                        farmcoinPrice = gameState.farmcoinPrice || 50.0;
+                        marketTrend = gameState.marketTrend || 0;
+                        marketVolatility = gameState.marketVolatility || 0.5;
+                        miningLuck = gameState.miningLuck || 50;
+                        priceHistory = gameState.priceHistory || [];
+                        marketCrash = gameState.marketCrash || false;
+                        marketBoom = gameState.marketBoom || false;
+                        superBoom = gameState.superBoom || false;
+                        criticalCrash = gameState.criticalCrash || false;
+                        crashRecovery = gameState.crashRecovery || false;
+                        crashTimer = gameState.crashTimer || 0;
+                        boomTimer = gameState.boomTimer || 0;
+                        superBoomTimer = gameState.superBoomTimer || 0;
+                        criticalCrashTimer = gameState.criticalCrashTimer || 0;
+                        recoveryTimer = gameState.recoveryTimer || 0;
+                        equipmentHealth = gameState.equipmentHealth || 100;
+                        equipmentEfficiency = gameState.equipmentEfficiency || 1.0;
+                        operationHistory = gameState.operationHistory || [];
+                        couponHistory = gameState.couponHistory || [];
+                        
+                        if (gameState.graphicsCards) {
+                            for (let cardId in gameState.graphicsCards) {
+                                if (graphicsCards[cardId]) {
+                                    graphicsCards[cardId].owned = gameState.graphicsCards[cardId].owned || 0;
+                                }
                             }
                         }
-                    }
-                    
-                    if (priceHistory.length === 0) {
-                        for (let i = 0; i < 30; i++) {
-                            priceHistory.push({
-                                time: i,
-                                price: 50 + (Math.random() - 0.5) * 20
-                            });
+                        
+                        if (autoMining && !miningActive) {
+                            startMining();
+                            document.getElementById('auto-btn').classList.add('active');
+                            document.getElementById('auto-status').textContent = 'ВКЛ';
                         }
+                        
+                        if (miningActive) {
+                            document.getElementById('mine-btn').innerHTML = '<i class="fa fa-pause"></i> Пауза майнинга';
+                        }
+                        
+                        if (superBoom) {
+                            document.getElementById('super-boom-alert').style.display = 'block';
+                        }
+                        if (marketBoom) {
+                            document.getElementById('boom-alert').style.display = 'block';
+                        }
+                        if (marketCrash) {
+                            document.getElementById('crash-alert').style.display = 'block';
+                        }
+                        
+                        addEvent('Игра успешно загружена', 'info');
+                        addHistory('Загрузка сохранения', 'system');
+                    } else {
+                        addEvent('Новая версия игры. Начинаем с чистого листа.', 'info');
                     }
-                    
-                    if (autoMining) {
-                        mobileAutoBtn.classList.add('active');
-                        desktopAutoBtn.classList.add('active');
-                        if (!miningActive) startMining();
-                    }
-                    
-                    if (miningActive) {
-                        mobileMineBtn.innerHTML = '<i class="fa fa-pause"></i> Пауза';
-                        desktopMineBtn.innerHTML = '<i class="fa fa-pause"></i> Пауза майнинга';
-                        mobileMineBtn.style.background = 'linear-gradient(to bottom, #f44336, #d32f2f)';
-                        desktopMineBtn.style.background = 'linear-gradient(to bottom, #f44336, #d32f2f)';
-                    }
-                    
-                    if (marketCrash) {
-                        mobileCrashAlert.style.display = 'block';
-                        desktopCrashAlert.style.display = 'block';
-                    }
-                    
-                    if (marketBoom) {
-                        mobileBoomAlert.style.display = 'block';
-                        desktopBoomAlert.style.display = 'block';
-                    }
-                    
-                    if (crashRecovery) {
-                        mobileRecoveryAlert.style.display = 'block';
-                        desktopRecoveryAlert.style.display = 'block';
-                    }
-                    
-                    updateUI();
-                    updateMarketUI(farmcoinPrice);
-                    addEvent('Игра загружена', 'info');
                 } catch (e) {
                     console.error('Ошибка загрузки:', e);
                     addEvent('Ошибка загрузки сохранения', 'error');
@@ -1617,77 +2367,31 @@
             }
         }
         
-        function init() {
-            mobileMineBtn.addEventListener('click', () => {
-                if (miningActive) {
-                    stopMining();
-                } else {
-                    startMining();
-                }
-            });
-            
-            desktopMineBtn.addEventListener('click', () => {
-                if (miningActive) {
-                    stopMining();
-                } else {
-                    startMining();
-                }
-            });
-            
-            mobileAutoBtn.addEventListener('click', toggleAutoMining);
-            desktopAutoBtn.addEventListener('click', toggleAutoMining);
-            
-            mobileCardSearch.addEventListener('input', updateMobileCatalog);
-            desktopCardSearch.addEventListener('input', updateDesktopCatalog);
-            
-            let touchStartX = 0;
-            let touchEndX = 0;
-            
-            document.addEventListener('touchstart', e => {
-                touchStartX = e.changedTouches[0].screenX;
-            });
-            
-            document.addEventListener('touchend', e => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
-            });
-            
-            function handleSwipe() {
-                const swipeThreshold = 50;
-                const diff = touchStartX - touchEndX;
-                
-                if (Math.abs(diff) > swipeThreshold) {
-                    if (diff > 0) {
-                        if (currentTab === 'owned') {
-                            switchTab('catalog');
-                        }
-                    } else {
-                        if (currentTab === 'catalog') {
-                            switchTab('owned');
-                        }
-                    }
-                }
-            }
-            
-            initCharts();
-            loadGame();
-            
-            setInterval(updateMarket, 3000);
-            setInterval(saveGame, 1000);
-            
-            updateUI();
-            updateCardsDisplay();
-            
-            addEvent('FarmCoin майнинг запущен', 'info');
-            addEvent('Цена ограничена: 5 ₽ - 150 ₽', 'info');
-            addEvent('25 видеокарт доступно для покупки', 'info');
-            
-            window.addEventListener('beforeunload', saveGame);
-        }
-        
+        // ========== ЗАПУСК ==========
         window.addEventListener('DOMContentLoaded', init);
-        window.switchTab = switchTab;
+        
+        // Экспорт функций для HTML
+        window.switchCardsTab = switchCardsTab;
         window.buyCard = buyCard;
+        window.openBuyModal = openBuyModal;
+        window.openSellModal = openSellModal;
+        window.openAnalysisModal = openAnalysisModal;
+        window.openRepairModal = openRepairModal;
+        window.openWithdrawModal = openWithdrawModal;
+        window.openHistoryModal = openHistoryModal;
+        window.openCouponsModal = openCouponsModal;
+        window.closeModal = closeModal;
+        window.updateBuyCalculation = updateBuyCalculation;
+        window.updateSellCalculation = updateSellCalculation;
+        window.updateWithdrawCalculation = updateWithdrawCalculation;
+        window.buyFarmCoin = buyFarmCoin;
+        window.sellFarmCoin = sellFarmCoin;
+        window.generateWithdrawCoupon = generateWithdrawCoupon;
+        window.confirmWithdraw = confirmWithdraw;
+        window.repairEquipment = repairEquipment;
+        window.updateAnalysis = updateAnalysis;
+        window.clearHistory = clearHistory;
+        window.clearCoupons = clearCoupons;
     </script>
 </body>
 </html>
